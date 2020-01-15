@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+	<!-- head start --> 
+	<head th:replace="fragments/config :: configFragment">
+		<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">devyu's </title>
+	</head>
+	<!-- head end --> 
+	
+	<body>
+		<div class="wrap">
+			<!-- header start --> 
+			<header th:replace="fragments/header :: headerFragment"></header>
+			<!-- header end -->
+			
+			<!-- content start -->
+			<div layout:fragment="content"></div>
+			<!-- content end -->
+			
+			<!-- footer start -->
+			<footer th:replace="fragments/footer :: footerFragment"></footer>
+			<!-- footer end -->
+		</div>
+		
+		<!-- loader -->
+	    <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#f4b214"/></svg></div>
+	
+	    <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+	    <script th:src="@{/js/jquery-migrate-3.0.0.js}"></script>
+	    <script th:src="@{/js/popper.min.js}"></script>
+	    <script th:src="@{/js/bootstrap.min.js}"></script>
+	    <script th:src="@{/js/owl.carousel.min.js}"></script>
+	    <script th:src="@{/js/jquery.waypoints.min.js}"></script>
+	    <script th:src="@{/js/jquery.stellar.min.js}"></script>
+	    <script th:src="@{/js/main.js}"></script>
+	</body>
+</html>
