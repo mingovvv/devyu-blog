@@ -8,9 +8,12 @@
 			           <a href="#"><span class="fa fa-facebook"></span></a>
 			           <a href="#"><span class="fa fa-instagram"></span></a> -->
 	           			<a href="https://github.com/puregyu"><span class="fa fa-github fa-2x"></span></a>
-	         		</div> 
-		         	<div class="col-1 social">
+	         		</div>
+		         	<div th:if="${session.SESSIONED_ID == null}" class="col-1 social">
 		           		<a href="/login"><span class="fa fa-sign-in fa-2x"></span></a>
+		         	</div>
+		         	<div th:if="${session.SESSIONED_ID != null}" class="col-1 social">
+		           		<a href="/"><span class="fa fa-sign-out fa-2x"></span></a>
 		         	</div>
 	       		</div>
 	     	</div>

@@ -1,4 +1,4 @@
-package com.devyu.blog.controller;
+package com.devyu.blog.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

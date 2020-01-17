@@ -10,11 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.springframework.stereotype.Service;
+
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter @ToString
+@Getter @Setter @ToString
 public class User{
 
 	@Id @GeneratedValue

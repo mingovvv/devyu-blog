@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html>
-
-<link rel="stylesheet" href="custom/css/login.css">
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/custom/css/login.css}">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 <div class="wrapper fadeInDown">
@@ -9,16 +8,21 @@
     <!-- Tabs Titles -->
 
     <!-- Icon -->
-    <div class="fadeIn first">
-      <img src="custom/icon/profile.png" id="icon" />
+    <div class="fadeIn first" th:if="${error}">
+      <img src="custom/icon/profile3.png" id="icon" />
+    </div>
+    <div class="fadeIn first" th:unless="${error}">
+      <img src="custom/icon/profile2.png" id="icon" />
     </div>
 
     <!-- Login Form -->
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+    <form th:action="@{/login}" method="post">
+      <input type="text" id="loginId" class="fadeIn second" name="loginId" placeholder="login">
+      <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
+		<div class="text-danger" th:text="${error}"></div>
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
+
 
     <!-- Remind Passowrd -->
     <div id="formFooter">

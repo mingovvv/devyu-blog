@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/default}">
+<head>
+	<script th:src="@{/custom/js/createForm.js}"></script>
+    <title>writing</title>
+</head>
+
+
+<div layout:fragment="content">
+	<section class="site-section">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <h1>posting blog</h1>
+          </div>
+        </div>
+        <div class="row blog-entries">
+          <div class="col-md-12 col-lg-8 main-content">
+            
+            <form action="#" method="post">
+                  <div class="row">
+                    <div class="col-md-12 form-group">
+                      <label for="title">title</label>
+                      <input type="text" id="title" class="form-control">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 form-group">
+                      <label for="content">content</label>
+                      <textarea name="content" id="content" class="form-control " cols="30" rows="8"></textarea>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 form-group">
+                      <label for="tag">tag</label>
+                      <span class="tags">
+						<input class="aaaa form-control border border-white" type="text" placeholder="#태그 입력" >                      
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 form-group">
+                      <input type="submit" value="Send Message" class="col-md-12 btn btn-primary bg-secondary border border-light">
+                    </div>
+                  </div>
+                </form>
+          </div>
+
+          <!-- END main-content -->
+          
+			<!-- side bar include -->
+        	<div th:replace="fragments/side-bar :: side-bar" ></div>
+      		<!-- side bar include -->
+        </div>
+      </div>
+    </section>
+</div>
+</html>
