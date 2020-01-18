@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.devyu.blog.Constant.Constant;
+import com.devyu.blog.constant.Constant;
 import com.devyu.blog.domain.User;
 import com.devyu.blog.service.UserService;
 

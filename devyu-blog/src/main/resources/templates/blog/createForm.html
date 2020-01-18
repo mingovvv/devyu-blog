@@ -17,27 +17,47 @@
         <div class="row blog-entries">
           <div class="col-md-12 col-lg-8 main-content">
             
-            <form action="#" method="post">
+            <form th:action="@{/sivbal}" method="post">
+            
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <label for="title">title</label>
                       <input type="text" id="title" class="form-control">
                     </div>
                   </div>
+                  
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <label for="content">content</label>
                       <textarea name="content" id="content" class="form-control " cols="30" rows="8"></textarea>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-12 form-group">
+                  
+                  <!-- tag start -->
+                  <!-- <div class="row">
+                    <div class="col-md-12 form-group inputTagAppendForm">
                       <label for="tag">tag</label>
-                      <span class="tags">
-						<input class="aaaa form-control border border-white" type="text" placeholder="#태그 입력" >                      
-                      </span>
+						<input class="form-control border border-white inputTagForm" type="text" placeholder="#태그 입력" >
                     </div>
-                  </div>
+                  </div> -->
+                  
+                  <div class="row">
+	                  <div class="col-md-12 form-group inputTagAppendForm">
+						  <label for="tag">tag</label>
+						  <ul class="tags">
+						    	<li class="append">
+						    		<span>#</span>
+						    		<input class="border border-white inputBox" type="text" placeholder="태그 입력">
+						    		<i class='fa fa-times tagMinus' aria-hidden='true'></i>
+						    	</li>
+						    	<!-- <li>
+							    	<i class="fa fa-plus tagPlus" aria-hidden="true"></i>
+						    	</li> -->
+						  </ul>
+					  </div>
+				</div>
+                  <!-- tag end -->
+                  
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <input type="submit" value="Send Message" class="col-md-12 btn btn-primary bg-secondary border border-light">
