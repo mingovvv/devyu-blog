@@ -1,17 +1,34 @@
 package com.devyu.blog.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.devyu.blog.domain.Blog;
+import com.devyu.blog.inputForm.BlogForm;
+import com.devyu.blog.service.BlogService;
+import com.devyu.blog.service.TagService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 public class BlogController {
+	
+	private final BlogService blogService;
+	private final TagService tagService;
+	
 
 	@GetMapping("/blog")
-	public String List() {
+	public String blogList(Model model) {
+		List<Blog> blogList = blogService.findAll();
+		model.addAttribute("blogList", blogList);
 		return "blog/list";
 	}
 	
@@ -26,7 +43,15 @@ public class BlogController {
 	}
 	
 	@PostMapping("blog/create")
-	public String create() {
-		return "redirect:/blog/list";
+	public String create(HttpServletRequest req, BlogForm blogForm, HttpSession session) {
+		
+		// 블로그
+		Blog blog = blogService.create(blogForm, session);
+		
+		// 태그
+		String[] tags = req.getParameterValues("tagName");
+		tagService.create(tags, blog);
+
+		return "redirect:/blog";
 	}
 }

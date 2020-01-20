@@ -28,4 +28,8 @@ public class UserRepository {
 		return user.get(0);
 	}
 
+	public User findOne(Long id) {
+		return em.find(User.class, id);
+	}
+
 }

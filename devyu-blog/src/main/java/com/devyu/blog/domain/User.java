@@ -1,6 +1,5 @@
 package com.devyu.blog.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,15 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.springframework.stereotype.Service;
-
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
-@Getter @Setter @ToString
-public class User{
+@Getter @Setter 
+public class User extends Abstract{
 
 	@Id @GeneratedValue
 	@Column(name="user_id")
@@ -27,9 +23,6 @@ public class User{
 	private String name;
 	private String password;
 	
-	private LocalDateTime createdDate;
-	private LocalDateTime modifiedDate;
-
 	@OneToMany(mappedBy = "user")
 	private List<Blog> blogs = new ArrayList<>();
 }

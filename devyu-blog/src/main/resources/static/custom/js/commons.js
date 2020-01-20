@@ -25,7 +25,7 @@ $(function(){
 			}
 	});
 	function addTags(){
-		$(".append").append("<span class='mr-1 ml-2'>#</span><input class='border border-white inputBox' type='text' placeholder='태그 입력'><i class='fa fa-times tagMinus' aria-hidden='true'></i>");
+		$(".append").append("<span class='mr-1 ml-2'>#</span><input class='border border-white inputBox' type='text' name='tagName' placeholder='태그 입력'><i class='fa fa-times tagMinus' aria-hidden='true'></i>");
 		$('.inputBox').last().focus();
 	}
 })

@@ -11,25 +11,25 @@
       <div class="container">
         <div class="row mb-4">
           <div class="col-md-6">
-            <h1>posting blog</h1>
+            <h1>write</h1>
           </div>
         </div>
         <div class="row blog-entries">
           <div class="col-md-12 col-lg-8 main-content">
             
-            <form th:action="@{/sivbal}" method="post">
+            <form th:action="@{/blog/create}" method="post">
             
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <label for="title">title</label>
-                      <input type="text" id="title" class="form-control">
+                      <input type="text"  id="title" name="title" class="form-control">
                     </div>
                   </div>
                   
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <label for="content">content</label>
-                      <textarea name="content" id="content" class="form-control " cols="30" rows="8"></textarea>
+                      <textarea name="contents" id="contents" class="form-control " cols="30" rows="8"></textarea>
                     </div>
                   </div>
                   
@@ -47,7 +47,7 @@
 						  <ul class="tags">
 						    	<li class="append">
 						    		<span>#</span>
-						    		<input class="border border-white inputBox" type="text" placeholder="태그 입력">
+						    		<input class="border border-white inputBox" type="text" name="tagName" placeholder="태그 입력">
 						    		<i class='fa fa-times tagMinus' aria-hidden='true'></i>
 						    	</li>
 						    	<!-- <li>
