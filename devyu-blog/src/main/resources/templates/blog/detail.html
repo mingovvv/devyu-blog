@@ -9,21 +9,19 @@
         
         <div class="row blog-entries element-animate">
 
-          <div class="col-md-12 col-lg-8 main-content">
+          <div class="col-md-12 col-lg-8 main-content" >
             <img th:src="@{/images/img_10.jpg}" alt="Image" class="img-fluid mb-5">
              <div class="post-meta">
-                        <span class="author mr-2"><img th:src="@{/images/person_1.jpg}" alt="Colorlib" class="mr-2"> Colorlib</span>&bullet;
-                        <span class="mr-2">March 15, 2018 </span> &bullet;
-                        <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-                        <span class="ml-2"><span class="fa fa-thumbs-o-up"></span></span> 2</span>
+                        <span class="author mr-2"><img th:src="@{/images/person_1.jpg}" alt="Colorlib" class="mr-2" th:text="${user.loginId}"> </span>&bullet;
+                        <span class="mr-2" th:text="${blog.getFormattedCreatedDate()}"></span> &bullet;
+                        <span class="ml-2 fa fa-eye"><span class="ml-1" th:text="${blog.countOfViews}"></span></span>
+                        <span class="ml-2 fa fa-comments"><span class="ml-1" th:text="${blog.countOfComment}"></span></span>
+                        <span class="ml-2 fa fa-thumbs-o-up"><span class="ml-1" th:text="${blog.countOfThumbsUp}"></span></span>
                       </div>
-            <h1 class="mb-4">There’s a Cool New Way for Men to Wear Socks and Sandals</h1>
-            <a class="category mb-5" href="#">Food</a> <a class="category mb-5" href="#">Travel</a>
+            <h1 class="mb-4" th:text="${blog.title}"></h1>
+            <a class="category mb-5" href="#">blogging</a> <a class="category mb-5" href="#">Travel</a>
            
-            <div class="post-content-body">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium nam quas inventore, ut iure iste modi eos adipisci ad ea itaque labore earum autem nobis et numquam, minima eius. Nam eius, non unde ut aut sunt eveniet rerum repellendus porro.</p>
-            <p>Sint ab voluptates itaque, ipsum porro qui obcaecati cumque quas sit vel. Voluptatum provident id quis quo. Eveniet maiores perferendis officia veniam est laborum, expedita fuga doloribus natus repellendus dolorem ab similique sint eius cupiditate necessitatibus, magni nesciunt ex eos.</p>
-            <p>Quis eius aspernatur, eaque culpa cumque reiciendis, nobis at earum assumenda similique ut? Aperiam vel aut, ex exercitationem eos consequuntur eaque culpa totam, deserunt, aspernatur quae eveniet hic provident ullam tempora error repudiandae sapiente illum rerum itaque voluptatem. Commodi, sequi.</p>
+            <div class="post-content-body" th:text="${blog.contents}">
             <div class="row mb-5">
               <div class="col-md-12 mb-4">
                 <img th:src="@{/images/img_7.jpg}" alt="Image placeholder" class="img-fluid">
@@ -45,7 +43,14 @@
 
             
             <div class="pt-5">
-              <p>Categories:  <a href="#">Food</a>, <a href="#">Travel</a>  Tags: <a href="#">#manila</a>, <a href="#">#asia</a></p>
+              <p>
+              	Tags: 
+              		<a href="#" th:each="tags : ${blog.tags}" >
+              			<span>#</span>
+              			<span th:text="${tags.tagName}"></span>
+              			<span th:if="!${tagsStat.count eq tagsStat.size}">,</span>
+              		</a>
+              </p>
             </div>
 
 
@@ -53,9 +58,10 @@
               <h3 class="mb-5">6 Comments</h3>
               <ul class="comment-list">
                 <li class="comment">
+                  <!-- comment profile
                   <div class="vcard">
                     <img th:src="@{/images/person_1.jpg}" alt="Image placeholder">
-                  </div>
+                  </div> -->
                   <div class="comment-body">
                     <h3>Jean Doe</h3>
                     <div class="meta">January 9, 2018 at 2:21pm</div>

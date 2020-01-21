@@ -18,7 +18,7 @@
               
 				<!-- START post -->
                 <div class="post-entry-horzontal" th:each="blog : ${blogList}">
-                  <a href="blog/detail">
+                  <a th:href="@{/blog/{id} (id=${blog.id})}">
                     <div class="image element-animate" data-animate-effect="fadeIn" style="background-image: url(images/img_10.jpg);"></div>
                     <span class="text">
                       <div class="post-meta">

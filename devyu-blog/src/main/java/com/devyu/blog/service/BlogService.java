@@ -44,4 +44,8 @@ public class BlogService {
 	public List<Blog> findAll() {
 		return blogRepository.findAll();
 	}
+
+	public Blog findOne(Long id) {
+		return blogRepository.findOne(id);
+	}
 }

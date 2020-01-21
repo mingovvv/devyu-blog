@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter @Setter 
@@ -25,4 +26,5 @@ public class User extends Abstract{
 	
 	@OneToMany(mappedBy = "user")
 	private List<Blog> blogs = new ArrayList<>();
+
 }

@@ -1,5 +1,6 @@
 package com.devyu.blog.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,7 +24,7 @@ public class Tags {
 	
 	private String tagName;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="blog_id")
 	private Blog blog;
 	

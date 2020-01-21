@@ -8,12 +8,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.devyu.blog.domain.Blog;
+import com.devyu.blog.domain.User;
 import com.devyu.blog.inputForm.BlogForm;
 import com.devyu.blog.service.BlogService;
 import com.devyu.blog.service.TagService;
+import com.devyu.blog.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BlogController {
 	
+	private final UserService userService;
 	private final BlogService blogService;
 	private final TagService tagService;
 	
@@ -32,8 +36,12 @@ public class BlogController {
 		return "blog/list";
 	}
 	
-	@GetMapping("/blog/detail")
-	public String detail() {
+	@GetMapping("/blog/{id}")
+	public String detail(@PathVariable Long id, Model model) {
+		Blog blog = blogService.findOne(id);
+		User user = userService.findOne(blog.getUser().getId());
+		model.addAttribute("blog", blog);
+		model.addAttribute("user", user);
 		return "blog/detail";
 	}
 	

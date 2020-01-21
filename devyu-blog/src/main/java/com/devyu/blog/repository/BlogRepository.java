@@ -24,4 +24,8 @@ public class BlogRepository {
 				.getResultList();
 	}
 
+	public Blog findOne(Long id) {
+		return em.find(Blog.class, id);
+	}
+
 }

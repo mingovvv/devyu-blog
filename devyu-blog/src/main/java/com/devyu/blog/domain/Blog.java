@@ -19,6 +19,7 @@ import com.devyu.blog.inputForm.BlogForm;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
