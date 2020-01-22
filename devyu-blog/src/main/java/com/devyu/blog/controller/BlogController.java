@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.devyu.blog.domain.Blog;
+import com.devyu.blog.domain.Comment;
 import com.devyu.blog.domain.User;
 import com.devyu.blog.inputForm.BlogForm;
 import com.devyu.blog.service.BlogService;
+import com.devyu.blog.service.CommentService;
 import com.devyu.blog.service.TagService;
 import com.devyu.blog.service.UserService;
 
@@ -27,6 +29,7 @@ public class BlogController {
 	private final UserService userService;
 	private final BlogService blogService;
 	private final TagService tagService;
+	private final CommentService commentService;
 	
 
 	@GetMapping("/blog")
@@ -40,8 +43,10 @@ public class BlogController {
 	public String detail(@PathVariable Long id, Model model) {
 		Blog blog = blogService.findOne(id);
 		User user = userService.findOne(blog.getUser().getId());
+		List<Comment> comments = commentService.findAll();
 		model.addAttribute("blog", blog);
 		model.addAttribute("user", user);
+		model.addAttribute("comments", comments);
 		return "blog/detail";
 	}
 	

@@ -9,12 +9,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
+import com.devyu.blog.inputForm.CommentForm;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
 import lombok.ToString;
 
 @Entity
-@Getter @ToString
-public class Comment {
+@Getter
+public class Comment extends Abstract{
 	
 	@Id
 	@GeneratedValue
@@ -28,11 +34,35 @@ public class Comment {
 	
 	private String password;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="member_id")
-	private User user;
 	
+	@JsonManagedReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="blog_id")
 	private Blog blog;
+	
+	/* 생성 메서드 */
+	public static Comment createComment(Blog blog, CommentForm commentForm) {
+		Comment comment = new Comment();
+		
+		// 초기화
+		comment.setInit(commentForm);
+		
+		// 연관관계
+		comment.setBlog(blog);
+		
+		return comment;
+	}
+	
+	/* 연관관계  */
+	private void setBlog(Blog blog) {
+		this.blog = blog;
+		blog.getComments().add(this);
+	}
+
+	/*  초기화 메서드 */
+	private void setInit(CommentForm commentForm) {
+		this.name = commentForm.getName();
+		this.password = commentForm.getPassword();
+		this.contents = commentForm.getContents();
+	}
 }
