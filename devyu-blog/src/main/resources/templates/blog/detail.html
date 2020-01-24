@@ -77,8 +77,8 @@
 
 					<div class="pt-5">
 						<p>
-							Tags: <a href="#" th:each="tags : ${blog.tags}"> <span>#</span>
-								<span th:text="${tags.tagName}"></span> <span
+							Tags: <a href="#" th:each="tags : ${blog.blogTags}"> <span>#</span>
+								<span th:text="${tags.tag.tagName}"></span> <span
 								th:if="!${tagsStat.count eq tagsStat.size}">,</span>
 							</a>
 						</p>

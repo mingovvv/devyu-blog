@@ -17,7 +17,6 @@ import com.devyu.blog.domain.User;
 import com.devyu.blog.inputForm.BlogForm;
 import com.devyu.blog.service.BlogService;
 import com.devyu.blog.service.CommentService;
-import com.devyu.blog.service.TagService;
 import com.devyu.blog.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,6 @@ public class BlogController {
 	
 	private final UserService userService;
 	private final BlogService blogService;
-	private final TagService tagService;
 	private final CommentService commentService;
 	
 
@@ -59,12 +57,8 @@ public class BlogController {
 	public String create(HttpServletRequest req, BlogForm blogForm, HttpSession session) {
 		
 		// 블로그
-		Blog blog = blogService.create(blogForm, session);
+		Blog blog = blogService.create(blogForm, session, req);
 		
-		// 태그
-		String[] tags = req.getParameterValues("tagName");
-		tagService.create(tags, blog);
-
 		return "redirect:/blog";
 	}
 }

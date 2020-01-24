@@ -1,22 +1,20 @@
 package com.devyu.blog.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
-import lombok.ToString;
 
 @Entity
-@Getter @ToString
+@Getter
 public class Tag {
 	
 	@Id
@@ -26,31 +24,30 @@ public class Tag {
 	
 	private String tagName;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="blog_id")
-	private Blog blog;
-	
+	@OneToMany(mappedBy = "tag", cascade = CascadeType.ALL)
+	private List<BlogTag> blogTags = new ArrayList<>();
 	
 	/* 연관관계 메서드 */
-	public void setBlog(Blog blog) {
-		this.blog = blog;
-		blog.getTags().add(this);
+	public void addBlogTag(BlogTag blogTag) {
+		blogTags.add(blogTag);
 	}
-	
-	/* 생성 메서드 */
-	public static Tag createTag(String tags, Blog blog) {
-		Tag tag = new Tag(); 
+
+	public static Tag createTag(String tagName, Blog blog) {
 		
-		// 연관관계 메서드 주입
-		tag.setBlog(blog);
+		Tag tag = new Tag();
+		tag.setInit(tagName);
 		
-		//  초기화 메서드 주입
-		tag.setInit(tags);
-			
+		BlogTag blogTag = new BlogTag();
+		blogTag.setBlog(blog);
+		blogTag.setTag(tag);
+		
+		tag.addBlogTag(blogTag);
+		blog.addBlogTag(blogTag);
+		
 		return tag;
 	}
 
-	private void setInit(String tags) {
-		this.tagName = tags;
+	private void setInit(String tagName) {
+		this.tagName=tagName;
 	}
 }
