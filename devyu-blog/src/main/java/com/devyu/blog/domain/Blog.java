@@ -79,5 +79,16 @@ public class Blog extends Abstract{
 		this.countOfThumbsUp = (long)0;
 		this.countOfViews = (long)0;
 	}
+
+	public void addCountOfCommnet() {
+		countOfComment = countOfComment+1;
+	}
 	
+	public void addCountOfThumbsUp() {
+		countOfThumbsUp = countOfThumbsUp+1;
+	}
+
+	public void addCountOfViews() {
+		countOfViews = countOfViews+1;
+	}
 }

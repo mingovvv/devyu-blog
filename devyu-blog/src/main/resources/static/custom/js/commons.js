@@ -43,15 +43,18 @@ $(function(){
 		var queryString = $(".submit-write").serialize();
 		var url = $(".submit-write").attr('action');
 		
-		console.log(queryString);
-		
 		$.ajax({
 			type : 'post',
 			url : url,
 			data : queryString,
 			dataType : 'json',
-			error : onError,
-			success : onSuccess
+			error : function(request,status,error){
+				onError();
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			},
+			success : function(data){
+				onSuccess(url);
+			}
 		});
 	}
 	
@@ -59,18 +62,75 @@ $(function(){
 		alert('Leave a comment [error]');
 	}
 
-	function onSuccess(data, status){
+	function onSuccess(url){
 		
-		var template = $("#comment-template").html();
+		var template = document.querySelector('#comment-template');
 		
-		console.log(data);
-		console.log(template);
-		var answerTemplate = $("#answerTemplate").html();
-//		var template = answerTemplate.format(data.name, data.formattedCreatedDate, data.contents, data.question.idx, data.idx);
-//		
-		$(".submit-write").append(template);
-		$(".submit-write textarea").val("");
-//		
-//		//$(".qna-comment-count strong").text(data.question.countOfAnswer);
+		$.ajax({
+			type : 'get',
+			url : url,
+			dataType : 'json',
+			error : function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			},
+			success : function(data){
+				
+				$(".comment-list").empty();
+				
+				$(data).each(function(index){
+					
+					var clone = document.importNode(template.content, true);
+					var name = clone.querySelector("h3");
+					var date = clone.querySelector(".abb")
+					var content = clone.querySelector("p");
+					
+					name.textContent = data[index].name;
+					date.textContent = data[index].formattedCreatedDate;
+					content.textContent = data[index].contents;
+					
+					$(".comment-list").append(clone);
+					$(".submit-write textarea").val("");
+				});
+				console.log(data.length);
+				$(".post-meta>.fa-comments span").text(data.length);
+				$(".comment-count").text(data.length+ " Comments");
+				$(".comment:last")[0].scrollIntoView({behavior: "smooth", block: "end"});
+				$(".comment:last").delay(200).fadeOut(200).fadeIn(200).fadeOut(200).fadeIn(200).fadeOut(200).fadeIn('slow');
+			}
+		});
 	}
+	
+	/////////////////////////
+	// blog like 추가 ////////
+	/////////////////////////
+	$(".like-icon").click(function(){
+		
+		var url = "/blog/"+$(".text-center input").val()+"/like";
+		
+		$(".like-icon").css("color","#dc9a55e3");
+		$(".like-animate").css("opacity","1");
+		$(".like-animate").animate({
+			bottom : "120px",
+			opacity : "0"
+		},500, function(){
+			$(".like-animate").css("bottom","60px").css("opacity","0");
+		});
+		
+		$.ajax({
+			type : 'post',
+			url : url,
+			dataType : 'json',
+			error : function(request,status,error){
+				onError();
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			},
+			success : function(data){
+				
+				console.log(data);
+				$(".post-meta>.fa-thumbs-o-up span").text(data);
+			}
+		});
+		
+	});
+	
 })

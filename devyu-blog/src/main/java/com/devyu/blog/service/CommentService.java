@@ -24,8 +24,10 @@ public class CommentService {
 	@Transactional
 	public Comment create(Long id, CommentForm commentForm) {
 		
-		// 영속성 유지를 위한 jpa select
+		// 영속성 컨텍스트의 1차캐시 안에 Blog객체 생성
 		Blog blogJPA = blogRepository.findOne(id);
+		
+		blogJPA.addCountOfCommnet();
 		
 		// 코멘트 생성
 		Comment comment = Comment.createComment(blogJPA, commentForm);
@@ -37,6 +39,10 @@ public class CommentService {
 
 	public List<Comment> findAll() {
 		return commentRepository.findAll();
+	}
+
+	public List<Comment> findAllByBlogId(Long id) {
+		return commentRepository.findAllByBlogId(id);
 	}
 	
 	

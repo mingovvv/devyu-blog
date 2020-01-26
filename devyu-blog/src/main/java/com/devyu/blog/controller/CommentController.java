@@ -1,5 +1,8 @@
 package com.devyu.blog.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +21,11 @@ public class CommentController {
 	
 	@PostMapping("/blog/{id}/comment")
 	public Comment create(@PathVariable Long id, CommentForm commentForm) {
-		
 		return commentService.create(id, commentForm);
+	}
+	
+	@GetMapping("/blog/{id}/comment")
+	public List<Comment> list(@PathVariable Long id) {
+		return commentService.findAllByBlogId(id);
 	}
 }

@@ -47,10 +47,7 @@ public class BlogService {
 				// 태그 저장
 				tagRepository.create(tag);
 			}
-			
 		}
-		
-		
 		// 블로그 저장
 		blogRepository.create(blog);
 		
@@ -61,7 +58,19 @@ public class BlogService {
 		return blogRepository.findAll();
 	}
 
-	public Blog findOne(Long id) {
-		return blogRepository.findOne(id);
+	@Transactional
+	public Blog findOne(Long id, boolean isCookie) {
+		Blog blog = blogRepository.findOne(id);
+		if(!isCookie) {
+			blog.addCountOfViews();
+		}
+		return blog;
+	}
+
+	@Transactional
+	public Long findCountOfThumbsUp(Long id) {
+		Blog blog = blogRepository.findOne(id);
+		blog.addCountOfThumbsUp();
+		return blog.getCountOfThumbsUp();
 	}
 }

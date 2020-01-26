@@ -34,6 +34,7 @@ public class Comment extends Abstract{
 	
 	private String password;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="blog_id")
 	private Blog blog;

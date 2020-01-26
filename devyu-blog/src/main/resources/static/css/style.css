@@ -149,7 +149,7 @@ header {
 
 .category {
   display: inline-block;
-  background: #6610f2;
+  background: #dc9a55e3;
   padding: 2px 8px;
   line-height: 1.5;
   font-size: 12px;
@@ -1280,6 +1280,20 @@ blockquote {
 .element-animate {
   opacity: 0;
   visibility: hidden; }
+
+.comment-color {
+	background: #f8f9fa;
+}
+
+.like-icon:hover {
+	color: #dc9a55e3;
+}
+.like-animate {
+	opacity:0;
+	position: relative;
+	left: 50px;
+	bottom: 60px;
+}
 
 #loader {
   position: fixed;

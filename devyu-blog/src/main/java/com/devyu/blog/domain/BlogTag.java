@@ -35,9 +35,4 @@ public class BlogTag {
 	public void setBlog(Blog blog) {
 		this.blog = blog;
 	}
-	
-	public static BlogTag createBlogTag() {
-		
-		return null;
-	}
 }

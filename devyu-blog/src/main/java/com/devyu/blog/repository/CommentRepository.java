@@ -23,4 +23,10 @@ public class CommentRepository {
 		return em.createQuery("select c from Comment c", Comment.class)
 					.getResultList();
 	}
+
+	public List<Comment> findAllByBlogId(Long id) {
+		return em.createQuery("select c from Comment c where blog_id=:id", Comment.class)
+					.setParameter("id",id)
+					.getResultList();
+	}
 }

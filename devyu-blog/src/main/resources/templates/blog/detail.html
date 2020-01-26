@@ -13,65 +13,24 @@
 					<img th:src="@{/images/img_10.jpg}" alt="Image"
 						class="img-fluid mb-5">
 					<div class="post-meta">
-						<span class="author mr-2"><img
-							th:src="@{/images/person_1.jpg}" alt="Colorlib" class="mr-2"
-							th:text="${user.loginId}"> </span>&bullet; <span class="mr-2"
-							th:text="${blog.getFormattedCreatedDate()}"></span> &bullet; <span
-							class="ml-2 fa fa-eye"><span class="ml-1"
-							th:text="${blog.countOfViews}"></span></span> <span
-							class="ml-2 fa fa-comments"><span class="ml-1"
-							th:text="${blog.countOfComment}"></span></span> <span
-							class="ml-2 fa fa-thumbs-o-up"><span class="ml-1"
-							th:text="${blog.countOfThumbsUp}"></span></span>
+						<span class="author mr-2">
+							<img th:src="@{/images/person_1.jpg}" alt="Colorlib" class="mr-2" th:text="${user.loginId}"> 
+						</span>&bullet; 
+						<span class="mr-2" th:text="${blog.getFormattedCreatedDate()}"></span> &bullet; 
+						<span class="ml-2 fa fa-eye">
+							<span class="ml-1" th:text="${blog.countOfViews}"></span>
+						</span> 
+						<span class="ml-2 fa fa-comments">
+							<span class="ml-1" th:text="${blog.countOfComment}"></span>
+						</span> 
+						<span class="ml-2 fa fa-thumbs-o-up">
+							<span class="ml-1" th:text="${blog.countOfThumbsUp}"></span>
+						</span>
 					</div>
 					<h1 class="mb-4" th:text="${blog.title}"></h1>
-					<a class="category mb-5" href="#">blogging</a> <a
-						class="category mb-5" href="#">Travel</a>
+					<a class="category mb-5" href="#">blogging</a> 
 
 					<div class="post-content-body" th:text="${blog.contents}">
-						<div class="row mb-5">
-							<div class="col-md-12 mb-4">
-								<img th:src="@{/images/img_7.jpg}" alt="Image placeholder"
-									class="img-fluid">
-							</div>
-							<div class="col-md-6 mb-4">
-								<img th:src="@{/images/img_9.jpg}" alt="Image placeholder"
-									class="img-fluid">
-							</div>
-							<div class="col-md-6 mb-4">
-								<img th:src="@{/images/img_11.jpg}" alt="Image placeholder"
-									class="img-fluid">
-							</div>
-						</div>
-						<p>Quibusdam autem, quas molestias recusandae aperiam
-							molestiae modi qui ipsam vel. Placeat tenetur veritatis tempore
-							quos impedit dicta, error autem, quae sint inventore ipsa quidem.
-							Quo voluptate quisquam reiciendis, minus, animi minima eum
-							officia doloremque repellat eos, odio doloribus cum.</p>
-						<p>Temporibus quo dolore veritatis doloribus delectus dolores
-							perspiciatis recusandae ducimus, nisi quod, incidunt ut quaerat,
-							magnam cupiditate. Aut, laboriosam magnam, nobis dolore fugiat
-							impedit necessitatibus nisi cupiditate, quas repellat itaque
-							molestias sit libero voluptas eveniet omnis illo ullam dolorem
-							minima.</p>
-						<p>Porro amet accusantium libero fugit totam, deserunt ipsa,
-							dolorem, vero expedita illo similique saepe nisi deleniti.
-							Cumque, laboriosam, porro! Facilis voluptatem sequi nulla quidem,
-							provident eius quos pariatur maxime sapiente illo nostrum
-							quibusdam aliquid fugiat! Earum quod fuga id officia.</p>
-						<p>Illo magnam at dolore ad enim fugiat ut maxime facilis
-							autem, nulla cumque quis commodi eos nisi unde soluta, ipsa eius
-							aspernatur sint atque! Nihil, eveniet illo ea, mollitia fuga
-							accusamus dolor dolorem perspiciatis rerum hic, consectetur error
-							rem aspernatur!</p>
-
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							Temporibus magni explicabo id molestiae, minima quas assumenda
-							consectetur, nobis neque rem, incidunt quam tempore perferendis
-							provident obcaecati sapiente, animi vel expedita omnis quae ipsa!
-							Obcaecati eligendi sed odio labore vero reiciendis facere
-							accusamus molestias eaque impedit, consequuntur quae fuga vitae
-							fugit?</p>
 					</div>
 
 
@@ -84,16 +43,24 @@
 						</p>
 					</div>
 
-					<!-- comment start -->
+					<div class="text-center">
+						<i class="like-icon fa fa-thumbs-o-up fa-4x" aria-hidden="true"></i>
+						<div class="like">like</div>
+						<span class="like-animate">+1</span>
+						<input type="hidden" th:value="${blog.id}">
+					</div>
+
 					<div class="pt-5">
-						<h3 class="mb-5">6 Comments</h3>
+						<h3 class="mb-5 comment-count" th:text="${blog.countOfComment} +' '+Comments"></h3>
+						<!-- START comment-list -->
 						<ul class="comment-list">
-							<li class="comment" th:each="comment : ${comments}">
-								<!-- comment profile
-                  <div class="vcard">
-                    <img th:src="@{/images/person_1.jpg}" alt="Image placeholder">
-                  </div> -->
-								<div class="comment-body float-left">
+							<li class="comment comment-color" th:each="comment : ${comments}">
+				                  <div class="vcard">
+				                 	 <i class="fa fa-user-circle fa-3x" aria-hidden="true"></i>
+				                    <!-- <img th:src="@{/images/person_1.jpg}" alt="Image placeholder"> -->
+				                  </div>
+								<div class="comment-body">
+									<input type="hidden" th:value="${comment.id}">
 									<h3 th:text="${comment.name}"></h3>
 									<div class="meta" th:text="${comment.getFormattedCreatedDate()}">asd</div>
 									<p th:text="${comment.contents}"></p>
@@ -101,13 +68,30 @@
 							</li>
 						</ul>
 						<!-- END comment-list -->
-
+						
+						<!-- START comment-template -->
+						<template id="comment-template">
+							<li class="comment comment-color">
+				                <div class="vcard">
+				                	<i class="fa fa-user-circle fa-3x" aria-hidden="true"></i>
+				                </div>
+								<div class="comment-body">
+									<input type="hidden">
+									<h3>name</h3>
+										<div class="meta abb">date</div>
+									<p>contents</p>
+								</div>
+								<input type="hidden">
+							</li>
+						</template> 
+						<!-- START comment-template -->
+						
 						<div class="comment-form-wrap pt-5">
 							<h3 class="mb-5">Leave a comment</h3>
 
 							<form method="post"
 								th:action="@{/blog/{id}/comment (id=${blog.id})}"
-								class="p-5 bg-light submit-write">
+								class="p-5 bg-light submit-write mb-5">
 								<div class="form-group">
 									<label for="name">Name *</label> <input type="text"
 										class="form-control" id="name" name="name">
@@ -139,6 +123,5 @@
 				<!-- side bar include -->
 			</div>
 	</section>
-
 </div>
 </html>
