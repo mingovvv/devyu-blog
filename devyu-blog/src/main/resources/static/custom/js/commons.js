@@ -4,18 +4,46 @@ $(function(){
 	// tag 추가 //
 	/////////////
 	
-	$('.tags').on("keydown click",'input[type="text"]',function(event){
+	$('.tags').on("keydown",'input[type="text"]',function(event){
 		
+	    
 		// input text width 조절
-		// $(this).attr("placeholder","tag");
-		$(this).attr("size", $(this).val().length+1);
+		var spanElm = this.nextElementSibling;
+		spanElm.textContent = this.value;  
+		this.style.width = spanElm.offsetWidth +20+ 'px'; 
+		$(this).attr("style", "width:"+this.style.width);
+		var inputBox = $('.tags input[type="text"]');
 		
 		// enter key fn
 		if (event.keyCode === 13) {
 			event.preventDefault();
-			addTags();
+			
+			var notEmpty = true;
+			inputBox.each(function(index){
+				if(this.value == ""){
+					notEmpty = false;
+				}
+			});
+			if(notEmpty){
+				addTags();
+			}
 		};
 	}); 
+	
+	$('.tags').on("blur",'input[type="text"]',function(event){
+		
+		// blur fn
+		var inputBox = $('.tags input[type="text"]');
+		var notEmpty = true;
+		inputBox.each(function(index){
+			if(this.value == ""){
+				notEmpty = false;
+			}
+		});
+		if(notEmpty){
+			addTags();
+		}
+	});
 	
 	$('.tags').on("click",'.tagMinus',function(event){
 			if($('.inputBox').length == 1) {
@@ -28,8 +56,9 @@ $(function(){
 				$(this).remove();
 			}
 	});
+	
 	function addTags(){
-		$(".append").append("<span class='mr-1 ml-2'>#</span><input class='border border-white inputBox' type='text' name='tagName' placeholder='태그 입력'><i class='fa fa-times tagMinus' aria-hidden='true'></i>");
+		$(".append").append("<div class='d-inline-block'><span class='mr-1 ml-2'>#</span><input style='width: 55px' class='border border-white inputBox' type='text' name='tagName' placeholder='tag..'><span class='measure'></span><i class='fa fa-times tagMinus' aria-hidden='true'></i></div>");
 		$('.inputBox').last().focus();
 	}
 	

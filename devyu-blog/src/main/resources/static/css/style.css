@@ -1086,6 +1086,7 @@ textarea.form-control {
 .post-entry-horzontal {
   margin-bottom: 30px; }
   .post-entry-horzontal a {
+  	width:100%;
     overflow: hidden;
     display: table;
     position: relative;
@@ -1295,6 +1296,26 @@ blockquote {
 	bottom: 60px;
 }
 
+.inputTagAppendForm input, .measure {
+    padding: 5px;
+    white-space: pre; /* white-spaces will work effectively */
+}
+
+.tagMinus{
+	margin-left: -10px;
+	margin-right: 10px;
+	color: #c70a3e;
+}
+
+.measure{  
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+}
+
+.inputTagAppendForm input:focus {
+	outline:none;
+}
 #loader {
   position: fixed;
   width: 96px;
