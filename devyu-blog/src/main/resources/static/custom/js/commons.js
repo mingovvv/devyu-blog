@@ -51,6 +51,7 @@ $(function(){
 			}
 
 			if($('.inputBox').length > 1) {
+				$(this).prev().prev().prev().remove();
 				$(this).prev().prev().remove();
 				$(this).prev().remove();
 				$(this).remove();
@@ -58,7 +59,7 @@ $(function(){
 	});
 	
 	function addTags(){
-		$(".append").append("<div class='d-inline-block'><span class='mr-1 ml-2'>#</span><input style='width: 55px' class='border border-white inputBox' type='text' name='tagName' placeholder='tag..'><span class='measure'></span><i class='fa fa-times tagMinus' aria-hidden='true'></i></div>");
+		$(".append").append("<div class='d-inline-block'><span class='mr-1 ml-2'>#</span><input style='width: 55px' class='border border-white inputBox' type='text' name='tagName' placeholder='tag'><span class='measure'></span><i class='fa fa-times tagMinus' aria-hidden='true'></i></div>");
 		$('.inputBox').last().focus();
 	}
 	
@@ -66,8 +67,9 @@ $(function(){
 	// comment ajax 추가 //
 	/////////////////////////
 	$(".submit-write input[type=submit]").click(addComment);
-	
+
 	function addComment(e){
+		
 		e.preventDefault();
 		var queryString = $(".submit-write").serialize();
 		var url = $(".submit-write").attr('action');
@@ -109,10 +111,12 @@ $(function(){
 				$(data).each(function(index){
 					
 					var clone = document.importNode(template.content, true);
+					var id = clone.querySelector("input")
 					var name = clone.querySelector("h3");
-					var date = clone.querySelector(".abb")
+					var date = clone.querySelector(".comment-date")
 					var content = clone.querySelector("p");
 					
+					id.value = data[index].id;
 					name.textContent = data[index].name;
 					date.textContent = data[index].formattedCreatedDate;
 					content.textContent = data[index].contents;
@@ -120,7 +124,6 @@ $(function(){
 					$(".comment-list").append(clone);
 					$(".submit-write textarea").val("");
 				});
-				console.log(data.length);
 				$(".post-meta>.fa-comments span").text(data.length);
 				$(".comment-count").text(data.length+ " Comments");
 				$(".comment:last")[0].scrollIntoView({behavior: "smooth", block: "end"});
@@ -157,6 +160,81 @@ $(function(){
 				
 				console.log(data);
 				$(".post-meta>.fa-thumbs-o-up span").text(data);
+			}
+		});
+		
+	});
+	
+	/////////////////////////
+	//// comment 삭제 /////
+	/////////////////////////
+	
+	var clone= $('.input-group').clone();
+	$('.comment-list').on("click",".comment-delete-icon",function(event){
+		clone
+		.css("display","flex")
+		.css("top","-30px")
+		.insertAfter($(this).parent().parent());
+		
+	}); 
+	
+	$('.comment-list').on("click",".comment-delete-cancel",function(event){
+		clone
+		.css("display","none")
+		.css("top","0px")
+		.insertAfter($('.comment-list'));
+	});
+	
+	$('.comment-list').on("click",".comment-delete",function(event){
+		var id = $(this).parent().parent().prev().find('input').val();
+		var password = $(this).parent().prev().val();
+		var json = { "id":id, "password":password};
+		
+		$.ajax({
+			type:'post',
+			url:'/blog/comment/delete',
+			data:JSON.stringify(json),
+			contentType:"application/json;charset=UTF-8",
+			dataType:'json',
+			error:function(){
+				console.log("에러")
+			},
+			success:function(result){
+				if(result){
+					var url = $(".submit-write").attr('action');
+					var template = document.querySelector('#comment-template');
+					
+					$.ajax({
+						type : 'get',
+						url : url,
+						dataType : 'json',
+						error : function(request,status,error){
+							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						},
+						success : function(data){
+							
+							$(".comment-list").empty();
+							
+							$(data).each(function(index){
+								
+								var clone = document.importNode(template.content, true);
+								var id = clone.querySelector("input")
+								var name = clone.querySelector("h3");
+								var date = clone.querySelector(".comment-date")
+								var content = clone.querySelector("p");
+								
+								id.value = data[index].id;
+								name.textContent = data[index].name;
+								date.textContent = data[index].formattedCreatedDate;
+								content.textContent = data[index].contents;
+								
+								$(".comment-list").append(clone);
+							});
+						}
+					});
+				}else{
+					alert("비밀번호가 일치하지 않습니다.");
+				}
 			}
 		});
 		

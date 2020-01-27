@@ -1,5 +1,6 @@
 package com.devyu.blog.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -44,7 +45,21 @@ public class CommentService {
 	public List<Comment> findAllByBlogId(Long id) {
 		return commentRepository.findAllByBlogId(id);
 	}
-	
-	
-	
+
+	@Transactional
+	public Boolean checkPassword(HashMap<String, String> jsonMap) {
+		String id = jsonMap.get("id");
+		String inputPassword = jsonMap.get("password");
+		
+		// checking
+		Comment comment = commentRepository.findOne(id);
+		Boolean result = comment.equalsPassword(comment.getPassword(), inputPassword);
+		
+		// delete
+		if(result) {
+			commentRepository.delete(comment);
+		}
+		
+		return result;
+	}
 }

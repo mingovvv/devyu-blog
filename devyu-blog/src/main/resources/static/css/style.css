@@ -1304,7 +1304,7 @@ blockquote {
 .tagMinus{
 	margin-left: -10px;
 	margin-right: 10px;
-	color: #c70a3e;
+	color: #ed89a5;
 }
 
 .measure{  
@@ -1316,6 +1316,14 @@ blockquote {
 .inputTagAppendForm input:focus {
 	outline:none;
 }
+
+.comment-delete-icon{
+	float: right;
+    margin-right: 5px;
+    margin-top: 5px;
+	cursor: pointer;
+}
+
 #loader {
   position: fixed;
   width: 96px;

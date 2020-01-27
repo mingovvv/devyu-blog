@@ -29,4 +29,12 @@ public class CommentRepository {
 					.setParameter("id",id)
 					.getResultList();
 	}
+
+	public Comment findOne(String id) {
+		return em.find(Comment.class, Long.parseLong(id));
+	}
+
+	public void delete(Comment comment) {
+		em.remove(comment);
+	}
 }

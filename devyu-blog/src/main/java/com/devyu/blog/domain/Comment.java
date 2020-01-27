@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.devyu.blog.inputForm.CommentForm;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -61,7 +63,14 @@ public class Comment extends Abstract{
 	/*  초기화 메서드 */
 	private void setInit(CommentForm commentForm) {
 		this.name = commentForm.getName();
-		this.password = commentForm.getPassword();
+		this.password = BCrypt.hashpw(commentForm.getPassword(), BCrypt.gensalt());
 		this.contents = commentForm.getContents();
+	}
+
+	public Boolean equalsPassword(String DBPassword, String inputPassword) {
+		if(BCrypt.checkpw(inputPassword, DBPassword)) {
+			return true;
+		}
+		return false;
 	}
 }

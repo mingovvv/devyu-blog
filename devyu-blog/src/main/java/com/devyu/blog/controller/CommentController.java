@@ -1,10 +1,12 @@
 package com.devyu.blog.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devyu.blog.domain.Comment;
@@ -27,5 +29,15 @@ public class CommentController {
 	@GetMapping("/blog/{id}/comment")
 	public List<Comment> list(@PathVariable Long id) {
 		return commentService.findAllByBlogId(id);
+	}
+	
+	@PostMapping("/blog/comment/delete")
+	public Boolean commentDelete(@RequestBody HashMap<String, String> jsonMap) {
+		Boolean result = commentService.checkPassword(jsonMap);
+		
+		if(result) {
+			return true;
+		}
+		return false;
 	}
 }
