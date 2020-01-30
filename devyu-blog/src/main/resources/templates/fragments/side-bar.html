@@ -1,14 +1,17 @@
-<div class="col-md-12 col-lg-4 sidebar" th:fragment = "side-bar">
+<div		lang="ko" 
+			xmlns:th="http://www.thymeleaf.org"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+			class="col-md-12 col-lg-4 sidebar" th:fragment = "side-bar">
 
 	<!-- search-form -->
-	<!-- <div class="sidebar-box search-form-wrap">
+	<div class="sidebar-box search-form-wrap">
 	  <form action="#" class="search-form">
 	    <div class="form-group">
 	      <span class="icon fa fa-search"></span>
 	      <input type="text" class="form-control" id="s" placeholder="Type a keyword and hit enter">
 	    </div>
 	  </form>
-	</div> -->
+	</div>
 	<!-- search-form -->
             
 	<!-- my profile -->
@@ -36,7 +39,7 @@
 	  <div class="post-entry-sidebar" th:each="pop : ${popList}">
 	    <ul th:with="contents = ${pop.contents}">
 	      <li>
-	        <a href="">
+	        <a th:href="@{/blog/{id} (id=${pop.id})}">
 	        
 	        <th:block th:with="startMatchingIndex = ${#strings.indexOf(contents, '<img src=')} + 10,
          								  frontCutting = ${#strings.substring(contents, startMatchingIndex)},
@@ -83,19 +86,8 @@
 	<!-- tag side-bar -->
 	<div class="sidebar-box">
 	  <h3 class="heading">Tags</h3>
-	  <ul class="tags">
-	    <li><a href="#">Travel</a></li>
-	    <li><a href="#">Adventure</a></li>
-	    <li><a href="#">Food</a></li>
-	    <li><a href="#">Lifestyle</a></li>
-	    <li><a href="#">Business</a></li>
-	    <li><a href="#">Freelancing</a></li>
-	    <li><a href="#">Travel</a></li>
-	    <li><a href="#">Adventure</a></li>
-	    <li><a href="#">Food</a></li>
-	    <li><a href="#">Lifestyle</a></li>
-	    <li><a href="#">Business</a></li>
-	    <li><a href="#">Freelancing</a></li>
+	  <ul class="tags" th:each="tag : ${tagList}">
+	    <li class="mb-1"><a href="#" th:text="${tag}"></a></li>
 	  </ul>
 	</div>
 	<!-- tag side-bar -->

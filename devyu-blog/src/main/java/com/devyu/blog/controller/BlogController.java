@@ -7,13 +7,11 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tomcat.util.http.fileupload.UploadContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +23,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.devyu.blog.domain.Blog;
 import com.devyu.blog.domain.Comment;
+import com.devyu.blog.domain.Tag;
 import com.devyu.blog.domain.User;
 import com.devyu.blog.inputForm.BlogForm;
 import com.devyu.blog.service.BlogService;
 import com.devyu.blog.service.CommentService;
+import com.devyu.blog.service.TagService;
 import com.devyu.blog.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +39,7 @@ public class BlogController {
 	
 	private final UserService userService;
 	private final BlogService blogService;
+	private final TagService tagService;
 	private final CommentService commentService;
 	
 
@@ -49,6 +50,10 @@ public class BlogController {
 		
 		List<Blog> popList = blogService.findPopList();
 		model.addAttribute("popList", popList);
+		
+		List<String> tagList = tagService.findAllNoDuplicate();
+		model.addAttribute("tagList", tagList);
+		
 		return "blog/list";
 	}
 	
@@ -74,6 +79,8 @@ public class BlogController {
 		User user = userService.findOne(blog.getUser().getId());
 		List<Comment> comments = commentService.findAllByBlogId(id);
 		List<Blog> popList = blogService.findPopList();
+		List<String> tagList = tagService.findAllNoDuplicate();
+		model.addAttribute("tagList", tagList);
 		model.addAttribute("popList", popList);
 		model.addAttribute("blog", blog);
 		model.addAttribute("user", user);
@@ -112,10 +119,11 @@ public class BlogController {
 	    	newFile.mkdirs();
 	    }
 	    
+	    String uuid = UUID.randomUUID().toString();
 		String originalFilename = file.getOriginalFilename();
 		
 		InputStream fis =  file.getInputStream();
-		FileOutputStream fos = new FileOutputStream(filePath + File.separator + originalFilename); //File.separator 구분자 / \ 윈도우는 \ 유닉스는 / 니깐 둘중 골라주는놈 파일.세퍼레이톨
+		FileOutputStream fos = new FileOutputStream(filePath + File.separator + uuid + originalFilename); //File.separator 구분자 / \ 윈도우는 \ 유닉스는 / 니깐 둘중 골라주는놈 파일.세퍼레이톨
 
 		byte[] buf = new byte[1024]; //버퍼 만들기
 			
@@ -130,6 +138,6 @@ public class BlogController {
 		fis.close();
 		fos.close();
 		
-		return "/blog/images/"+originalFilename;
+		return "/blog/images/"+uuid + originalFilename;
 	}
 }

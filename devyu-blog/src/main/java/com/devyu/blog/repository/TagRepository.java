@@ -19,4 +19,9 @@ public class TagRepository {
 	public void create(Tag tag) {
 		em.persist(tag);
 	}
+
+	public List<Tag> findAll() {
+		return em.createQuery("select t from Tag t", Tag.class)
+					.getResultList();
+	}
 }
