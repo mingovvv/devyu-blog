@@ -73,4 +73,8 @@ public class BlogService {
 		blog.addCountOfThumbsUp();
 		return blog.getCountOfThumbsUp();
 	}
+
+	public List<Blog> findPopList() {
+		return blogRepository.findPopList();
+	}
 }

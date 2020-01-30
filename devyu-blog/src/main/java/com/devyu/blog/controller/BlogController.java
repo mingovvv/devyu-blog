@@ -46,6 +46,9 @@ public class BlogController {
 	public String blogList(Model model) {
 		List<Blog> blogList = blogService.findAll();
 		model.addAttribute("blogList", blogList);
+		
+		List<Blog> popList = blogService.findPopList();
+		model.addAttribute("popList", popList);
 		return "blog/list";
 	}
 	
@@ -70,6 +73,8 @@ public class BlogController {
 		Blog blog = blogService.findOne(id, isCookie);
 		User user = userService.findOne(blog.getUser().getId());
 		List<Comment> comments = commentService.findAllByBlogId(id);
+		List<Blog> popList = blogService.findPopList();
+		model.addAttribute("popList", popList);
 		model.addAttribute("blog", blog);
 		model.addAttribute("user", user);
 		model.addAttribute("comments", comments);

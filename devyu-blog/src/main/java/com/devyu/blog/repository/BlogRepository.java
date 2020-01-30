@@ -28,4 +28,10 @@ public class BlogRepository {
 		return em.find(Blog.class, id);
 	}
 
+	public List<Blog> findPopList() {
+		return em.createQuery("select b from Blog b order by b.countOfViews desc", Blog.class)
+				.setMaxResults(3)
+				.getResultList();
+	}
+
 }

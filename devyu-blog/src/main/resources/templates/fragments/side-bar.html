@@ -33,37 +33,31 @@
 	<!-- Popular Posts --> 
 	<div class="sidebar-box">
 	  <h3 class="heading">Popular Posts</h3>
-	  <div class="post-entry-sidebar">
-	    <ul>
+	  <div class="post-entry-sidebar" th:each="pop : ${popList}">
+	    <ul th:with="contents = ${pop.contents}">
 	      <li>
 	        <a href="">
-	          <img th:src="@{/images/img_2.jpg}" alt="Image placeholder" class="mr-4">
+	        
+	        <th:block th:with="startMatchingIndex = ${#strings.indexOf(contents, '<img src=')} + 10,
+         								  frontCutting = ${#strings.substring(contents, startMatchingIndex)},
+         								  endMatchingIndex = ${#strings.indexOf(frontCutting, '&quot')},
+         								  endCutting = ${#strings.substring(frontCutting, 0, endMatchingIndex)}"
+         					th:if="${#strings.contains(contents, '<img src=')}">
+          	<img	th:src="${endCutting}"
+        				class="mr-4" />
+         	</th:block>	
+         	
+         	<th:block th:unless="${#strings.contains(contents, '<img src=')}">
+         	<img
+         			
+       				th:src="@{/images/noimage.png}"
+       				class="mr-4" />
+         	</th:block>
+                    	
 	          <div class="text">
-	            <h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
+	            <h4 th:text="${pop.title}">There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
 	            <div class="post-meta">
-	              <span class="mr-2">March 15, 2018 </span>
-	            </div>
-	          </div>
-	        </a>
-	      </li>
-	      <li>
-	        <a href="">
-	          <img th:src="@{/images/img_2.jpg}" alt="Image placeholder" class="mr-4">
-	          <div class="text">
-	            <h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
-	            <div class="post-meta">
-	              <span class="mr-2">March 15, 2018 </span>
-	            </div>
-	          </div>
-	        </a>
-	      </li>
-	      <li>
-	        <a href="">
-	          <img th:src="@{/images/img_2.jpg}" alt="Image placeholder" class="mr-4">
-	          <div class="text">
-	            <h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
-	            <div class="post-meta">
-	              <span class="mr-2">March 15, 2018 </span>
+	              <span class="mr-2" th:text="${pop.getFormattedCreatedDate()}">March 15, 2018 </span>
 	            </div>
 	          </div>
 	        </a>

@@ -12,9 +12,21 @@
 		<div class="container">
 			<div class="row blog-entries element-animate">
 
-				<div class="col-md-12 col-lg-8 main-content">
-					<img th:src="@{/images/img_10.jpg}" alt="Image"
-						class="img-fluid mb-5">
+				<div class="col-md-12 col-lg-8 main-content" th:with="contents = ${blog.contents}">
+					
+					<th:block th:with="startMatchingIndex = ${#strings.indexOf(contents, '<img src=')} + 10,
+                    								  frontCutting = ${#strings.substring(contents, startMatchingIndex)},
+                    								  endMatchingIndex = ${#strings.indexOf(frontCutting, '&quot')},
+                    								  endCutting = ${#strings.substring(frontCutting, 0, endMatchingIndex)}"
+                    					th:if="${#strings.contains(contents, '<img src=')}">
+	                    	<img	th:src="${endCutting}"
+	                  					class="img-fluid mb-5" />
+                   	</th:block>	
+                    	
+                   	<th:block th:unless="${#strings.contains(contents, '<img src=')}">
+                   		<img class="img-fluid mb-5" />
+                   	</th:block>
+					
 					<div class="post-meta">
 						<span class="author mr-2">
 							<img th:src="@{/images/person_1.jpg}" alt="Colorlib" class="mr-2" th:text="${user.loginId}"> 
