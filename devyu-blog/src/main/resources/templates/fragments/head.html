@@ -1,7 +1,7 @@
 <html 	xmlns:th="http://www.thymeleaf.org"
       		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-	<head th:fragment="configFragment">
+	<head th:fragment="headFragment">
 	
 		<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">devyu's </title>
 	    <meta charset="utf-8">
@@ -17,16 +17,8 @@
 	    <link rel="stylesheet" th:href="@{/fonts/fontawesome/css/font-awesome.min.css}">
 	    <link rel="stylesheet" th:href="@{/fonts/flaticon/font/flaticon.css}">
 		
-	
 	    <!-- Theme Style -->
 	    <link rel="stylesheet" th:href="@{/css/style.css}">
-	<!-- 
-	    컨텐츠페이지의 CSS 영역이 들어감
-	    <th:block layout:fragment="css"></th:block>
-	    컨텐츠페이지의 스크립트 영역이 들어감
-	    <th:block layout:fragment="script"></th:block>
-	     -->
-	     
 	</head>
 
 </html>

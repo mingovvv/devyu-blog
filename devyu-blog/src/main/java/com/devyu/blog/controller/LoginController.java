@@ -35,7 +35,6 @@ public class LoginController {
 		}
 		
 		session.setAttribute(Constant.SESSIONED_ID, user);
-		System.out.println("로그인 완료 : " + session.getAttribute(Constant.SESSIONED_ID));
 		return "redirect:/";
 	}
 	
