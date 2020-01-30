@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout/default}">
+<html 	lang="ko" 
+			xmlns:th="http://www.thymeleaf.org"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+			layout:decorate="~{layout/default}">
 <head>
     <title>블로그</title>
 </head>
@@ -19,7 +22,29 @@
 				<!-- START post -->
                 <div class="post-entry-horzontal" th:each="blog : ${blogList}">
                   <a th:href="@{/blog/{id} (id=${blog.id})}">
-                    <div class="image element-animate" data-animate-effect="fadeIn" style="background-image: url(images/img_10.jpg);"></div>
+                    <div class="image element-animate" data-animate-effect="fadeIn" th:with="contents = ${blog.contents}">
+                    	
+                    	<th:block th:with="startMatchingIndex = ${#strings.indexOf(contents, '<img src=')} + 10,
+                    								  frontCutting = ${#strings.substring(contents, startMatchingIndex)},
+                    								  endMatchingIndex = ${#strings.indexOf(frontCutting, '&quot')},
+                    								  endCutting = ${#strings.substring(frontCutting, 0, endMatchingIndex)}"
+                    					th:if="${#strings.contains(contents, '<img src=')}">
+	                    	<img	th:src="${endCutting}"
+	                  					style="width: 100%; height: -webkit-fill-available;" />
+                    	</th:block>	
+                    	
+                    	<th:block th:unless="${#strings.contains(contents, '<img src=')}">
+                    	<img
+                    			
+                  				th:src="@{/images/noimage.png}"
+                  				style="width: 100%; height: -webkit-fill-available; border: 1px solid #e6e6e6;" />
+                    	</th:block>
+                    		
+                    </div>
+<!--                     <div class="image element-animate" data-animate-effect="fadeIn">
+                    	<img th:src="${blog.contents}" style="width: 100%; height: -webkit-fill-available;">
+                    </div> -->
+                    <!-- <div class="image element-animate" data-animate-effect="fadeIn" style="background-image: url(images/img_10.jpg);"></div> -->
                     <span class="text">
                       <div class="post-meta">
                         <span class="mr-2" th:text="${blog.getFormattedCreatedDate()}">March 15, 2018 </span> &bullet;
