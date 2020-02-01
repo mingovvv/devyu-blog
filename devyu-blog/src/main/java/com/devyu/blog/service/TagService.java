@@ -7,6 +7,7 @@ import java.util.TreeSet;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.devyu.blog.domain.Blog;
 import com.devyu.blog.domain.Tag;
 import com.devyu.blog.repository.TagRepository;
 
@@ -29,13 +30,12 @@ public class TagService {
 			tagNames.add(findAll.get(i).getTagName());
 		}
 		TreeSet<String> tagNameNoDuplicationTreeSet = new TreeSet<String>(tagNames);
-
-		System.err.println("중복제거 1 : " + tagNameNoDuplicationTreeSet);
-		
 		ArrayList<String> tagNameNoDuplicationArrayList = new ArrayList<String>(tagNameNoDuplicationTreeSet);
-		
-		System.err.println("중복제거 2 : " + tagNameNoDuplicationArrayList);
-		
 		return tagNameNoDuplicationArrayList;
+	}
+
+
+	public List<Blog> findBlogForTagName(String tagname) {
+		return tagRepository.findBlogForTagName(tagname);
 	}
 }

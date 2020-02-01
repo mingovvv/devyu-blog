@@ -24,4 +24,16 @@ public class TagRepository {
 		return em.createQuery("select t from Tag t", Tag.class)
 					.getResultList();
 	}
+
+	public List<Blog> findBlogForTagName(String tagname) {
+		return em.createQuery("select b "
+				+ "from Blog b "
+				+ "left join BlogTag bt "
+				+ "on b.id = bt.blog "
+				+ "left join Tag t "
+				+ "on t.id = bt.tag "
+				+ "where t.tagName =:tagname", Blog.class)
+					.setParameter("tagname", tagname)
+					.getResultList();
+	}
 }

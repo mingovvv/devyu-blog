@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.Cookie;
@@ -53,6 +55,10 @@ public class BlogController {
 		
 		List<String> tagList = tagService.findAllNoDuplicate();
 		model.addAttribute("tagList", tagList);
+		
+		Map<String, String> blogFlag = new HashMap<>();
+		blogFlag.put("flag", "default");
+		model.addAttribute("blogFlag", blogFlag);
 		
 		return "blog/list";
 	}
