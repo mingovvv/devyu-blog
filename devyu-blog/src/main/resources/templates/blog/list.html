@@ -6,15 +6,21 @@
 <head>
     <title>블로그</title>
 </head>
+
 <div layout:fragment="content">
 <section class="site-section pt-5">
       <div class="container">
         <div class="row mb-4">
           <div class="col-md-6">
-            <h2 class="mb-4" th:if="${blogFlag.flag eq 'default'}" th:text="${'all lists'}"></h2>
-            <h2 class="mb-4" th:if="${blogFlag.flag eq 'searchTag'}" th:text="${'# '+blogFlag.tagName}"></h2>
-            <h2 class="mb-4" th:if="${blogFlag.flag eq 'searchText'}" th:text="${'검색 : '+blogFlag.keyword}"></h2>
-          </div>
+            <span class="mb-4" th:if="${blogFlag.flag eq 'default'}" th:text="${'전체글 '}"></span>
+           	<span th:if="${blogFlag.flag eq 'default'}" th:text="${blogFlag.count} + ' 건'" style="color: #04beb8"></span>
+           	
+            <span class="mb-4" th:if="${blogFlag.flag eq 'searchTag'}" th:text="${'#'+blogFlag.tagName}"></span>
+           	<span th:if="${blogFlag.flag eq 'searchTag'}" th:text="${blogFlag.count} + ' 건'" style="color: #04beb8"></span>
+           	
+            <span class="mb-4" th:if="${blogFlag.flag eq 'searchText'}" th:text="${'search : '+blogFlag.keyword}"></span>
+           	<span th:if="${blogFlag.flag eq 'searchText'}" th:text="${blogFlag.count} + ' 건'" style="color: #04beb8"></span>
+          </div> 
         </div>
         <div class="row blog-entries">
           <div class="col-md-12 col-lg-8 main-content">
@@ -94,8 +100,10 @@
 <!--  검색어 highlighting  -->
 <script type="text/javascript" th:inline="javascript">
 $(function(){
-	/* <![CDATA[ */       
-	$('.word').highlight(/*[[ ${blogFlag.keyword}]]*/);
-	/* ]]> */
+	if(/*[[ ${blogFlag.keyword}]]*/ != null){
+		/* <![CDATA[ */       
+		$('.word').highlight(/*[[ ${blogFlag.keyword}]]*/);
+		/* ]]> */
+	}
 })
 </script>

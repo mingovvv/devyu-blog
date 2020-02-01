@@ -55,8 +55,10 @@ public class BlogController {
 		List<String> tagList = tagService.findAllNoDuplicate();
 		model.addAttribute("tagList", tagList);
 		
-		Map<String, String> blogFlag = new HashMap<>();
+		Map<String, Object> blogFlag = new HashMap<>();
 		blogFlag.put("flag", "default");
+		blogFlag.put("keyword", null);
+		blogFlag.put("count", blogList.size());
 		model.addAttribute("blogFlag", blogFlag);
 		
 		return "blog/list";
@@ -157,9 +159,10 @@ public class BlogController {
 		List<String> tagList = tagService.findAllNoDuplicate();
 		model.addAttribute("tagList", tagList);
 		
-		Map<String, String> blogFlag = new HashMap<>();
+		Map<String, Object> blogFlag = new HashMap<>();
 		blogFlag.put("flag", "searchText");
 		blogFlag.put("keyword", keyword);
+		blogFlag.put("count", searchList.size());
 		model.addAttribute("blogFlag", blogFlag);
 		
 		return "blog/list";
