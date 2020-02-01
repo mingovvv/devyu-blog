@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout/default}">
+<html 	lang="ko" 
+			xmlns:th="http://www.thymeleaf.org"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+			layout:decorate="~{layout/default}">
 <head>
     <title>블로그</title>
 </head>
@@ -8,31 +11,52 @@
       <div class="container">
         <div class="row mb-4">
           <div class="col-md-6">
-            <h2 class="mb-4">Category: BLOG</h2>
+            <h2 class="mb-4" th:if="${blogFlag.flag eq 'default'}" th:text="${'all lists'}"></h2>
+            <h2 class="mb-4" th:if="${blogFlag.flag eq 'searchTag'}" th:text="${'# '+blogFlag.tagName}"></h2>
           </div>
         </div>
         <div class="row blog-entries">
           <div class="col-md-12 col-lg-8 main-content">
             <div class="row mb-5 mt-5">
-
               <div class="col-md-12">
+              
 				<!-- START post -->
-                <div class="post-entry-horzontal">
-                  <a href="blog/detail">
-                    <div class="image element-animate" data-animate-effect="fadeIn" style="background-image: url(images/img_10.jpg);"></div>
-                    <span class="text">
+                <div class="post-entry-horzontal" th:each="blog : ${blogList}">
+                  <a th:href="@{/blog/{id} (id=${blog.id})}" th:with="contents = ${blog.contents}">
+                    
+                    	
+                    	<th:block th:with="startMatchingIndex = ${#strings.indexOf(contents, '<img src=')} + 10,
+                    								  frontCutting = ${#strings.substring(contents, startMatchingIndex)},
+                    								  endMatchingIndex = ${#strings.indexOf(frontCutting, '&quot')},
+                    								  endCutting = ${#strings.substring(frontCutting, 0, endMatchingIndex)}"
+                    					th:if="${#strings.contains(contents, '<img src=')}">
+                    		<div class="image element-animate" data-animate-effect="fadeIn">
+		                    	<img	th:src="${endCutting}"
+		                  					style="width: 100%; height: -webkit-fill-available;" />
+	                  		</div>
+                    	</th:block>	
+                    	
+                    	<th:block th:unless="${#strings.contains(contents, '<img src=')}">
+                    	</th:block>
+                    		
+<!--                     <div class="image element-animate" data-animate-effect="fadeIn">
+                    	<img th:src="${blog.contents}" style="width: 100%; height: -webkit-fill-available;">
+                    </div> -->
+                    <!-- <div class="image element-animate" data-animate-effect="fadeIn" style="background-image: url(images/img_10.jpg);"></div> -->
+                    <span class="text" style="border: 1px solid #e6e6e6">
                       <div class="post-meta">
-                        <span class="author mr-2"><img th:src="@{images/person_1.jpg}" alt="Colorlib"> devyu</span>&bullet;
-                        <span class="mr-2">March 15, 2018 </span> &bullet;
+                        <span class="mr-2" th:text="${blog.getFormattedCreatedDate()}">March 15, 2018 </span> &bullet;
                         <span class="mr-2">blogging</span> &bullet;
-                        <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-                        <span class="ml-2"><span class="fa fa-thumbs-o-up"></span> 2</span>
+                        <span class="ml-2 fa fa-eye"><span class="ml-1" th:text="${blog.countOfViews}"></span></span>
+                        <span class="ml-2 fa fa-comments"><span class="ml-1" th:text="${blog.countOfComment}"></span></span>
+                        <span class="ml-2 fa fa-thumbs-o-up"><span class="ml-1" th:text="${blog.countOfThumbsUp}"></span></span>
                       </div>
-                      <h2>There’s a Cool New Way for Men to Wear Socks and Sandals</h2>
+	                      <h2 th:text="${blog.title}"></h2>
                     </span>
                   </a>
                 </div>
                 <!-- END post -->
+                
               </div>
             </div>
 
@@ -57,7 +81,9 @@
           </div>
           <!-- END main-content -->
 
-          
+          <!-- side bar include -->
+        	<div th:replace="fragments/side-bar :: side-bar" ></div>
+      	<!-- side bar include -->
 
         </div>
       </div>

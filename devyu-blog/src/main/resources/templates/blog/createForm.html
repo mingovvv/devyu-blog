@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html	lang="ko" 
+			xmlns:th="http://www.thymeleaf.org"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+			layout:decorate="~{layout/default}">
+<head>
+    <title>writing</title>
+</head>
+
+
+<div layout:fragment="content">
+	<section class="site-section">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <h1>write</h1>
+          </div>
+        </div>
+        <div class="row blog-entries">
+          <div class="col-md-12 col-lg-8 main-content">
+            
+            <form th:action="@{/blog/create}" method="post">
+            
+                  <div class="row">
+                    <div class="col-md-12 form-group">
+                      <label for="title">title</label>
+                      <input type="text"  id="title" name="title" class="form-control">
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-md-12 form-group">
+                      <label for="content">content</label>
+                      <textarea name="contents" id="summernote" class="form-control summernote" cols="30" rows="8"></textarea>
+                    </div>
+                  </div>
+                  
+                  <!-- tag start -->
+                  
+                  <!-- <div class="row">
+                    <div class="col-md-12 form-group inputTagAppendForm">
+                      <label for="tag">tag</label>
+						<input class="form-control border border-white inputTagForm" type="text" placeholder="#태그 입력" >
+                    </div>
+                  </div> -->
+                  
+                  <div class="row">
+	                  <div class="col-md-12 form-group inputTagAppendForm">
+						  <label for="tag">tag</label>
+						  <ul class="tags">
+						    	<li class="append">
+						    		<div class="d-inline-block">
+						    		<span>#</span>
+						    		<input style="width: 55px" class="border border-white inputBox" type="text" name="tagName" placeholder="tag">
+						    		<span class="measure"></span>
+						    		<i class='fa fa-times tagMinus' aria-hidden='true'></i>
+						    		</div>
+						    	</li>
+						  </ul>
+					  </div>
+				</div>
+                  <!-- tag end -->
+                  
+                  <div class="row">
+                    <div class="col-md-12 form-group">
+                      <input type="submit" value="Send Message" class="col-md-12 btn btn-primary bg-secondary border border-light">
+                    </div>
+                  </div>
+                </form>
+          </div>
+
+          <!-- END main-content -->
+          
+			<!-- side bar include -->
+        	<div th:replace="fragments/side-bar :: side-bar" ></div>
+      		<!-- side bar include -->
+        </div>
+      </div>
+    </section>
+</div>
+</html>
+
+<!-- side bar include -->
+<div th:replace="fragments/summernote-editor :: summernote-editor" ></div>
+<!-- side bar include -->
+
