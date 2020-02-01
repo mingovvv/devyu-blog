@@ -25,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.devyu.blog.domain.Blog;
 import com.devyu.blog.domain.Comment;
-import com.devyu.blog.domain.Tag;
 import com.devyu.blog.domain.User;
 import com.devyu.blog.inputForm.BlogForm;
 import com.devyu.blog.service.BlogService;
@@ -145,5 +144,25 @@ public class BlogController {
 		fos.close();
 		
 		return "/blog/images/"+uuid + originalFilename;
+	}
+	
+	@PostMapping("/blog/searchText")
+	public String searchText(String keyword, Model model) {
+		List<Blog> searchList = blogService.findAllSearchText(keyword);
+		model.addAttribute("blogList",searchList);
+		
+		List<Blog> popList = blogService.findPopList();
+		model.addAttribute("popList", popList);
+		
+		List<String> tagList = tagService.findAllNoDuplicate();
+		model.addAttribute("tagList", tagList);
+		
+		Map<String, String> blogFlag = new HashMap<>();
+		blogFlag.put("flag", "searchText");
+		blogFlag.put("keyword", keyword);
+		model.addAttribute("blogFlag", blogFlag);
+		
+		return "blog/list";
+		
 	}
 }

@@ -77,4 +77,8 @@ public class BlogService {
 	public List<Blog> findPopList() {
 		return blogRepository.findPopList();
 	}
+
+	public List<Blog> findAllSearchText(String keyword) {
+		return blogRepository.findAllSearchText(keyword);
+	}
 }

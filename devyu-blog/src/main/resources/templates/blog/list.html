@@ -13,6 +13,7 @@
           <div class="col-md-6">
             <h2 class="mb-4" th:if="${blogFlag.flag eq 'default'}" th:text="${'all lists'}"></h2>
             <h2 class="mb-4" th:if="${blogFlag.flag eq 'searchTag'}" th:text="${'# '+blogFlag.tagName}"></h2>
+            <h2 class="mb-4" th:if="${blogFlag.flag eq 'searchText'}" th:text="${'검색 : '+blogFlag.keyword}"></h2>
           </div>
         </div>
         <div class="row blog-entries">
@@ -24,19 +25,18 @@
                 <div class="post-entry-horzontal" th:each="blog : ${blogList}">
                   <a th:href="@{/blog/{id} (id=${blog.id})}" th:with="contents = ${blog.contents}">
                     
-                    	
-                    	<th:block th:with="startMatchingIndex = ${#strings.indexOf(contents, '<img src=')} + 10,
+                    	<th:block th:with="startMatchingIndex = ${#strings.indexOf(contents, 'src=')} + 5,
                     								  frontCutting = ${#strings.substring(contents, startMatchingIndex)},
                     								  endMatchingIndex = ${#strings.indexOf(frontCutting, '&quot')},
                     								  endCutting = ${#strings.substring(frontCutting, 0, endMatchingIndex)}"
-                    					th:if="${#strings.contains(contents, '<img src=')}">
+                    					th:if="${#strings.contains(contents, 'src=')}">
                     		<div class="image element-animate" data-animate-effect="fadeIn">
 		                    	<img	th:src="${endCutting}"
 		                  					style="width: 100%; height: -webkit-fill-available;" />
 	                  		</div>
                     	</th:block>	
                     	
-                    	<th:block th:unless="${#strings.contains(contents, '<img src=')}">
+                    	<th:block th:unless="${#strings.contains(contents, 'src=')}">
                     	</th:block>
                     		
 <!--                     <div class="image element-animate" data-animate-effect="fadeIn">
@@ -45,13 +45,13 @@
                     <!-- <div class="image element-animate" data-animate-effect="fadeIn" style="background-image: url(images/img_10.jpg);"></div> -->
                     <span class="text" style="border: 1px solid #e6e6e6">
                       <div class="post-meta">
-                        <span class="mr-2" th:text="${blog.getFormattedCreatedDate()}">March 15, 2018 </span> &bullet;
-                        <span class="mr-2">blogging</span> &bullet;
+                        <span class="mr-2" th:text="${blog.getFormattedCreatedDate()}">March 15, 2018 </span>
+                        <span class="mr-2">blogging</span> 
                         <span class="ml-2 fa fa-eye"><span class="ml-1" th:text="${blog.countOfViews}"></span></span>
                         <span class="ml-2 fa fa-comments"><span class="ml-1" th:text="${blog.countOfComment}"></span></span>
                         <span class="ml-2 fa fa-thumbs-o-up"><span class="ml-1" th:text="${blog.countOfThumbsUp}"></span></span>
                       </div>
-	                      <h2 th:text="${blog.title}"></h2>
+	                      <h2 class="word" th:if="${blog.title}" th:text="${blog.title}"></h2>
                     </span>
                   </a>
                 </div>
@@ -90,3 +90,12 @@
     </section>
 </div>
 </html>
+
+<!--  검색어 highlighting  -->
+<script type="text/javascript" th:inline="javascript">
+$(function(){
+	/* <![CDATA[ */       
+	$('.word').highlight(/*[[ ${blogFlag.keyword}]]*/);
+	/* ]]> */
+})
+</script>

@@ -5,10 +5,10 @@
 
 	<!-- search-form -->
 	<div class="sidebar-box search-form-wrap">
-	  <form action="#" class="search-form">
+	  <form method="post" th:action="@{/blog/searchText}" class="search-form">
 	    <div class="form-group">
 	      <span class="icon fa fa-search"></span>
-	      <input type="text" class="form-control" id="s" placeholder="keyword and hit">
+	      <input type="text" class="form-control" id="s" placeholder="keyword and hit"  th:name="keyword">
 	    </div>
 	  </form>
 	</div>
@@ -41,15 +41,15 @@
 	      <li>
 	        <a th:href="@{/blog/{id} (id=${pop.id})}">
 	        
-	        <th:block th:with="startMatchingIndex = ${#strings.indexOf(contents, '<img src=')} + 10,
+	        <th:block th:with="startMatchingIndex = ${#strings.indexOf(contents, 'src=')} + 5,
          								  frontCutting = ${#strings.substring(contents, startMatchingIndex)},
          								  endMatchingIndex = ${#strings.indexOf(frontCutting, '&quot')},
          								  endCutting = ${#strings.substring(frontCutting, 0, endMatchingIndex)}"
-         					th:if="${#strings.contains(contents, '<img src=')}">
+         					th:if="${#strings.contains(contents, 'src=')}">
           		<img	th:src="${endCutting}" class="mr-4" />
          	</th:block>	
          	
-         	<th:block th:unless="${#strings.contains(contents, '<img src=')}">
+         	<th:block th:unless="${#strings.contains(contents, 'src=')}">
          	</th:block>
                     	
 	          <div class="text">

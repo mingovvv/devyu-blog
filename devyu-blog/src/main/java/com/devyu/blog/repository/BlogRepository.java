@@ -34,4 +34,10 @@ public class BlogRepository {
 				.getResultList();
 	}
 
+	public List<Blog> findAllSearchText(String keyword) {
+		return em.createQuery("select b from Blog b where b.title like :keyword", Blog.class)
+				.setParameter("keyword", "%" + keyword + "%")
+				.getResultList();
+	}
+
 }
