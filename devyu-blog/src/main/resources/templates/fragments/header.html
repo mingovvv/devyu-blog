@@ -3,17 +3,17 @@
 		<div class="top-bar">
 	    	<div class="container">
 	       		<div class="row">
-	         		<div class="col-10 social">
+	         		<div class="col-6 social">
 			           <!-- <a href="#"><span class="fa fa-twitter"></span></a>
 			           <a href="#"><span class="fa fa-facebook"></span></a>
 			           <a href="#"><span class="fa fa-instagram"></span></a> -->
-	           			<a href="https://github.com/puregyu"><span class="fa fa-github fa-2x"></span></a>
+	           			<a href="https://github.com/puregyu" target="_blank"><span class="fa fa-github fa-2x"></span></a>
 	         		</div>
-		         	<div th:if="${session.SESSIONED_ID == null}" class="col-2 social">
-		           		<a href="/login"><span class="fa fa-sign-in fa-2x"> in</span></a>
+		         	<div th:if="${session.SESSIONED_ID == null}" class="col-6 social text-right">
+		           		<a href="/login"><span class="fa fa-sign-in fa-2x"> In</span></a>
 		         	</div>
-		         	<div th:if="${session.SESSIONED_ID != null}" class="col-2 social">
-		           		<a href="/logout"><span class="fa fa-sign-out fa-2x"> out</span></a>
+		         	<div th:if="${session.SESSIONED_ID != null}" class="col-6 social text-right">
+		           		<a href="/logout"><span class="fa fa-sign-out fa-2x"> Out</span></a>
 		         	</div>
 	       		</div>
 	     	</div>
@@ -35,10 +35,10 @@
 	       <div class="collapse navbar-collapse" id="navbarMenu">
 	         <ul class="navbar-nav mx-auto">
 	           <li class="nav-item">
-	             <a class="nav-link active" href="/">Home</a>
+	             <a class="nav-link" href="/">Home</a>
 	           </li>
 	           <li class="nav-item">
-	             <a class="nav-link" href="#">About_Me</a>
+	             <a class="nav-link" href="#">About Me</a>
 	           </li>
 	           <li class="nav-item">
 	             <a class="nav-link" href="/blog">Blog</a>

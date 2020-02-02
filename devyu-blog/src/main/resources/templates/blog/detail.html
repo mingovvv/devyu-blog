@@ -2,9 +2,12 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/default}">
+
+<!-- title start -->
 <head>
 	<title th:text="${blog.title}"></title>
 </head>
+<!-- title start -->
 
 <div layout:fragment="content">
 	<section class="site-section py-lg">
@@ -30,7 +33,7 @@
 
 					<div class="post-meta">
 						<span class="author mr-2"> <img
-							th:src="@{/images/person_1.jpg}" alt="Colorlib" class="mr-2"
+							th:src="@{/custom/images/devyu.jpg}" alt="Colorlib" class="mr-2"
 							th:text="${user.loginId}">
 						</span>&bullet; <span class="mr-2"
 							th:text="${blog.getFormattedCreatedDate()}"></span> &bullet; <span
@@ -45,7 +48,9 @@
 					<h1 class="mb-4" th:text="${blog.title}"></h1>
 					<a class="category mb-5" href="#">blogging</a>
 
-					<th:block th:utext="${blog.contents}"></th:block>
+					<div style="width: 100%">
+						<th:block th:utext="${blog.contents}"></th:block>
+					</div>
 
 					<!-- 					<div class="post-content-body" th:text="${blog.contents}">
 					</div> -->
@@ -53,15 +58,18 @@
 
 					<div class="pt-5">
 						<p>
-							Tags: <a href="#" th:each="tags : ${blog.blogTags}"> <span>#</span>
-								<span th:text="${tags.tag.tagName}"></span> <span
+							Tags: <a
+								th:href="@{/blog/search={tagname} (tagname=${tags.tag.tagName})}"
+								th:each="tags : ${blog.blogTags}"> <span>#</span> <span
+								th:text="${tags.tag.tagName}"></span> <span
 								th:if="!${tagsStat.count eq tagsStat.size}">,</span>
 							</a>
 						</p>
 					</div>
 
 					<div class="text-center">
-						<i class="like-icon fa fa-thumbs-o-up fa-4x" aria-hidden="true"></i>
+						<i class="like-icon fa fa-thumbs-o-up fa-4x mt-5"
+							aria-hidden="true"></i>
 						<div class="like">like</div>
 						<span class="like-animate">+1</span> <input type="hidden"
 							th:value="${blog.id}">

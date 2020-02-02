@@ -16,8 +16,8 @@
 }
 
 .tagMinus{
-	margin-left: -10px;
-	margin-right: 10px;
+	/* margin-left: -10px;
+	margin-right: 10px; */
 	color: #ed89a5;
 }
 
@@ -56,3 +56,10 @@ code, kbd, pre, samp {
 }
 
 .highlight { background-color: #f8f223; color: #13ad5e; }
+
+.pop-sidebar{
+    border-right: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;;
+    padding: 0;
+    margin-bottom: 25px;
+}

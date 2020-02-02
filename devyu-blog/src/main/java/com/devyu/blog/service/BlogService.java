@@ -81,4 +81,28 @@ public class BlogService {
 	public List<Blog> findAllSearchText(String keyword) {
 		return blogRepository.findAllSearchText(keyword);
 	}
+
+	public int findAllCnt() {
+		return blogRepository.findAllCnt();
+	}
+
+	public List<Blog> findListPaging(int startIndex, int pageSize) {
+		return blogRepository.findListPaging(startIndex, pageSize);
+	}
+
+	public int findAllForTagNameCnt(String tagName) {
+		return blogRepository.findAllForTagNameCnt(tagName);
+	}
+
+	public int findAllForSearchCnt(String search) {
+		return blogRepository.findAllForSearchCnt(search);
+	}
+
+	public List<Blog> findListPagingForTagName(String tagName, int startIndex, int pageSize) {
+		return blogRepository.findListPagingForTagName(tagName, startIndex, pageSize);
+	}
+
+	public List<Blog> findListPagingForSearch(String search, int startIndex, int pageSize) {
+		return blogRepository.findListPagingForSearch(search, startIndex, pageSize);
+	}
 }

@@ -1,4 +1,10 @@
 $(function(){
+	
+	$('.fa-search').click(function(){
+		$('.search-form').submit();
+	});
+
+
 
 	/////////////
 	// tag 추가 //
