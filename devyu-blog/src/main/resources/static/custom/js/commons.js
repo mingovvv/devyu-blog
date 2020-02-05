@@ -57,10 +57,6 @@ $(function(){
 			}
 
 			if($('.inputBox').length > 1) {
-//				$(this).prev().prev().prev().remove();
-//				$(this).prev().prev().prev().remove();
-//				$(this).prev().prev().remove();
-//				$(this).prev().remove();
 				$(this).parent().remove();
 				$(this).remove();
 			}
@@ -246,4 +242,29 @@ $(function(){
 			}
 		});
 	});
+	
 })
+
+/////////////////////////
+//// blog 수정 버튼 ///////
+/////////////////////////
+function fn_update(id){
+	if(confirm("수정 하시겠습니까?")){
+		var form = $('.ud-form');
+	    form.attr('action', '/blog/update/' + id);
+	    form.attr('method', 'get');
+	    form.submit();
+	}
+}
+
+/////////////////////////
+//// blog 삭제 버튼 ///////
+/////////////////////////
+function fn_delete(id) {
+	if(confirm("삭제 하시겠습니까?")){
+		var form = $('.ud-form');
+	    form.attr('action', '/blog/delete/' + id);
+	    form.attr('method', 'post');
+	    form.submit();
+	}
+}

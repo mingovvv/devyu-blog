@@ -47,7 +47,17 @@
 					</div>
 					<h1 class="mb-4" th:text="${blog.title}"></h1>
 					<a class="category mb-5" href="#">blogging</a>
-
+					
+					<th:block th:if="${session.SESSIONED_ID != null}">
+	                  <div th:if="${session.SESSIONED_ID.id == blog.user.id}" class="btn-edit-delete" style="top: 0px;">
+		                  	<form class="ud-form">
+			                  	<button type="button" class="btn btn-warning btn-sm" th:onclick="'fn_update(\''+ ${blog.id} +'\')'">수정</button>
+			                  	<button type="button" class="btn btn-secondary btn-sm" th:onclick="'fn_delete(\''+ ${blog.id} +'\')'">삭제</button>
+		                  	</form>
+	                  </div>
+	                </div>
+                </th:block>
+					
 					<div style="width: 100%">
 						<th:block th:utext="${blog.contents}"></th:block>
 					</div>

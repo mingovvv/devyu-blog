@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.devyu.blog.constant.Constant;
 import com.devyu.blog.domain.Blog;
 import com.devyu.blog.domain.Comment;
 import com.devyu.blog.domain.Pagination;
@@ -54,6 +55,7 @@ public class BlogController {
 									@RequestParam(defaultValue="1") int curPage,
 									@RequestParam(defaultValue="1") String tagname,
 									@RequestParam(defaultValue="1") String keyword,
+									HttpSession session,
 									HttpServletRequest request) {
 		
 		String uri = request.getRequestURI(); 
@@ -161,7 +163,12 @@ public class BlogController {
 	}
 	
 	@GetMapping("/blog/create")
-	public String createForm(Model model) {
+	public String createForm(Model model, HttpSession session) {
+		
+		if(session.getAttribute(Constant.SESSIONED_ID) == null) {
+			model.addAttribute("error", "로그인된 사용자만 이용할 수 있습니다.");
+			return "login/loginForm";
+		}
 		
 		List<Blog> popList = blogService.findPopList();
 		model.addAttribute("popList", popList);
@@ -239,10 +246,21 @@ public class BlogController {
 		
 	}
 	
-	@GetMapping("/blog/edit/{id}")
-	public String updateForm(@PathVariable Long id, Model model) {
+	@GetMapping("/blog/update/{id}")
+	public String updateForm(@PathVariable Long id, Model model, HttpSession session) {
 		
 		Blog blog = blogService.findOne(id);
+		
+		if(session.getAttribute(Constant.SESSIONED_ID) == null) {
+			model.addAttribute("error", "로그인된 사용자만 이용할 수 있습니다.");
+			return "blog/login";
+		}
+		
+		User user = (User) session.getAttribute(Constant.SESSIONED_ID); 
+		if(!user.getId().equals(blog.getUser().getId())) {
+			return "error";
+		}
+		
 		List<Blog> popList = blogService.findPopList();
 		List<String> tagList = tagService.findAllNoDuplicate();
 		model.addAttribute("blog", blog);
@@ -252,23 +270,16 @@ public class BlogController {
 		return "blog/updateForm";
 	}
 	
-	@PostMapping("/blog/edit/{id}")
+	@PostMapping("/blog/update/{id}")
 	public String update(@PathVariable Long id, BlogForm blogForm) {
 		blogService.update(id, blogForm);
 		return "redirect:/blog";
 	}
 	
-	@GetMapping("/blog/delete/{id}")
-	public String delete(@PathVariable Long id) {
+	@PostMapping("/blog/delete/{id}")
+	public String delete(@PathVariable Long id, HttpSession session) {
 		blogService.delete(id);
 		return "redirect:/blog";
 	}
 }
-
-
-
-
-
-
-
 

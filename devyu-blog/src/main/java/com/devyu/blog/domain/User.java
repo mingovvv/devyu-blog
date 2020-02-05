@@ -32,4 +32,5 @@ public class User extends Abstract{
 	@OneToMany(mappedBy = "user")
 	private List<Blog> blogs = new ArrayList<>();
 
+	
 }

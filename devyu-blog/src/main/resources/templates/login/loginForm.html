@@ -9,10 +9,10 @@
 
     <!-- Icon -->
     <div class="fadeIn first" th:if="${error}">
-      <img src="custom/icon/profile3.png" id="icon" />
+      <img th:src="@{/custom/icon/profile3.png}" id="icon" />
     </div>
     <div class="fadeIn first" th:unless="${error}">
-      <img src="custom/icon/profile2.png" id="icon" />
+      <img th:src="@{/custom/icon/profile2.png}" id="icon" />
     </div>
 
     <!-- Login Form -->
