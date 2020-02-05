@@ -1,17 +1,16 @@
 <div		lang="ko" 
 			xmlns:th="http://www.thymeleaf.org"
-			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 			class="col-md-12 col-lg-4 sidebar" th:fragment = "side-bar">
 
 	<!-- search-form -->
-	<div class="sidebar-box search-form-wrap">
-	  <form action="#" class="search-form">
+	<!-- <div class="sidebar-box search-form-wrap">
+	  <form method="post" th:action="@{/blog/search}" class="search-form">
 	    <div class="form-group">
-	      <span class="icon fa fa-search"></span>
-	      <input type="text" class="form-control" id="s" placeholder="keyword and hit">
+	      <span class="icon fa fa-search" style="cursor: pointer;"></span>
+	      <input type="text" class="form-control" id="s" placeholder="keyword and hit"  th:name="keyword">
 	    </div>
 	  </form>
-	</div>
+	</div> -->
 	<!-- search-form -->
             
 	<!-- my profile -->
@@ -36,20 +35,20 @@
 	<!-- Popular Posts --> 
 	<div class="sidebar-box">
 	  <h3 class="heading">Popular Posts</h3>
-	  <div class="post-entry-sidebar" th:each="pop : ${popList}">
+	  <div class="post-entry-sidebar pop-sidebar" th:each="pop : ${popList}">
 	    <ul th:with="contents = ${pop.contents}">
 	      <li>
 	        <a th:href="@{/blog/{id} (id=${pop.id})}">
 	        
-	        <th:block th:with="startMatchingIndex = ${#strings.indexOf(contents, '<img src=')} + 10,
+	        <th:block th:with="startMatchingIndex = ${#strings.indexOf(contents, 'src=')} + 5,
          								  frontCutting = ${#strings.substring(contents, startMatchingIndex)},
          								  endMatchingIndex = ${#strings.indexOf(frontCutting, '&quot')},
          								  endCutting = ${#strings.substring(frontCutting, 0, endMatchingIndex)}"
-         					th:if="${#strings.contains(contents, '<img src=')}">
+         					th:if="${#strings.contains(contents, 'src=')}">
           		<img	th:src="${endCutting}" class="mr-4" />
          	</th:block>	
          	
-         	<th:block th:unless="${#strings.contains(contents, '<img src=')}">
+         	<th:block th:unless="${#strings.contains(contents, 'src=')}">
          	</th:block>
                     	
 	          <div class="text">
@@ -82,7 +81,7 @@
 	<div class="sidebar-box">
 	  <h3 class="heading">Tags</h3>
 	  <ul class="tags" th:each="tag : ${tagList}">
-	    <li class="mb-1"><a th:href="@{/blog/search={tagname} (tagname=${tag})}" th:text="${tag}"></a></li>
+	    <li class="mb-1"><a th:href="@{/blog/tag?tagname={tagname} (tagname=${tag})}" th:text="${tag}"></a></li>
 	  </ul>
 	</div>
 	<!-- tag side-bar -->

@@ -1,4 +1,10 @@
 $(function(){
+	
+	$('.fa-search').click(function(){
+		$('.search-form').submit();
+	});
+
+
 
 	/////////////
 	// tag 추가 //
@@ -51,9 +57,11 @@ $(function(){
 			}
 
 			if($('.inputBox').length > 1) {
-				$(this).prev().prev().prev().remove();
-				$(this).prev().prev().remove();
-				$(this).prev().remove();
+//				$(this).prev().prev().prev().remove();
+//				$(this).prev().prev().prev().remove();
+//				$(this).prev().prev().remove();
+//				$(this).prev().remove();
+				$(this).parent().remove();
 				$(this).remove();
 			}
 	});

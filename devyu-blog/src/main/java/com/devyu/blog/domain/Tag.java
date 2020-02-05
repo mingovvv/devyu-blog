@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 
@@ -24,6 +25,7 @@ public class Tag {
 	
 	private String tagName;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "tag", cascade = CascadeType.ALL)
 	private List<BlogTag> blogTags = new ArrayList<>();
 	
@@ -50,4 +52,11 @@ public class Tag {
 	private void setInit(String tagName) {
 		this.tagName=tagName;
 	}
+
+	@Override
+	public String toString() {
+		return "Tag [id=" + id + ", tagName=" + tagName + "]";
+	}
+
+	
 }

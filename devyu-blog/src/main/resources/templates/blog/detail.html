@@ -1,120 +1,135 @@
 <!DOCTYPE html>
-<html 	lang="ko" 
-			xmlns:th="http://www.thymeleaf.org"
-			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-			layout:decorate="~{layout/default}">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default}">
+
+<!-- title start -->
 <head>
 	<title th:text="${blog.title}"></title>
 </head>
+<!-- title start -->
 
 <div layout:fragment="content">
 	<section class="site-section py-lg">
 		<div class="container">
 			<div class="row blog-entries element-animate">
 
-				<div class="col-md-12 col-lg-8 main-content" th:with="contents = ${blog.contents}">
-					
-					<th:block th:with="startMatchingIndex = ${#strings.indexOf(contents, '<img src=')} + 10,
+				<div class="col-md-12 col-lg-8 main-content"
+					th:with="contents = ${blog.contents}">
+
+					<th:block
+						th:with="startMatchingIndex = ${#strings.indexOf(contents, 'src=')} + 5,
                     								  frontCutting = ${#strings.substring(contents, startMatchingIndex)},
                     								  endMatchingIndex = ${#strings.indexOf(frontCutting, '&quot')},
                     								  endCutting = ${#strings.substring(frontCutting, 0, endMatchingIndex)}"
-                    					th:if="${#strings.contains(contents, '<img src=')}">
-	                    	<img	th:src="${endCutting}"
-	                  					class="img-fluid mb-5" />
-                   	</th:block>	
-                    	
-                   	<th:block th:unless="${#strings.contains(contents, '<img src=')}">
-                   		<img class="img-fluid mb-5" />
-                   	</th:block>
-					
+						th:if="${#strings.contains(contents, 'src=')}">
+						<img th:src="${endCutting}" class="img-fluid mb-5"
+							style="width: 100%" />
+					</th:block>
+
+					<th:block th:unless="${#strings.contains(contents, 'src=')}">
+						<img class="img-fluid mb-5" />
+					</th:block>
+
 					<div class="post-meta">
-						<span class="author mr-2">
-							<img th:src="@{/images/person_1.jpg}" alt="Colorlib" class="mr-2" th:text="${user.loginId}"> 
-						</span>&bullet; 
-						<span class="mr-2" th:text="${blog.getFormattedCreatedDate()}"></span> &bullet; 
-						<span class="ml-2 fa fa-eye">
-							<span class="ml-1" th:text="${blog.countOfViews}"></span>
-						</span> 
-						<span class="ml-2 fa fa-comments">
-							<span class="ml-1" th:text="${blog.countOfComment}"></span>
-						</span> 
-						<span class="ml-2 fa fa-thumbs-o-up">
-							<span class="ml-1" th:text="${blog.countOfThumbsUp}"></span>
+						<span class="author mr-2"> <img
+							th:src="@{/custom/images/devyu.jpg}" alt="Colorlib" class="mr-2"
+							th:text="${user.loginId}">
+						</span>&bullet; <span class="mr-2"
+							th:text="${blog.getFormattedCreatedDate()}"></span> &bullet; <span
+							class="ml-2 fa fa-eye"> <span class="ml-1"
+							th:text="${blog.countOfViews}"></span>
+						</span> <span class="ml-2 fa fa-comments"> <span class="ml-1"
+							th:text="${blog.countOfComment}"></span>
+						</span> <span class="ml-2 fa fa-thumbs-o-up"> <span class="ml-1"
+							th:text="${blog.countOfThumbsUp}"></span>
 						</span>
 					</div>
 					<h1 class="mb-4" th:text="${blog.title}"></h1>
-					<a class="category mb-5" href="#">blogging</a> 
+					<a class="category mb-5" href="#">blogging</a>
 
-					<th:block th:utext="${blog.contents}"></th:block>
+					<div style="width: 100%">
+						<th:block th:utext="${blog.contents}"></th:block>
+					</div>
 
-<!-- 					<div class="post-content-body" th:text="${blog.contents}">
+					<!-- 					<div class="post-content-body" th:text="${blog.contents}">
 					</div> -->
 
 
 					<div class="pt-5">
 						<p>
-							Tags: <a href="#" th:each="tags : ${blog.blogTags}"> <span>#</span>
-								<span th:text="${tags.tag.tagName}"></span> <span
+							Tags: <a 
+								th:href="@{/blog/tag?tagname={tagname} (tagname=${tags.tag.tagName})}"
+								th:each="tags : ${blog.blogTags}"> <span>#</span> <span
+								th:text="${tags.tag.tagName}"></span> <span
 								th:if="!${tagsStat.count eq tagsStat.size}">,</span>
 							</a>
 						</p>
 					</div>
 
 					<div class="text-center">
-						<i class="like-icon fa fa-thumbs-o-up fa-4x" aria-hidden="true"></i>
+						<i class="like-icon fa fa-thumbs-o-up fa-4x mt-5"
+							aria-hidden="true"></i>
 						<div class="like">like</div>
-						<span class="like-animate">+1</span>
-						<input type="hidden" th:value="${blog.id}">
+						<span class="like-animate">+1</span> <input type="hidden"
+							th:value="${blog.id}">
 					</div>
 
 					<div class="pt-5">
-						<h3 class="mb-5 comment-count" th:text="${blog.countOfComment} +' '+Comments"></h3>
-						
+						<h3 class="mb-5 comment-count"
+							th:text="${blog.countOfComment} +' '+Comments"></h3>
+
 						<!-- START comment-list -->
 						<ul class="comment-list">
 							<li class="comment comment-color" th:each="comment : ${comments}">
-				                <div class="vcard">
-				                	<i class="fa fa-user-circle fa-3x" aria-hidden="true"></i>
-				                  	<!-- <img th:src="@{/images/person_1.jpg}" alt="Image placeholder"> -->
-				                </div>
+								<div class="vcard">
+									<i class="fa fa-user-circle fa-3x" aria-hidden="true"></i>
+									<!-- <img th:src="@{/images/person_1.jpg}" alt="Image placeholder"> -->
+								</div>
 								<div class="comment-body">
 									<input type="hidden" th:value="${comment.id}">
 									<h3 class="d-inline-block" th:text="${comment.name}"></h3>
 									<span class="fa fa-trash-o comment-delete-icon"></span>
-									<div class="meta" th:text="${comment.getFormattedCreatedDate()}"></div>
+									<div class="meta"
+										th:text="${comment.getFormattedCreatedDate()}"></div>
 									<p th:text="${comment.contents}"></p>
 								</div>
 							</li>
 						</ul>
 						<!-- END comment-list -->
-							
+
 						<!-- START comment-delete -->
 						<div class="input-group" style="display: none; border: solid;">
-						  <input type="password" class="form-control" placeholder="input user password" aria-label="Recipient's username" aria-describedby="basic-addon2" style="height: 45px;">
-						  <div class="input-group-append">
-						    <button class="btn btn-outline-secondary comment-delete" type="button">delete</button>
-						    <button class="btn btn-outline-secondary comment-delete-cancel" type="button">cancel</button>
-						  </div>
+							<input type="password" class="form-control"
+								placeholder="enter user password"
+								aria-label="Recipient's username"
+								aria-describedby="basic-addon2" style="height: 45px;">
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary comment-delete"
+									type="button">delete</button>
+								<button class="btn btn-outline-secondary comment-delete-cancel"
+									type="button">cancel</button>
+							</div>
 						</div>
 						<!-- END comment-delete -->
-						
+
 						<!-- START comment-template -->
 						<template id="comment-template">
-							<li class="comment comment-color">
-				                <div class="vcard">
-				                	<i class="fa fa-user-circle fa-3x" aria-hidden="true"></i>
-				                </div>
-								<div class="comment-body">
-									<input type="hidden">
-									<h3 class="d-inline-block">name</h3>
-									<span class="fa fa-trash-o comment-delete-icon"></span>
-									<div class="meta comment-date">date</div>
-									<p>contents</p>
-								</div>
-							</li>
-						</template> 
+						<li class="comment comment-color">
+							<div class="vcard">
+								<i class="fa fa-user-circle fa-3x" aria-hidden="true"></i>
+							</div>
+							<div class="comment-body">
+								<input type="hidden">
+								<h3 class="d-inline-block">name</h3>
+								<span class="fa fa-trash-o comment-delete-icon"></span>
+								<div class="meta comment-date">date</div>
+								<p>contents</p>
+							</div>
+						</li>
+						</template>
 						<!-- START comment-template -->
-						
+
 						<div class="comment-form-wrap pt-5">
 							<h3 class="mb-5">Leave a comment</h3>
 
@@ -140,7 +155,7 @@
 								</div>
 							</form>
 						</div>
-						
+
 					</div>
 
 				</div>

@@ -33,9 +33,11 @@ public class TagController {
 		List<String> tagList = tagService.findAllNoDuplicate();
 		model.addAttribute("tagList", tagList);
 		
-		Map<String, String> blogFlag = new HashMap<>();
+		Map<String, Object> blogFlag = new HashMap<>();
 		blogFlag.put("flag", "searchTag");
+		blogFlag.put("keyword", null);
 		blogFlag.put("tagName", tagName);
+		blogFlag.put("count", blogforTagName.size());
 		model.addAttribute("blogFlag", blogFlag);
 		
 		return "blog/list";

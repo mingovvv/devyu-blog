@@ -2,7 +2,6 @@ package com.devyu.blog.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class BlogService {
 	private final TagRepository tagRepository;
 	
 	@Transactional
-	public Blog create(BlogForm blogForm, HttpSession session, HttpServletRequest req) {
+	public Blog create(BlogForm blogForm, HttpSession session) {
 
 		// session에 담아둔 login user의 정보 가져오기
 		User user = (User)session.getAttribute(Constant.SESSIONED_ID);
@@ -39,7 +38,7 @@ public class BlogService {
 		
 		Blog blog = Blog.createBlog(userPersistence, blogForm);
 		
-		String[] tags = req.getParameterValues("tagName");
+		String[] tags = blogForm.getTagName();
 		for(int i=0;i<tags.length;i++) {
 			if(tags[i].trim() != "") {
 				Tag tag = Tag.createTag(tags[i].trim(), blog);
@@ -48,6 +47,7 @@ public class BlogService {
 				tagRepository.create(tag);
 			}
 		}
+		
 		// 블로그 저장
 		blogRepository.create(blog);
 		
@@ -76,5 +76,68 @@ public class BlogService {
 
 	public List<Blog> findPopList() {
 		return blogRepository.findPopList();
+	}
+
+	public List<Blog> findAllSearchText(String keyword) {
+		return blogRepository.findAllSearchText(keyword);
+	}
+
+	public int findAllCnt() {
+		return blogRepository.findAllCnt();
+	}
+
+	public List<Blog> findListPaging(int startIndex, int pageSize) {
+		return blogRepository.findListPaging(startIndex, pageSize);
+	}
+
+	public int findAllForTagNameCnt(String tagName) {
+		return blogRepository.findAllForTagNameCnt(tagName);
+	}
+
+	public int findAllForSearchCnt(String search) {
+		return blogRepository.findAllForSearchCnt(search);
+	}
+
+	public List<Blog> findListPagingForTagName(String tagName, int startIndex, int pageSize) {
+		return blogRepository.findListPagingForTagName(tagName, startIndex, pageSize);
+	}
+
+	public List<Blog> findListPagingForSearch(String search, int startIndex, int pageSize) {
+		return blogRepository.findListPagingForSearch(search, startIndex, pageSize);
+	}
+
+	public Blog findOne(Long id) {
+		return blogRepository.findOne(id);
+	}
+
+	@Transactional
+	public void update(Long id, BlogForm blogForm) {
+		
+		Blog blog = blogRepository.findOne(id);
+
+		// 태그 삭제
+		for(int i=0;i<blog.getBlogTags().size();i++) {
+			Tag tag = blog.getBlogTags().get(i).getTag();
+			tagRepository.delete(tag);
+		} 
+
+		// 블로그 업데이트
+		blog.update(blogForm);
+
+		// 태그 추가
+		String[] tags = blogForm.getTagName();
+		for(int i=0;i<tags.length;i++) {
+			if(tags[i].trim() != "") {
+				Tag tag = Tag.createTag(tags[i].trim(), blog);
+				// 태그 저장
+				tagRepository.create(tag);
+			}
+		}
+	}
+
+	@Transactional
+	public void delete(Long id) {
+		Blog blog = blogRepository.findOne(id);
+		blogRepository.delete(blog);
 	}
 }

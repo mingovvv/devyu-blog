@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.devyu.blog.domain.Blog;
+import com.devyu.blog.domain.BlogTag;
 import com.devyu.blog.domain.Tag;
 
 @Repository
@@ -36,4 +37,13 @@ public class TagRepository {
 					.setParameter("tagname", tagname)
 					.getResultList();
 	}
+
+	public void delete(Tag tag) {
+		em.remove(tag);
+	}
+
+	public Tag findOne(Long id) {
+		return em.find(Tag.class, id);
+	}
+
 }

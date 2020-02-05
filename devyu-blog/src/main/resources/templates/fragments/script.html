@@ -1,4 +1,6 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html 	xmlns:th="http://www.thymeleaf.org"
+      		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
 	<div th:fragment="scriptFragment">
 		<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
 	    <script th:src="@{/js/jquery-migrate-3.0.0.js}"></script>
@@ -9,5 +11,20 @@
 	    <script th:src="@{/js/jquery.stellar.min.js}"></script>
 	    <script th:src="@{/js/main.js}"></script>
 	    <script th:src="@{/custom/js/commons.js}"></script>
+	    <script th:src="@{/custom/js/jquery.highlight-4.js}"></script>
+	    
+	    <!--Start of Tawk.to Script-->
+		<script type="text/javascript">
+		var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+		(function(){
+		var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+		s1.async=true;
+		s1.src='https://embed.tawk.to/5e359709a89cda5a18839c62/default';
+		s1.charset='UTF-8';
+		s1.setAttribute('crossorigin','*');
+		s0.parentNode.insertBefore(s1,s0);
+		})();
+		</script>
+		<!--End of Tawk.to Script-->
 	</div>
 </html>
