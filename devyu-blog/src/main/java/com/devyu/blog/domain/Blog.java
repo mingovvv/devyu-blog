@@ -43,7 +43,7 @@ public class Blog extends Abstract{
 	private List<BlogTag> blogTags = new ArrayList<>();
 	
 
-	@OneToMany(mappedBy = "blog")
+	@OneToMany(mappedBy = "blog", cascade = CascadeType.ALL)
 	private List<Comment> comments = new ArrayList<>();
 	
 	
@@ -90,5 +90,11 @@ public class Blog extends Abstract{
 
 	public void addCountOfViews() {
 		countOfViews = countOfViews+1;
+	}
+
+	public void update(BlogForm blogForm) {
+		this.title = blogForm.getTitle();
+		this.contents = blogForm.getContents();
+		this.blogTags.clear();
 	}
 }

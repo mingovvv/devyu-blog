@@ -29,6 +29,8 @@ $('#summernote').summernote({
 	}
 });
 
+$('.note-editor .note-editable').css("line-height", 1);
+
 function uploadImage(file) {
     var data = new FormData();
     data.append('file', file, file.name);

@@ -58,8 +58,8 @@
 
 					<div class="pt-5">
 						<p>
-							Tags: <a
-								th:href="@{/blog/search={tagname} (tagname=${tags.tag.tagName})}"
+							Tags: <a 
+								th:href="@{/blog/tag?tagname={tagname} (tagname=${tags.tag.tagName})}"
 								th:each="tags : ${blog.blogTags}"> <span>#</span> <span
 								th:text="${tags.tag.tagName}"></span> <span
 								th:if="!${tagsStat.count eq tagsStat.size}">,</span>
@@ -101,7 +101,7 @@
 						<!-- START comment-delete -->
 						<div class="input-group" style="display: none; border: solid;">
 							<input type="password" class="form-control"
-								placeholder="input user password"
+								placeholder="enter user password"
 								aria-label="Recipient's username"
 								aria-describedby="basic-addon2" style="height: 45px;">
 							<div class="input-group-append">

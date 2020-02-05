@@ -29,6 +29,7 @@ import com.devyu.blog.domain.Comment;
 import com.devyu.blog.domain.Pagination;
 import com.devyu.blog.domain.User;
 import com.devyu.blog.inputForm.BlogForm;
+import com.devyu.blog.repository.BlogRepository;
 import com.devyu.blog.service.BlogService;
 import com.devyu.blog.service.CommentService;
 import com.devyu.blog.service.TagService;
@@ -61,7 +62,7 @@ public class BlogController {
 		if(uri.equals("/blog") || uri.equals("/blog/page")) {
 			listCnt = blogService.findAllCnt();
 			Pagination pagination = new Pagination(listCnt, curPage);
-			System.err.println(pagination);
+			
 			model.addAttribute("pagination", pagination);
 			List<Blog> blogList = blogService.findListPaging(pagination.getStartIndex(), pagination.getPageSize());
 			model.addAttribute("blogList", blogList);
@@ -81,9 +82,8 @@ public class BlogController {
 			
 		}else if(uri.equals("/blog/tag")) {
 			listCnt = blogService.findAllForTagNameCnt(tagname);
-			System.err.println(listCnt);
 			Pagination pagination = new Pagination(listCnt, curPage);
-			System.err.println(pagination);
+			
 			model.addAttribute("pagination", pagination);
 			List<Blog> blogList = blogService.findListPagingForTagName(tagname, pagination.getStartIndex(), pagination.getPageSize());
 			model.addAttribute("blogList", blogList);
@@ -103,11 +103,9 @@ public class BlogController {
 			
 			
 		}else if(uri.equals("/blog/search")) {
-			System.err.println(keyword);
 			listCnt = blogService.findAllForSearchCnt(keyword);
-			System.err.println(listCnt);
 			Pagination pagination = new Pagination(listCnt, curPage);
-			System.err.println(pagination);
+			
 			model.addAttribute("pagination", pagination);
 			List<Blog> blogList = blogService.findListPagingForSearch(keyword, pagination.getStartIndex(), pagination.getPageSize());
 			model.addAttribute("blogList", blogList);
@@ -125,11 +123,7 @@ public class BlogController {
 			model.addAttribute("blogFlag", blogFlag);
 			
 			
-		}else {
-			
 		}
-		
-		
 		return "blog/list";
 	}
 	
@@ -179,9 +173,9 @@ public class BlogController {
 	}
 	
 	@PostMapping("/blog/create")
-	public String create(HttpServletRequest req, BlogForm blogForm, HttpSession session) {
+	public String create(BlogForm blogForm, HttpSession session) {
 		
-		blogService.create(blogForm, session, req);
+		blogService.create(blogForm, session);
 		
 		return "redirect:/blog";
 	}
@@ -244,4 +238,37 @@ public class BlogController {
 		return "blog/list";
 		
 	}
+	
+	@GetMapping("/blog/edit/{id}")
+	public String updateForm(@PathVariable Long id, Model model) {
+		
+		Blog blog = blogService.findOne(id);
+		List<Blog> popList = blogService.findPopList();
+		List<String> tagList = tagService.findAllNoDuplicate();
+		model.addAttribute("blog", blog);
+		model.addAttribute("tagList", tagList);
+		model.addAttribute("popList", popList);
+		
+		return "blog/updateForm";
+	}
+	
+	@PostMapping("/blog/edit/{id}")
+	public String update(@PathVariable Long id, BlogForm blogForm) {
+		blogService.update(id, blogForm);
+		return "redirect:/blog";
+	}
+	
+	@GetMapping("/blog/delete/{id}")
+	public String delete(@PathVariable Long id) {
+		blogService.delete(id);
+		return "redirect:/blog";
+	}
 }
+
+
+
+
+
+
+
+

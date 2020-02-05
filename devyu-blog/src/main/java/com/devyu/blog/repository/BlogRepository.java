@@ -92,4 +92,8 @@ public class BlogRepository {
 						.setMaxResults(pageSize)
 						.getResultList();
 	}
+
+	public void delete(Blog blog) {
+		em.remove(blog);
+	}
 }

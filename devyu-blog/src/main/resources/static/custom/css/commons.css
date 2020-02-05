@@ -11,13 +11,17 @@
 }
 
 .inputTagAppendForm input, .measure {
-    padding: 5px;
+    /* padding: 5px; */
     white-space: pre; /* white-spaces will work effectively */
 }
 
+.append div{
+	margin-right: 20px;
+}
+
 .tagMinus{
-	/* margin-left: -10px;
-	margin-right: 10px; */
+	 margin-left: -10px;
+	/*margin-right: 10px; */
 	color: #ed89a5;
 }
 
@@ -58,8 +62,31 @@ code, kbd, pre, samp {
 .highlight { background-color: #f8f223; color: #13ad5e; }
 
 .pop-sidebar{
-    border-right: 1px solid #e6e6e6;
-    border-bottom: 1px solid #e6e6e6;;
+    border-right: 1px solid #bab2b2;
+    border-bottom: 1px solid #bab2b2;;
     padding: 0;
     margin-bottom: 25px;
+}
+
+.btn-edit-delete{
+    top: -20px;
+    left: -15px;
+    float: right;
+    z-index: 100;
+    position: relative;
+}
+
+.btn-edit-delete button{
+    height: 30px;
+    line-height: 1;
+	border-radius: 8px;
+}
+
+.btn-edit-delete a:not(a){
+	display: inline;
+}
+
+.inputTagAppendForm input::placeholder{
+	font-size:12px;
+	color:#afafaf;
 }

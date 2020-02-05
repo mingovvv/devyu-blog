@@ -4,7 +4,7 @@
 			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 			layout:decorate="~{layout/default}">
 <head>
-    <title>writing</title>
+    <title>update</title>
 </head>
 
 
@@ -19,19 +19,23 @@
         <div class="row blog-entries">
           <div class="col-md-12 col-lg-8 main-content">
             
-            <form th:action="@{/blog/create}" method="post">
+            <form th:action="@{/blog/edit/{id} (id=${blog.id})}" method="post">
             
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <label for="title">title</label>
-                      <input type="text"  id="title" name="title" class="form-control">
+                      	<input type="text"  id="title" name="title" class="form-control" th:value="${blog.title}">
                     </div>
                   </div>
                   
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <label for="content">content</label>
-                      <textarea style="line-height: normal;" name="contents" id="summernote" class="form-control summernote" cols="30" rows="8"></textarea>
+                      <textarea style="line-height: normal;" name="contents" id="summernote" class="form-control summernote" cols="30" rows="8" th:value="${blog.contents}">
+                      <th:block th:utext=${blog.contents}>
+                      
+                      </th:block>
+                      </textarea>
                     </div>
                   </div>
                    
@@ -49,6 +53,12 @@
 						  <label for="tag">tag</label>
 						  <ul class="tags">
 						    	<li class="append">
+						    		<div class="d-inline-block" th:each="tags : ${blog.blogTags}">
+						    		<span>#</span>
+						    		<input style="width: 55px" class="border border-white inputBox" type="text" name="tagName" placeholder="tag" th:value="${tags.tag.tagName}">
+						    		<span class="measure"></span>
+						    		<i class='fa fa-times tagMinus' aria-hidden='true'></i>
+						    		</div>
 						    		<div class="d-inline-block">
 						    		<span>#</span>
 						    		<input style="width: 55px" class="border border-white inputBox" type="text" name="tagName" placeholder="tag">
@@ -63,7 +73,7 @@
                   
                   <div class="row">
                     <div class="col-md-12 form-group">
-                      <input type="submit" value="작성하기" class="col-md-12 btn btn-primary bg-secondary border border-light">
+                      <input type="submit" value="수정하기" class="col-md-12 btn btn-primary bg-secondary border border-light">
                     </div>
                   </div>
                 </form>

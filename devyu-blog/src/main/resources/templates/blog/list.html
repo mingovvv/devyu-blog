@@ -24,6 +24,16 @@
         </div>
         <div class="row blog-entries">
           <div class="col-md-12 col-lg-8 main-content">
+          
+          <!-- search-form -->
+          <form method="post" th:action="@{/blog/search}" class="search-form">
+		    <div class="form-group">
+		      <span class="icon fa fa-search" style="cursor: pointer;"></span>
+		      <input type="text" class="form-control" id="s" placeholder="keyword and hit"  th:name="keyword">
+		    </div>
+		  </form>
+          <!-- search-form -->
+          
             <div class="row mb-5 mt-5">
               <div class="col-md-12">
               
@@ -38,7 +48,7 @@
                     					th:if="${#strings.contains(contents, 'src=')}">
                     		<div class="image element-animate" data-animate-effect="fadeIn">
 		                    	<img	th:src="${endCutting}"
-		                  					style="width: 100%; height: -webkit-fill-available; border: 1px solid #e6e6e6;" />
+		                  					style="width: 100%; height: -webkit-fill-available;" />
 	                  		</div>
                     	</th:block>	
                     	
@@ -55,8 +65,14 @@
                         </span>
                       </div>
 	                      <h2 class="search-text" th:if="${blog.title}" th:text="${blog.title}"></h2>
+	                      
+	                      
                     </span>
                   </a>
+                  <span class="btn-edit-delete">
+                  		<button type="button" class="btn btn-primary btn-sm" th:onclick="  'location.href = \' ' + @{/blog/edit/{id} (id=${blog.id})} + ' \' '  " >수정</button>
+	                  	<button type="button" class="btn btn-secondary btn-sm" th:onclick="  'location.href = \' ' + @{/blog/delete/{id} (id=${blog.id})} + ' \' '  ">삭제</button>
+                  </span>
                 </div>
                 <!-- END post -->
                 
@@ -70,14 +86,14 @@
                   <ul class="pagination" th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
                     
                     <!-- [처음] button -->
-                    <li class="page-item" th:if="${blogFlag.flag eq 'default'} and ${pagination.curRange == 1}"><a class="page-link" th:href="@{/blog/page?curPage=1}">처음</a></li>
-                    <li class="page-item" th:if="${blogFlag.flag eq 'searchTag'} and ${pagination.curRange == 1}"><a class="page-link" th:href="@{/blog/tag?tagname={tagname}&curPage=1 (tagname =${blogFlag.tagname})}">처음</a></li>
-                    <li class="page-item" th:if="${blogFlag.flag eq 'searchText'} and ${pagination.curRange == 1}"><a class="page-link" th:href="@{/blog/search?keyword={keyword}&curPage=1 (keyword =${blogFlag.keyword})}">처음</a></li>
+                    <li class="page-item" th:if="${blogFlag.flag eq 'default'} and ${pagination.curPage != 1}"><a class="page-link" th:href="@{/blog/page?curPage=1}">처음</a></li>
+                    <li class="page-item" th:if="${blogFlag.flag eq 'searchTag'} and ${pagination.curPage != 1}"><a class="page-link" th:href="@{/blog/tag?tagname={tagname}&curPage=1 (tagname =${blogFlag.tagname})}">처음</a></li>
+                    <li class="page-item" th:if="${blogFlag.flag eq 'searchText'} and ${pagination.curPage != 1}"><a class="page-link" th:href="@{/blog/search?keyword={keyword}&curPage=1 (keyword =${blogFlag.keyword})}">처음</a></li>
 
 					<!-- [이전] button -->
-                    <li class="page-item" th:if="${blogFlag.flag eq 'default'} and ${pagination.curPage != 1}"><a class="page-link" th:href="@{/blog/page?curPage={prevPage} (prevPage =${pagination.prevPage})}">&lt;</a></li>
-                    <li class="page-item" th:if="${blogFlag.flag eq 'searchTag'} and ${pagination.curPage != 1}"><a class="page-link" th:href="@{/blog/tag?tagname={tagname}&curPage={prevPage} (tagname=${blogFlag.tagname}, prevPage =${pagination.prevPage})}">&lt;</a></li>
-                    <li class="page-item" th:if="${blogFlag.flag eq 'searchText'} and ${pagination.curPage != 1}"><a class="page-link" th:href="@{/blog/search?keyword={keyword}&curPage={prevPage} (keyword=${blogFlag.keyword}, prevPage =${pagination.prevPage})}">&lt;</a></li>
+                    <li class="page-item" th:if="${blogFlag.flag eq 'default'} and ${pagination.curRange != 1}"><a class="page-link" th:href="@{/blog/page?curPage={Page} (Page =${pagination.prevPage})}">&lt;</a></li>
+                    <li class="page-item" th:if="${blogFlag.flag eq 'searchTag'} and ${pagination.curRange != 1}"><a class="page-link" th:href="@{/blog/tag?tagname={tagname}&curPage={prevPage} (tagname=${blogFlag.tagname}, prevPage =${pagination.prevPage})}">&lt;</a></li>
+                    <li class="page-item" th:if="${blogFlag.flag eq 'searchText'} and ${pagination.curRange != 1}"><a class="page-link" th:href="@{/blog/search?keyword={keyword}&curPage={prevPage} (keyword=${blogFlag.keyword}, prevPage =${pagination.prevPage})}">&lt;</a></li>
                     
                     <th:block th:each="num : ${#numbers.sequence(start,end)}">
                     	<th:block th:if="${num} == ${pagination.curPage}">
@@ -97,14 +113,14 @@
                     </th:block>
                     
                     <!-- [다음] button -->
-                    <li class="page-item" th:if="${blogFlag.flag eq 'default'} and ${pagination.curPage != pagination.pageCnt && pagination.pageCnt > 0}"><a class="page-link" th:href="@{/blog/page?curPage={nextPage} (nextPage =${pagination.nextPage})}">&gt;</a></li>
-                    <li class="page-item" th:if="${blogFlag.flag eq 'searchTag'} and ${pagination.curPage != pagination.pageCnt && pagination.pageCnt > 0}"><a class="page-link" th:href="@{/blog/tag?tagname={tagname}&curPage={nextPage} (tagname=${blogFlag.tagname}, nextPage =${pagination.nextPage})}">&gt;</a></li>
-                    <li class="page-item" th:if="${blogFlag.flag eq 'searchText'} and ${pagination.curPage != pagination.pageCnt && pagination.pageCnt > 0}"><a class="page-link" th:href="@{/blog/search?keyword={keyword}&curPage={nextPage} (keyword=${blogFlag.keyword}, nextPage =${pagination.nextPage})}">&gt;</a></li>
+                    <li class="page-item" th:if="${blogFlag.flag eq 'default'} and ${pagination.curRange != pagination.rangeCnt && pagination.pageCnt > 0}"><a class="page-link" th:href="@{/blog/page?curPage={nextPage} (nextPage =${pagination.nextPage})}">&gt;</a></li>
+                    <li class="page-item" th:if="${blogFlag.flag eq 'searchTag'} and ${pagination.curRange != pagination.rangeCnt && pagination.pageCnt > 0}"><a class="page-link" th:href="@{/blog/tag?tagname={tagname}&curPage={nextPage} (tagname=${blogFlag.tagname}, nextPage =${pagination.nextPage})}">&gt;</a></li>
+                    <li class="page-item" th:if="${blogFlag.flag eq 'searchText'} and ${pagination.curRange != pagination.rangeCnt && pagination.pageCnt > 0}"><a class="page-link" th:href="@{/blog/search?keyword={keyword}&curPage={nextPage} (keyword=${blogFlag.keyword}, nextPage =${pagination.nextPage})}">&gt;</a></li>
 
 					<!-- [끝으로] button -->
-                    <li class="page-item" th:if="${blogFlag.flag eq 'default'} and ${pagination.curPage != pagination.rangeCnt && pagination.rangeCnt > 0}"><a class="page-link" th:href="@{/blog/page?curPage={pageCnt} (pageCnt =${pagination.pageCnt})}">끝</a></li>
-                    <li class="page-item" th:if="${blogFlag.flag eq 'searchTag'} and ${pagination.curPage != pagination.rangeCnt && pagination.rangeCnt > 0}"><a class="page-link" th:href="@{/blog/tag?tagname={tagname}&curPage={pageCnt} (tagname =${blogFlag.tagname}, pageCnt =${pagination.pageCnt})}">끝</a></li>
-                    <li class="page-item" th:if="${blogFlag.flag eq 'searchText'} and ${pagination.curPage != pagination.rangeCnt && pagination.rangeCnt > 0}"><a class="page-link" th:href="@{/blog/search?keyword={keyword}&curPage={pageCnt} (keyword =${blogFlag.keyword}, pageCnt =${pagination.pageCnt})}">끝</a></li>
+                    <li class="page-item" th:if="${blogFlag.flag eq 'default'} and ${pagination.curPage != pagination.pageCnt && pagination.rangeCnt > 0}"><a class="page-link" th:href="@{/blog/page?curPage={pageCnt} (pageCnt =${pagination.pageCnt})}">끝</a></li>
+                    <li class="page-item" th:if="${blogFlag.flag eq 'searchTag'} and ${pagination.curPage != pagination.pageCnt && pagination.rangeCnt > 0}"><a class="page-link" th:href="@{/blog/tag?tagname={tagname}&curPage={pageCnt} (tagname =${blogFlag.tagname}, pageCnt =${pagination.pageCnt})}">끝</a></li>
+                    <li class="page-item" th:if="${blogFlag.flag eq 'searchText'} and ${pagination.curPage != pagination.pageCnt && pagination.rangeCnt > 0}"><a class="page-link" th:href="@{/blog/search?keyword={keyword}&curPage={pageCnt} (keyword =${blogFlag.keyword}, pageCnt =${pagination.pageCnt})}">끝</a></li>
                   
                   </ul>
                 </nav>
