@@ -52,7 +52,7 @@ public class LoginController {
 	public String login(String loginId, String password, Model model, HttpSession session, String referer){
 		User user = userService.findByUserId(loginId);
 		
-		if(user == null || !user.getPassword().equals(password)) { 
+		if(user == null || !user.equalsPassword(user.getPassword(), password)) {
 			model.addAttribute("errorMessage", "아이디 또는 비밀번호가 일치하지 않습니다.");
 			return "login/loginForm"; 
 		}

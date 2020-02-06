@@ -74,6 +74,17 @@ $(function(){
 
 	function addComment(e){
 		
+		if($('form input[name="name"]').val().trim() == ''){
+			alert("name을 입력해주세요.");
+			return false;
+		}else if($('form input[name="password"]').val().trim() == ''){
+			alert("password를 입력해주세요.");
+			return false;
+		}else if($('form input[name="message"]').val().trim() == ''){
+			alert("message를 입력해주세요.");
+			return false;
+		}
+		
 		e.preventDefault();
 		var queryString = $(".submit-write").serialize();
 		var url = $(".submit-write").attr('action');
@@ -137,39 +148,6 @@ $(function(){
 	}
 	
 	/////////////////////////
-	// blog like 추가 ////////
-	/////////////////////////
-	$(".like-icon").click(function(){
-		
-		var url = "/blog/"+$(".text-center input").val()+"/like";
-		
-		$(".like-icon").css("color","#dc9a55e3");
-		$(".like-animate").css("opacity","1");
-		$(".like-animate").animate({
-			bottom : "120px",
-			opacity : "0"
-		},500, function(){
-			$(".like-animate").css("bottom","60px").css("opacity","0");
-		});
-		
-		$.ajax({
-			type : 'post',
-			url : url,
-			dataType : 'json',
-			error : function(request,status,error){
-				onError();
-				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			},
-			success : function(data){
-				
-				console.log(data);
-				$(".post-meta>.fa-thumbs-o-up span").text(data);
-			}
-		});
-		
-	});
-	
-	/////////////////////////
 	//// comment 삭제 /////
 	/////////////////////////
 	
@@ -190,6 +168,7 @@ $(function(){
 	});
 	
 	$('.comment-list').on("click",".comment-delete",function(event){
+		
 		var id = $(this).parent().parent().prev().find('input').val();
 		var password = $(this).parent().prev().val();
 		var json = { "id":id, "password":password};
@@ -241,6 +220,39 @@ $(function(){
 				}
 			}
 		});
+	});
+	
+	/////////////////////////
+	// blog like 추가 ////////
+	/////////////////////////
+	$(".like-icon").click(function(){
+		
+		var url = "/blog/"+$(".text-center input").val()+"/like";
+		
+		$(".like-icon").css("color","#dc9a55e3");
+		$(".like-animate").css("opacity","1");
+		$(".like-animate").animate({
+			bottom : "120px",
+			opacity : "0"
+		},500, function(){
+			$(".like-animate").css("bottom","60px").css("opacity","0");
+		});
+		
+		$.ajax({
+			type : 'post',
+			url : url,
+			dataType : 'json',
+			error : function(request,status,error){
+				onError();
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			},
+			success : function(data){
+				
+				console.log(data);
+				$(".post-meta>.fa-thumbs-o-up span").text(data);
+			}
+		});
+		
 	});
 	
 })

@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -35,5 +37,12 @@ public class User extends Abstract{
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", loginId=" + loginId + ", name=" + name + ", password=" + password + "]";
+	}
+
+	public Boolean equalsPassword(String DBpassword, String inputPassword) {
+		if(BCrypt.checkpw(inputPassword, DBpassword)) {
+			return true;
+		}
+		return false;
 	}
 }

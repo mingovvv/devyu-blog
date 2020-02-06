@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import com.devyu.blog.inputForm.BlogForm;
 
@@ -26,6 +27,7 @@ public class Blog extends Abstract{
 	@Column(name="blog_id")
 	private Long id;
 	
+	@NotNull
 	private String title;
 	
 	@Lob
