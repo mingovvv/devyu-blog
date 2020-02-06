@@ -32,5 +32,8 @@ public class User extends Abstract{
 	@OneToMany(mappedBy = "user")
 	private List<Blog> blogs = new ArrayList<>();
 
-	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", loginId=" + loginId + ", name=" + name + ", password=" + password + "]";
+	}
 }
