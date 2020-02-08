@@ -40,8 +40,12 @@ public class User extends Abstract{
 	}
 
 	public Boolean equalsPassword(String DBpassword, String inputPassword) {
-		if(BCrypt.checkpw(inputPassword, DBpassword)) {
-			return true;
+		try {
+			if(BCrypt.checkpw(inputPassword, DBpassword)) {
+				return true;
+			}
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

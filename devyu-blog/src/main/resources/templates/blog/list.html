@@ -4,6 +4,17 @@
 	layout:decorate="~{layout/default}">
 <head>
 	<title>블로그</title>
+	<th:block layout:fragment="js">
+		<!--  검색어 highlighting  -->
+		<script th:src="@{/custom/js/jquery.highlight-4.js}"></script>
+		<script type="text/javascript" th:inline="javascript">
+		if(/*[[ ${blogFlag.keyword}]]*/ != null){
+			/* <![CDATA[ */       
+			$('.search-text').highlight(/*[[ ${blogFlag.keyword}]]*/);
+			/* ]]> */
+		}
+		</script>
+	</th:block>
 </head>
 
 <div layout:fragment="content">
@@ -203,13 +214,3 @@
 	</section>
 </div>
 </html>
-<!--  검색어 highlighting  -->
-<script type="text/javascript" th:inline="javascript">
-$(function(){
-	if(/*[[ ${blogFlag.keyword}]]*/ != null){
-		/* <![CDATA[ */       
-		$('.search-text').highlight(/*[[ ${blogFlag.keyword}]]*/);
-		/* ]]> */
-	}
-})
-</script>

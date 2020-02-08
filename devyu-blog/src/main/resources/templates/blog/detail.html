@@ -10,6 +10,11 @@
 <!-- title start -->
 
 <div layout:fragment="content">
+<div class="control-bar btn-group-vertical">
+  <button type="button" class="btn btn-secondary fa fa-arrow-up"></button>
+  <button type="button" class="btn btn-secondary percentage"></button>
+  <button type="button" class="btn btn-secondary fa fa-undo"></button>
+</div>
 	<section class="site-section py-lg">
 		<div class="container">
 			<div class="row blog-entries element-animate">
@@ -49,7 +54,7 @@
 					<a class="category mb-5" href="#">blogging</a>
 					
 					<th:block th:if="${session.SESSIONED_ID != null}">
-	                  <div th:if="${session.SESSIONED_ID.id == blog.user.id}" class="btn-edit-delete" style="top: 0px;">
+	                  <div th:if="${session.SESSIONED_ID.id == blog.user.id}" class="btn-edit-delete" style="right: 0px; position: inherit;">
 		                  	<form class="ud-form">
 			                  	<button type="button" class="btn btn-warning btn-sm" th:onclick="'fn_update(\''+ ${blog.id} +'\')'">수정</button>
 			                  	<button type="button" class="btn btn-secondary btn-sm" th:onclick="'fn_delete(\''+ ${blog.id} +'\')'">삭제</button>
@@ -168,8 +173,8 @@
 					</div>
 
 				</div>
-
 				<!-- END main-content -->
+
 
 				<!-- side bar include -->
 				<div th:replace="fragments/side-bar :: side-bar"></div>

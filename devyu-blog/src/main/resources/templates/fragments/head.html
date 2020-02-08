@@ -1,9 +1,11 @@
-<html 	xmlns:th="http://www.thymeleaf.org"
-      		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html 	lang="ko" 
+			xmlns:th="http://www.thymeleaf.org"
+			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 	<head th:fragment="headFragment">
 	
 		<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">devyu's </title>
+	    
 	    <meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
@@ -18,10 +20,15 @@
 	    <link rel="stylesheet" th:href="@{/fonts/ionicons/css/ionicons.min.css}">
 	    <link rel="stylesheet" th:href="@{/fonts/fontawesome/css/font-awesome.min.css}">
 	    <link rel="stylesheet" th:href="@{/fonts/flaticon/font/flaticon.css}">
-		
+	    
+		<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.css" rel="stylesheet">
 	    <!-- Theme Style -->
 	    <link rel="stylesheet" th:href="@{/css/style.css}">
 	    <link rel="stylesheet" th:href="@{/custom/css/commons.css}">
+	    
+	    <!-- 개별적인 css 설정 -->
+	    <th:block layout:fragment="css"></th:block>
+	    
 	</head>
 
 </html>

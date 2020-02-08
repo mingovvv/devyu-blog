@@ -1,17 +1,37 @@
 $(function(){
 	
+	// control-bar
+	$(window).scroll(function(){
+		  var percentage = ($(window).scrollTop() / ($(document).height() - $(window).height())) * 100;
+		  console.log(percentage);
+		  $('.percentage').text(Math.round(percentage) +  '%');
+	});
+	$('.fa-arrow-up').click(function(){
+		$('html').animate({scrollTop : 0})
+	});
+	$('.fa-undo').click(function(){
+		window.history.back();
+	});
+	
+	
+	// fix-bar
+	var offset = $( '.site-section' ).offset();
+	$(window).scroll(function() {
+		 if ($(document).scrollTop() > offset.top ) {
+			 $('#fix-bar').addClass('fixed');
+		 }else{
+			 $('#fix-bar').removeClass('fixed');
+		 }
+	});
+	
 	$('.fa-search').click(function(){
 		$('.search-form').submit();
 	});
 
 
 
-	/////////////
-	// tag 추가 //
-	/////////////
-	
+	// tag 추가 (keydown)
 	$('.tags').on("keydown",'input[type="text"]',function(event){
-		
 	    
 		// input text width 조절
 		var spanElm = this.nextElementSibling;
@@ -36,6 +56,7 @@ $(function(){
 		};
 	}); 
 	
+	// tag 추가(blur)
 	$('.tags').on("blur",'input[type="text"]',function(event){
 		
 		// blur fn
@@ -51,6 +72,7 @@ $(function(){
 		}
 	});
 	
+	// tag 삭제
 	$('.tags').on("click",'.tagMinus',function(event){
 			if($('.inputBox').length == 1) {
 				alert("모든 태그를 지울 수 없습니다.");
@@ -62,19 +84,18 @@ $(function(){
 			}
 	});
 	
+	// tag 추가 fn
 	function addTags(){
 		$(".append").append("<div class='d-inline-block'><span class='mr-1 ml-2'>#</span><input style='width: 55px' class='border border-white inputBox' type='text' name='tagName' placeholder='tag'><span class='measure'></span><i class='fa fa-times tagMinus' aria-hidden='true'></i></div>");
 		$('.inputBox').last().focus();
 	}
 	
-	/////////////////////////
-	// comment ajax 추가 //
-	/////////////////////////
+	// comment ajax 추가
 	$(".submit-write input[type=submit]").click(addComment);
 
 	function addComment(e){
 		
-		if($('form input[name="name"]').val().trim() == ''){
+		/*if($('form input[name="name"]').val().trim() == ''){
 			alert("name을 입력해주세요.");
 			return false;
 		}else if($('form input[name="password"]').val().trim() == ''){
@@ -83,7 +104,7 @@ $(function(){
 		}else if($('form input[name="message"]').val().trim() == ''){
 			alert("message를 입력해주세요.");
 			return false;
-		}
+		}*/
 		
 		e.preventDefault();
 		var queryString = $(".submit-write").serialize();
@@ -147,10 +168,7 @@ $(function(){
 		});
 	}
 	
-	/////////////////////////
-	//// comment 삭제 /////
-	/////////////////////////
-	
+	// comment 삭제 
 	var clone= $('.input-group').clone();
 	$('.comment-list').on("click",".comment-delete-icon",function(event){
 		clone
@@ -222,9 +240,7 @@ $(function(){
 		});
 	});
 	
-	/////////////////////////
-	// blog like 추가 ////////
-	/////////////////////////
+	// blog 좋아요 추가 
 	$(".like-icon").click(function(){
 		
 		var url = "/blog/"+$(".text-center input").val()+"/like";
@@ -254,12 +270,11 @@ $(function(){
 		});
 		
 	});
-	
+    
+
 })
 
-/////////////////////////
-//// blog 수정 버튼 ///////
-/////////////////////////
+// blog 게시물 수정 
 function fn_update(id){
 	if(confirm("수정 하시겠습니까?")){
 		var form = $('.ud-form');
@@ -269,9 +284,7 @@ function fn_update(id){
 	}
 }
 
-/////////////////////////
-//// blog 삭제 버튼 ///////
-/////////////////////////
+// blog 게시물 삭제
 function fn_delete(id) {
 	if(confirm("삭제 하시겠습니까?")){
 		var form = $('.ud-form');

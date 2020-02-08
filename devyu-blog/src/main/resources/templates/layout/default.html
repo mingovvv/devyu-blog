@@ -1,5 +1,6 @@
 <!doctype html>
-<html 	lang="ko" xmlns:th="http://www.thymeleaf.org"
+<html 	lang="ko" 
+			xmlns:th="http://www.thymeleaf.org"
 			xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	
 	<!-- head start --> 
@@ -9,20 +10,16 @@
 	<!-- head end --> 
 	
 	<!-- body start -->
-	
 	<body>
-	
+		<!-- fix-bar start -->
+		<th:block th:replace="fragments/fix-bar :: fixBarFragment"></th:block>
+		<!-- fix-bar end-->
+		 
+		 <!-- fixed-bar -->
 		<div class="wrap">
-
-			<!-- sessioned user writting button -->
-          	<a th:if="${session.SESSIONED_ID != null}" th:href="@{/blog/create}">
-			<span class="fa fa-pencil-square fa-4x position-fixed fixed-bottom ml-4 mb-4 d-table text-warning"></span>
-          	</a>
-		
 			<!-- header start --> 
 			<header th:replace="fragments/header :: headerFragment"></header>
 			<!-- header end -->
-
 			
 			<!-- content start -->
 			<div layout:fragment="content"></div>
@@ -34,11 +31,11 @@
 		</div>
 		
 		<!-- loader start -->
-		<div th:replace="fragments/loader :: loader"></div>
+		<th:block th:replace="fragments/loader :: loader"></th:block>
 		<!-- loader end -->
 		
 		<!-- script start -->
-		<div th:replace="fragments/script :: scriptFragment"></div>
+		<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 	    <!-- script end -->
 	    
 	</body>

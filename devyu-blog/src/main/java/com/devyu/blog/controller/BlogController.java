@@ -110,6 +110,7 @@ public class BlogController {
 		model.addAttribute("popList", popList);
 		model.addAttribute("tagList", tagList);
 		model.addAttribute("blogFlag", blogFlag);
+		model.addAttribute("active", "blog");
 		
 		return "blog/list";
 	}
@@ -234,12 +235,6 @@ public class BlogController {
 	@GetMapping("/blog/update/{id}")
 	public String updateForm(@PathVariable Long id, Model model, HttpSession session, HttpServletRequest request) {
 		
-		System.err.println(request.getHeader("referer"));
-		System.err.println(request.getHeader("referer"));
-		System.err.println(request.getHeader("referer"));
-		System.err.println(request.getHeader("referer"));
-		System.err.println(request.getHeader("referer"));
-		
 		Blog blog = blogService.findOne(id);
 		
 		if(session.getAttribute(Constant.SESSIONED_ID) == null) {
@@ -250,7 +245,10 @@ public class BlogController {
 		User user = (User) session.getAttribute(Constant.SESSIONED_ID); 
 		
 		if(!user.getId().equals(blog.getUser().getId())) {
-			model.addAttribute("errorMessage", "로그인된 유저의 게시글이 아닙니다. 본인의 게시물만 수정할 수 있습니다.");
+			Map<String, Object> modal = new HashMap<>();
+			modal.put("title", "malicious Access");
+			modal.put("message", "로그인된 유저의 게시글이 아닙니다. 본인의 게시물만 수정할 수 있습니다.");
+			model.addAttribute("modal", modal);
 			return "index";
 		}
 		

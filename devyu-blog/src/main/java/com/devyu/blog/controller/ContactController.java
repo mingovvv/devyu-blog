@@ -1,6 +1,8 @@
 package com.devyu.blog.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -39,17 +41,19 @@ public class ContactController {
 		
 		List<String> tagList = tagService.findAllNoDuplicate();
 		model.addAttribute("tagList", tagList);
+		
+		model.addAttribute("active", "contact");
 		return "contact/contact";
 	}
 	
 	@PostMapping("/contact")
-	public String mailSender(ContactForm contactForm) throws AddressException, MessagingException{
+	public String mailSender(ContactForm contactForm, Model model) throws AddressException, MessagingException{
 		
 		String subject = contactForm.getName()+Constant.SMTP_TITLE; 
 		String body =   
 			"<div><b>이름</b> : "+	contactForm.getName()	+ "</div>" +
 			"<div><b>이메일</b> : "+	contactForm.getEMail()	+ "</div>" +
-			"<div><b>넘버</b> : "+	contactForm.getPhone()	+ "</div>" +
+			"<div><b>핸드폰 번호</b> : "+	contactForm.getPhone()	+ "</div>" +
 			"<div><b>메세지</b> : "+	contactForm.getMessage() + "</div>";
 		
 		// 정보를 담기 위한 객체 생성 // SMTP 서버 정보 설정
@@ -76,7 +80,12 @@ public class ContactController {
 		mimeMessage.setText(body); //내용셋팅 
 		mimeMessage.setContent(body, "text/html; charset=UTF-8"); 
 		Transport.send(mimeMessage); //javax.mail.Transport.send() 이용
-
+		
+		Map<String, Object> modal = new HashMap<>();
+		modal.put("title", "mail sender");
+		modal.put("message", "성공적으로 메일이 전송되었습니다 )");
+		model.addAttribute("modal", modal);
+		
 		return "contact/contact";
 	}
 }

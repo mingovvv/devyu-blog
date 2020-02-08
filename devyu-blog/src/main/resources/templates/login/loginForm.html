@@ -19,7 +19,7 @@
     <form th:action="@{/login}" method="post">
       <input type="hidden" name="referer" th:value="${referer}">
       <input type="text" id="loginId" class="fadeIn second" name="loginId" placeholder="login">
-      <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
+      <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
 		<div class="text-danger" th:text="${errorMessage}"></div>
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
