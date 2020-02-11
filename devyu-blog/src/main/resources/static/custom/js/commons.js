@@ -3,7 +3,6 @@ $(function(){
 	// control-bar
 	$(window).scroll(function(){
 		  var percentage = ($(window).scrollTop() / ($(document).height() - $(window).height())) * 100;
-		  console.log(percentage);
 		  $('.percentage').text(Math.round(percentage) +  '%');
 	});
 	$('.fa-arrow-up').click(function(){
@@ -94,19 +93,19 @@ $(function(){
 	$(".submit-write input[type=submit]").click(addComment);
 
 	function addComment(e){
+		e.preventDefault();
 		
-		/*if($('form input[name="name"]').val().trim() == ''){
-			alert("name을 입력해주세요.");
+		if($('form input[name="name"]').val().trim() == ''){
+			alert("닉네임을 입력해주세요.");
 			return false;
 		}else if($('form input[name="password"]').val().trim() == ''){
-			alert("password를 입력해주세요.");
+			alert("비밀번호를 입력해주세요.");
 			return false;
-		}else if($('form input[name="message"]').val().trim() == ''){
-			alert("message를 입력해주세요.");
+		}else if($('form textarea').val().trim() == ''){
+			alert("메시지를 입력해주세요.");
 			return false;
-		}*/
+		}
 		
-		e.preventDefault();
 		var queryString = $(".submit-write").serialize();
 		var url = $(".submit-write").attr('action');
 		
@@ -277,7 +276,7 @@ $(function(){
 // blog 게시물 수정 
 function fn_update(id){
 	if(confirm("수정 하시겠습니까?")){
-		var form = $('.ud-form');
+		var form = $('.edit-button-form');
 	    form.attr('action', '/blog/update/' + id);
 	    form.attr('method', 'get');
 	    form.submit();
@@ -287,7 +286,7 @@ function fn_update(id){
 // blog 게시물 삭제
 function fn_delete(id) {
 	if(confirm("삭제 하시겠습니까?")){
-		var form = $('.ud-form');
+		var form = $('.edit-button-form');
 	    form.attr('action', '/blog/delete/' + id);
 	    form.attr('method', 'post');
 	    form.submit();

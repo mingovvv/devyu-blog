@@ -1,5 +1,6 @@
 @charset "UTF-8";
-/* BASIC */
+
+/* ===  fix-bar START ===  */
 #fix-bar {
 	z-index: 101;
 	background: #faeaea;
@@ -7,6 +8,7 @@
 	width: 100%;
 	display: none;
 	top: 0px;
+	border-bottom: 2px solid;
 }
 
 #fix-bar site-logo {
@@ -37,6 +39,12 @@
 		padding-left: 1.5rem;
 	}
 }
+@media ( max-width : 768px) {
+#fix-bar ul {
+		padding-left: 20px;
+	}
+}
+/* ===  fix-bar END ===  */
 
 .like-icon:hover {
 	color: #dc9a55e3;
@@ -50,7 +58,6 @@
 }
 
 .inputTagAppendForm input, .measure {
-	/* padding: 5px; */
 	white-space: pre; /* white-spaces will work effectively */
 }
 
@@ -60,7 +67,6 @@
 
 .tagMinus {
 	margin-left: -10px;
-	/*margin-right: 10px; */
 	color: #ed89a5;
 }
 
@@ -104,36 +110,42 @@ code, kbd, pre, samp {
 	color: #13ad5e;
 }
 
+/* === side-bar START === */
 .pop-sidebar {
 	border-right: 1px solid #bab2b2;
 	border-bottom: 1px solid #bab2b2;;
 	padding: 0;
 	margin-bottom: 25px;
 }
+/* === side-bar END === */
 
-.btn-edit-delete {
-	/* top: -20px;
-    left: -15px; */
-	/* float: right; */
+/* === edit-button(update, delete) START === */
+.edit-button {
 	right: 30px;
 	z-index: 100;
 	position: absolute;
 }
 
-.btn-edit-delete form {
+.edit-button form {
 	position: relative;
 	bottom: 20px;
 }
 
-.btn-edit-delete button {
-	height: 45px;
+.blog-detail .edit-button form {
+	position: relative;
+	bottom: 80px;
+}
+
+.edit-button button {
+	height: 35px;
 	line-height: 1;
 	border-radius: 8px;
 }
 
-.btn-edit-delete a:not(a) {
+.edit-button a:not(a) {
 	display: inline;
 }
+/* === edit-button(update, delete) END === */
 
 .inputTagAppendForm input::placeholder {
 	font-size: 12px;
@@ -144,14 +156,14 @@ code, kbd, pre, samp {
 	font-weight: 600;
 }
 
-/* blog detail */
+
+/* === blog detail controll-bar START === */
 .control-bar {
 	z-index: 100;
 	position: fixed;
-	margin: auto;
-	top: 0;
-	right: 5px;
-	bottom: 0;
+	top:50%; 
+	right:-15px;
+    transform: translate(-50%, -50%);
 }
 
 .control-bar button:first-child {
@@ -161,3 +173,4 @@ code, kbd, pre, samp {
 .control-bar button:last-child {
 	border-radius: 0px 0px 25px 25px;
 }
+/* === blog detail controll-bar END === */

@@ -3,18 +3,18 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/default}">
 <head>
-	<title>블로그</title>
-	<th:block layout:fragment="js">
-		<!--  검색어 highlighting  -->
-		<script th:src="@{/custom/js/jquery.highlight-4.js}"></script>
-		<script type="text/javascript" th:inline="javascript">
+<title>블로그</title>
+<th:block layout:fragment="js">
+	<!--  검색어 highlighting  -->
+	<script th:src="@{/custom/js/jquery.highlight-4.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
 		if(/*[[ ${blogFlag.keyword}]]*/ != null){
 			/* <![CDATA[ */       
 			$('.search-text').highlight(/*[[ ${blogFlag.keyword}]]*/);
 			/* ]]> */
 		}
 		</script>
-	</th:block>
+</th:block>
 </head>
 
 <div layout:fragment="content">
@@ -56,39 +56,49 @@
 
 							<!-- START post -->
 							<div class="post-entry-horzontal" th:each="blog : ${blogList}">
-								<a th:href="@{/blog/{id} (id=${blog.id})}"
-									th:with="contents = ${blog.contents}"> <th:block
-										th:with="startMatchingIndex = ${#strings.indexOf(contents, 'src=')} + 5,
-                    								  frontCutting = ${#strings.substring(contents, startMatchingIndex)},
-                    								  endMatchingIndex = ${#strings.indexOf(frontCutting, '&quot')},
-                    								  endCutting = ${#strings.substring(frontCutting, 0, endMatchingIndex)}"
-										th:if="${#strings.contains(contents, 'src=')}">
-										<div class="image element-animate"
-											data-animate-effect="fadeIn">
-											<img th:src="${endCutting}"
-												style="width: 100%; height: -webkit-fill-available;" />
-										</div>
-									</th:block> <th:block th:unless="${#strings.contains(contents, 'src=')}">
-									</th:block> <span class="text">
+								<a 	th:href="@{/blog/{id} (id=${blog.id})}"
+										th:with="contents = ${blog.contents}"> 
+									<th:block	th:with="startMatchingIndex = ${#strings.indexOf(contents, 'src=')} + 5,
+                    											  frontCutting = ${#strings.substring(contents, startMatchingIndex)},
+                    											  endMatchingIndex = ${#strings.indexOf(frontCutting, '&quot')},
+                    											  endCutting = ${#strings.substring(frontCutting, 0, endMatchingIndex)}"
+													th:if="${#strings.contains(contents, 'src=')}">
+													<div class="image element-animate" data-animate-effect="fadeIn">
+														<img th:src="${endCutting}" style="width: 100%; height: -webkit-fill-available;" />
+													</div>
+									</th:block> 
+									<th:block th:unless="${#strings.contains(contents, 'src=')}"> </th:block> 
+									<span class="text">
 										<div class="post-meta">
-											<span class="mr-2"
-												th:text="${blog.getFormattedCreatedDate()}"></span> <span
-												class="float-right"> <span class="ml-2 fa fa-eye"><span
-													class="ml-1" th:text="${blog.countOfViews}"></span></span> <span
-												class="ml-2 fa fa-comments"><span class="ml-1"
-													th:text="${blog.countOfComment}"></span></span> <span
-												class="ml-2 fa fa-thumbs-o-up"><span class="ml-1"
-													th:text="${blog.countOfThumbsUp}"></span></span>
+											<span class="mr-2" th:text="${blog.getFormattedCreatedDate()}"></span>
+											 <span 	class="float-right"> 
+											 	<span class="ml-2 fa fa-eye"> <span class="ml-1" th:text="${blog.countOfViews}"></span>
+											 </span> 
+											 <span	class="ml-2 fa fa-comments">
+											 	<span class="ml-1" th:text="${blog.countOfComment}"></span>
+											 </span>
+											  <span 	class="ml-2 fa fa-thumbs-o-up">
+											  	<span class="ml-1" th:text="${blog.countOfThumbsUp}"></span>
+											  </span>
 											</span>
 										</div>
-										<h2 class="search-text" th:if="${blog.title}"
-											th:text="${blog.title}"></h2>
-
-
+										<h2 class="search-text" th:if="${blog.title}" th:text="${blog.title}"></h2>
 								</span>
 								</a>
+								
 								<!-- 수정, 삭제 버튼 START -->
 								<th:block th:if="${session.SESSIONED_ID != null}">
+									<div th:if="${session.SESSIONED_ID.id == blog.user.id}">
+										<div class="edit-button btn-group" role="group" aria-label="Basic example">
+											<form class="edit-button-form">
+												<button type="button" class="btn btn-secondary" th:onclick="'fn_update(\''+ ${blog.id} +'\')'">수정</button>
+												<button type="button" class="btn btn-secondary" th:onclick="'fn_delete(\''+ ${blog.id} +'\')'">삭제</button>
+											</form>
+										</div>
+									</div> 
+								</th:block>
+								<!-- 수정, 삭제 버튼 END -->
+								<!-- <th:block th:if="${session.SESSIONED_ID != null}">
 									<div th:if="${session.SESSIONED_ID.id == blog.user.id}"
 										class="btn-edit-delete">
 										<form class="ud-form">
@@ -97,9 +107,8 @@
 											<button type="button" class="btn btn-secondary btn-sm"
 												th:onclick="'fn_delete(\''+ ${blog.id} +'\')'">삭제</button>
 										</form>
-									</div>
-								</th:block>
-								<!-- 수정, 삭제 버튼 END -->
+									</div> 
+								</th:block>-->
 							</div>
 							<!-- END post -->
 

@@ -143,6 +143,7 @@ public class BlogController {
 		model.addAttribute("blog", blog);
 		model.addAttribute("user", user);
 		model.addAttribute("comments", comments);
+		model.addAttribute("active", "blog");
 		
 		
 		return "blog/detail";
@@ -162,6 +163,7 @@ public class BlogController {
 		List<String> tagList = tagService.findAllNoDuplicate();
 		model.addAttribute("tagList", tagList);
 		
+		model.addAttribute("active", "blog");
 		return "blog/createForm";
 	}
 	
@@ -257,6 +259,7 @@ public class BlogController {
 		model.addAttribute("blog", blog);
 		model.addAttribute("tagList", tagList);
 		model.addAttribute("popList", popList);
+		model.addAttribute("active", "blog");
 		
 		return "blog/updateForm";
 	}

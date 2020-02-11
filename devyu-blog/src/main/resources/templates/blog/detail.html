@@ -19,7 +19,7 @@
 		<div class="container">
 			<div class="row blog-entries element-animate">
 
-				<div class="col-md-12 col-lg-8 main-content"
+				<div class="col-md-12 col-lg-8 main-content blog-detail"
 					th:with="contents = ${blog.contents}">
 
 					<th:block
@@ -53,21 +53,22 @@
 					<h1 class="mb-4" th:text="${blog.title}"></h1>
 					<a class="category mb-5" href="#">blogging</a>
 					
+					<!-- 수정, 삭제 버튼 START -->
 					<th:block th:if="${session.SESSIONED_ID != null}">
-	                  <div th:if="${session.SESSIONED_ID.id == blog.user.id}" class="btn-edit-delete" style="right: 0px; position: inherit;">
-		                  	<form class="ud-form">
-			                  	<button type="button" class="btn btn-warning btn-sm" th:onclick="'fn_update(\''+ ${blog.id} +'\')'">수정</button>
-			                  	<button type="button" class="btn btn-secondary btn-sm" th:onclick="'fn_delete(\''+ ${blog.id} +'\')'">삭제</button>
-		                  	</form>
-	                  </div>
-                </th:block>
+						<div th:if="${session.SESSIONED_ID.id == blog.user.id}">
+							<div class="edit-button btn-group" role="group" aria-label="Basic example">
+								<form class="edit-button-form">
+									<button type="button" class="btn btn-secondary" th:onclick="'fn_update(\''+ ${blog.id} +'\')'">수정</button>
+									<button type="button" class="btn btn-secondary" th:onclick="'fn_delete(\''+ ${blog.id} +'\')'">삭제</button>
+								</form>
+							</div>
+						</div> 
+					</th:block>
+					<!-- 수정, 삭제 버튼 END -->
 					
 					<div style="width: 100%">
 						<th:block th:utext="${blog.contents}"></th:block>
 					</div>
-
-					<!-- 					<div class="post-content-body" th:text="${blog.contents}">
-					</div> -->
 
 
 					<div class="pt-5">
