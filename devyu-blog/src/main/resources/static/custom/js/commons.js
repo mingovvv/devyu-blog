@@ -1,17 +1,36 @@
 $(function(){
 	
+	// control-bar
+	$(window).scroll(function(){
+		  var percentage = ($(window).scrollTop() / ($(document).height() - $(window).height())) * 100;
+		  $('.percentage').text(Math.round(percentage) +  '%');
+	});
+	$('.fa-arrow-up').click(function(){
+		$('html').animate({scrollTop : 0})
+	});
+	$('.fa-undo').click(function(){
+		window.history.back();
+	});
+	
+	
+	// fix-bar
+	var offset = $( '.site-section' ).offset();
+	$(window).scroll(function() {
+		 if ($(document).scrollTop() > offset.top ) {
+			 $('#fix-bar').addClass('fixed');
+		 }else{
+			 $('#fix-bar').removeClass('fixed');
+		 }
+	});
+	
 	$('.fa-search').click(function(){
 		$('.search-form').submit();
 	});
 
 
 
-	/////////////
-	// tag 추가 //
-	/////////////
-	
+	// tag 추가 (keydown)
 	$('.tags').on("keydown",'input[type="text"]',function(event){
-		
 	    
 		// input text width 조절
 		var spanElm = this.nextElementSibling;
@@ -36,6 +55,7 @@ $(function(){
 		};
 	}); 
 	
+	// tag 추가(blur)
 	$('.tags').on("blur",'input[type="text"]',function(event){
 		
 		// blur fn
@@ -51,34 +71,41 @@ $(function(){
 		}
 	});
 	
+	// tag 삭제
 	$('.tags').on("click",'.tagMinus',function(event){
 			if($('.inputBox').length == 1) {
 				alert("모든 태그를 지울 수 없습니다.");
 			}
 
 			if($('.inputBox').length > 1) {
-//				$(this).prev().prev().prev().remove();
-//				$(this).prev().prev().prev().remove();
-//				$(this).prev().prev().remove();
-//				$(this).prev().remove();
 				$(this).parent().remove();
 				$(this).remove();
 			}
 	});
 	
+	// tag 추가 fn
 	function addTags(){
 		$(".append").append("<div class='d-inline-block'><span class='mr-1 ml-2'>#</span><input style='width: 55px' class='border border-white inputBox' type='text' name='tagName' placeholder='tag'><span class='measure'></span><i class='fa fa-times tagMinus' aria-hidden='true'></i></div>");
 		$('.inputBox').last().focus();
 	}
 	
-	/////////////////////////
-	// comment ajax 추가 //
-	/////////////////////////
+	// comment ajax 추가
 	$(".submit-write input[type=submit]").click(addComment);
 
 	function addComment(e){
-		
 		e.preventDefault();
+		
+		if($('form input[name="name"]').val().trim() == ''){
+			alert("닉네임을 입력해주세요.");
+			return false;
+		}else if($('form input[name="password"]').val().trim() == ''){
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}else if($('form textarea').val().trim() == ''){
+			alert("메시지를 입력해주세요.");
+			return false;
+		}
+		
 		var queryString = $(".submit-write").serialize();
 		var url = $(".submit-write").attr('action');
 		
@@ -140,43 +167,7 @@ $(function(){
 		});
 	}
 	
-	/////////////////////////
-	// blog like 추가 ////////
-	/////////////////////////
-	$(".like-icon").click(function(){
-		
-		var url = "/blog/"+$(".text-center input").val()+"/like";
-		
-		$(".like-icon").css("color","#dc9a55e3");
-		$(".like-animate").css("opacity","1");
-		$(".like-animate").animate({
-			bottom : "120px",
-			opacity : "0"
-		},500, function(){
-			$(".like-animate").css("bottom","60px").css("opacity","0");
-		});
-		
-		$.ajax({
-			type : 'post',
-			url : url,
-			dataType : 'json',
-			error : function(request,status,error){
-				onError();
-				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			},
-			success : function(data){
-				
-				console.log(data);
-				$(".post-meta>.fa-thumbs-o-up span").text(data);
-			}
-		});
-		
-	});
-	
-	/////////////////////////
-	//// comment 삭제 /////
-	/////////////////////////
-	
+	// comment 삭제 
 	var clone= $('.input-group').clone();
 	$('.comment-list').on("click",".comment-delete-icon",function(event){
 		clone
@@ -194,6 +185,7 @@ $(function(){
 	});
 	
 	$('.comment-list').on("click",".comment-delete",function(event){
+		
 		var id = $(this).parent().parent().prev().find('input').val();
 		var password = $(this).parent().prev().val();
 		var json = { "id":id, "password":password};
@@ -246,4 +238,57 @@ $(function(){
 			}
 		});
 	});
+	
+	// blog 좋아요 추가 
+	$(".like-icon").click(function(){
+		
+		var url = "/blog/"+$(".text-center input").val()+"/like";
+		
+		$(".like-icon").css("color","#dc9a55e3");
+		$(".like-animate").css("opacity","1");
+		$(".like-animate").animate({
+			bottom : "120px",
+			opacity : "0"
+		},500, function(){
+			$(".like-animate").css("bottom","60px").css("opacity","0");
+		});
+		
+		$.ajax({
+			type : 'post',
+			url : url,
+			dataType : 'json',
+			error : function(request,status,error){
+				onError();
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			},
+			success : function(data){
+				
+				console.log(data);
+				$(".post-meta>.fa-thumbs-o-up span").text(data);
+			}
+		});
+		
+	});
+    
+
 })
+
+// blog 게시물 수정 
+function fn_update(id){
+	if(confirm("수정 하시겠습니까?")){
+		var form = $('.edit-button-form');
+	    form.attr('action', '/blog/update/' + id);
+	    form.attr('method', 'get');
+	    form.submit();
+	}
+}
+
+// blog 게시물 삭제
+function fn_delete(id) {
+	if(confirm("삭제 하시겠습니까?")){
+		var form = $('.edit-button-form');
+	    form.attr('action', '/blog/delete/' + id);
+	    form.attr('method', 'post');
+	    form.submit();
+	}
+}

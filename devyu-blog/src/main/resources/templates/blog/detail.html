@@ -10,11 +10,16 @@
 <!-- title start -->
 
 <div layout:fragment="content">
+<div class="control-bar btn-group-vertical">
+  <button type="button" class="btn btn-secondary fa fa-arrow-up"></button>
+  <button type="button" class="btn btn-secondary percentage"></button>
+  <button type="button" class="btn btn-secondary fa fa-undo"></button>
+</div>
 	<section class="site-section py-lg">
 		<div class="container">
 			<div class="row blog-entries element-animate">
 
-				<div class="col-md-12 col-lg-8 main-content"
+				<div class="col-md-12 col-lg-8 main-content blog-detail"
 					th:with="contents = ${blog.contents}">
 
 					<th:block
@@ -47,13 +52,23 @@
 					</div>
 					<h1 class="mb-4" th:text="${blog.title}"></h1>
 					<a class="category mb-5" href="#">blogging</a>
-
+					
+					<!-- 수정, 삭제 버튼 START -->
+					<th:block th:if="${session.SESSIONED_ID != null}">
+						<div th:if="${session.SESSIONED_ID.id == blog.user.id}">
+							<div class="edit-button btn-group" role="group" aria-label="Basic example">
+								<form class="edit-button-form">
+									<button type="button" class="btn btn-secondary" th:onclick="'fn_update(\''+ ${blog.id} +'\')'">수정</button>
+									<button type="button" class="btn btn-secondary" th:onclick="'fn_delete(\''+ ${blog.id} +'\')'">삭제</button>
+								</form>
+							</div>
+						</div> 
+					</th:block>
+					<!-- 수정, 삭제 버튼 END -->
+					
 					<div style="width: 100%">
 						<th:block th:utext="${blog.contents}"></th:block>
 					</div>
-
-					<!-- 					<div class="post-content-body" th:text="${blog.contents}">
-					</div> -->
 
 
 					<div class="pt-5">
@@ -138,19 +153,19 @@
 								class="p-5 bg-light submit-write mb-5">
 								<div class="form-group">
 									<label for="name">Name *</label> <input type="text"
-										class="form-control" id="name" name="name" required="required">
+										class="form-control" id="name" name="name">
 								</div>
 								<div class="form-group">
 									<label for="email">password *</label> <input type="password"
 										class="form-control" id="password" name="password">
 								</div>
 								<div class="form-group">
-									<label for="message">Message</label>
+									<label for="message">Message *</label>
 									<textarea name="contents" id="message" cols="30" rows="10"
 										class="form-control"></textarea>
 								</div>
 								<div class="form-group">
-									<input type="submit" value="Post Comment"
+									<input type="submit" value="댓글 남기기"
 										class="btn btn-primary">
 								</div>
 							</form>
@@ -159,8 +174,8 @@
 					</div>
 
 				</div>
-
 				<!-- END main-content -->
+
 
 				<!-- side bar include -->
 				<div th:replace="fragments/side-bar :: side-bar"></div>

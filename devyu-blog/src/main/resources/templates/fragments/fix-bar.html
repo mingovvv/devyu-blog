@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="fixBarFragment">
+<div id="fix-bar">
+	<div class="col-12 text-center">
+		<a class="absolute-toggle d-block d-md-none" data-toggle="collapse" href="#navbarMenu" role="button" aria-expanded="false" aria-controls="navbarMenu"><span class="burger-lines"></span></a>
+		<h1 class="site-logo d-md-none" ><a href="/">devyu's Blog</a></h1>
+	</div>
+
+	 <nav class="navbar navbar-expand-md  navbar-light p-0">
+		<div class="collapse navbar-collapse" id="navbarMenu">
+			<ul class="navbar-nav mx-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="/" th:classappend="${active} == home ? active">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#" th:classappend="${active} == aboutMe ? active"><b>About Me</b></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/blog" th:classappend="${active} == blog ? active"><b>Blog</b></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/contact" th:classappend="${active} == contact ? active"><b>Contact</b></a>
+				</li>
+			</ul>
+		</div>
+	 </nav>
+</div>
+</th:block>
+</html>

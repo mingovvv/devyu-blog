@@ -1,112 +1,140 @@
 <html xmlns:th="http://www.thymeleaf.org">
-	<footer th:fragment="footerFragment" class="site-footer">
-		<div class="container">
-			<div class="row mb-5">
-				<div class="col-md-4">
-					<!-- about me SATRT -->
-					<h3>About Me</h3>
-					<p class="mb-4">
-						<img th:src="@{/custom/images/about-me2.jpg}" alt="Image placeholder"
-							class="img-fluid">
-					</p>
-					<p>
-						안녕하세요 :) <br/>
-						배움을 즐기는 개발자 devyu 입니다. 즐코합시다 !  
-						<!-- <a href="#">Read More</a> -->
-					</p>
-					<!-- about me END -->
-				</div>
-				<div class="col-md-6 ml-auto">
-					<div class="row">
-						
-						<!-- latest post START -->
-						<div class="col-md-7">
-							<h3>Latest Post</h3>
-							<div class="post-entry-sidebar">
-								<ul>
-									<li><a href=""> <img th:src="@{/images/img_6.jpg}"
-											alt="Image placeholder" class="mr-4">
-											<div class="text">
-												<h4>How to Find the Video Games of Your Youth</h4>
-												<div class="post-meta">
-													<span class="mr-2">March 15, 2018 </span> &bullet; <span
-														class="ml-2"><span class="fa fa-comments"></span> 3</span>
-												</div>
+<footer th:fragment="footerFragment" class="site-footer">
+	<div class="container">
+		<div class="row mb-5">
+			<div class="col-md-4">
+				<!-- about me SATRT -->
+				<h3>About Me</h3>
+				<p class="mb-4">
+					<img th:src="@{/custom/images/about-me2.jpg}"
+						alt="Image placeholder" class="img-fluid">
+				</p>
+				<p>
+					안녕하세요 :) <br /> 개발자 devyu의 블로그 입니다. 즐코합시다 !
+					<!-- <a href="#">Read More</a> -->
+				</p>
+				<!-- about me END -->
+			</div>
+			<div class="col-md-6 ml-auto">
+				<div class="row">
+
+					<!-- latest post START -->
+					<div class="col-md-7">
+						<h3>Latest Post</h3>
+						<div class="post-entry-sidebar">
+							<ul>
+								<li><a href=""> <img th:src="@{/images/img_6.jpg}"
+										alt="Image placeholder" class="mr-4">
+										<div class="text">
+											<h4>How to Find the Video Games of Your Youth</h4>
+											<div class="post-meta">
+												<span class="mr-2">March 15, 2018 </span> &bullet; <span
+													class="ml-2"><span class="fa fa-comments"></span> 3</span>
 											</div>
-									</a></li>
-									<li><a href=""> <img th:src="@{/images/img_3.jpg}"
-											alt="Image placeholder" class="mr-4">
-											<div class="text">
-												<h4>How to Find the Video Games of Your Youth</h4>
-												<div class="post-meta">
-													<span class="mr-2">March 15, 2018 </span> &bullet; <span
-														class="ml-2"><span class="fa fa-comments"></span> 3</span>
-												</div>
+										</div>
+								</a></li>
+								<li><a href=""> <img th:src="@{/images/img_3.jpg}"
+										alt="Image placeholder" class="mr-4">
+										<div class="text">
+											<h4>How to Find the Video Games of Your Youth</h4>
+											<div class="post-meta">
+												<span class="mr-2">March 15, 2018 </span> &bullet; <span
+													class="ml-2"><span class="fa fa-comments"></span> 3</span>
 											</div>
-									</a></li>
-									<li><a href=""> <img th:src="@{/images/img_4.jpg}"
-											alt="Image placeholder" class="mr-4">
-											<div class="text">
-												<h4>How to Find the Video Games of Your Youth</h4>
-												<div class="post-meta">
-													<span class="mr-2">March 15, 2018 </span> &bullet; <span
-														class="ml-2"><span class="fa fa-comments"></span> 3</span>
-												</div>
+										</div>
+								</a></li>
+								<li><a href=""> <img th:src="@{/images/img_4.jpg}"
+										alt="Image placeholder" class="mr-4">
+										<div class="text">
+											<h4>How to Find the Video Games of Your Youth</h4>
+											<div class="post-meta">
+												<span class="mr-2">March 15, 2018 </span> &bullet; <span
+													class="ml-2"><span class="fa fa-comments"></span> 3</span>
 											</div>
-									</a></li>
-								</ul>
-							</div>
+										</div>
+								</a></li>
+							</ul>
 						</div>
-						<!-- latest post END -->
-						
-						<div class="col-md-1"></div>
-	
-	
-						<div class="col-md-4">
-							
-							<!-- Quick Links START -->
-							<div class="mb-5">
-								<h3>Quick Links</h3>
-								<ul class="list-unstyled">
-									<li><a href="/">Home</a></li>
-									<li><a href="#">About Me</a></li>
-									<li><a href="/blog">Blog</a></li>
-									<li><a href="#">Contact</a></li>
-								</ul>
-							</div>
-							<!-- Quick Links END -->
-	
-							<!-- Social Links START -->
-							<div class="mb-5">
-								<h3>Social</h3>
-								<ul class="list-unstyled footer-social">
-									<li>
-										<a href="https://github.com/puregyu" target="_blank">
-											<span class="fa fa-github"></span>github
-										</a>
-									</li>
-								</ul>
-							</div>
-							<!-- Social Links END -->
+					</div>
+					<!-- latest post END -->
+
+					<div class="col-md-1"></div>
+
+
+					<div class="col-md-4">
+
+						<!-- Quick Links START -->
+						<div class="mb-5">
+							<h3>Quick Links</h3>
+							<ul class="list-unstyled">
+								<li><a href="/">Home</a></li>
+								<li><a href="#">About Me</a></li>
+								<li><a href="/blog">Blog</a></li>
+								<li><a href="/contact">Contact</a></li>
+							</ul>
 						</div>
+						<!-- Quick Links END -->
+
+						<!-- Social Links START -->
+						<div class="mb-5">
+							<h3>Social</h3>
+							<ul class="list-unstyled footer-social">
+								<li><a href="https://github.com/puregyu" target="_blank">
+										<span class="fa fa-github"></span>github
+								</a></li>
+								<li><a href="https://pugyu.tistory.com" target="_blank">
+										<span class="fa fa-link"></span>Tstory
+								</a></li>
+							</ul>
+						</div>
+						<!-- Social Links END -->
 					</div>
 				</div>
 			</div>
-			
-			<div class="row">
-				<div class="col-md-12 text-center">
-					<p class="small">
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						Copyright &copy;
-						<script>document.write(new Date().getFullYear());</script>
-						All Rights Reserved | This template is made with <i
-							class="fa fa-heart text-danger" aria-hidden="true"></i> by <a
-							href="https://colorlib.com" target="_blank">Colorlib</a>
-						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					</p>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<p class="small">
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					Copyright &copy;
+					<script>
+						document.write(new Date().getFullYear());
+					</script>
+					All Rights Reserved | This template is made with <i
+						class="fa fa-heart text-danger" aria-hidden="true"></i> by <a
+						href="https://colorlib.com" target="_blank">Colorlib</a>
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+				</p>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- 공용 모달 -->
+	<th:block th:if="${modal}">
+		<div class="modal fade" id="EmailModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel"
+							th:text="${modal.title}"></h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" th:text="${modal.message}"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+					</div>
 				</div>
 			</div>
-			
 		</div>
-	</footer>
+	</th:block>
+	<!-- 공용 모달 -->
+
+</footer>
 </html>

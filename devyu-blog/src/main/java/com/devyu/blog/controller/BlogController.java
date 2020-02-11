@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.ejb.access.EjbAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.devyu.blog.constant.Constant;
 import com.devyu.blog.domain.Blog;
 import com.devyu.blog.domain.Comment;
 import com.devyu.blog.domain.Pagination;
@@ -54,76 +58,60 @@ public class BlogController {
 									@RequestParam(defaultValue="1") int curPage,
 									@RequestParam(defaultValue="1") String tagname,
 									@RequestParam(defaultValue="1") String keyword,
-									HttpServletRequest request) {
+									HttpSession session,
+									HttpServletRequest request,
+									HttpServletResponse response) {
 		
 		String uri = request.getRequestURI(); 
+
+		int listCnt=0;
+		Pagination pagination = null;
+		List<Blog> blogList = null;
+		List<Blog> popList = null;
+		List<String> tagList = null;
+		Map<String, Object> blogFlag = new HashMap<>();
 		
-		int listCnt = 0;
-		if(uri.equals("/blog") || uri.equals("/blog/page")) {
+		switch(uri) {
+		case "/blog" : 
+		case "/blog/page" :
 			listCnt = blogService.findAllCnt();
-			Pagination pagination = new Pagination(listCnt, curPage);
-			
-			model.addAttribute("pagination", pagination);
-			List<Blog> blogList = blogService.findListPaging(pagination.getStartIndex(), pagination.getPageSize());
-			model.addAttribute("blogList", blogList);
-			
-			List<Blog> popList = blogService.findPopList();
-			model.addAttribute("popList", popList);
-			
-			List<String> tagList = tagService.findAllNoDuplicate();
-			model.addAttribute("tagList", tagList);
-			
-			Map<String, Object> blogFlag = new HashMap<>();
+			pagination = new Pagination(listCnt, curPage);
+			blogList = blogService.findListPaging(pagination.getStartIndex(), pagination.getPageSize());
 			blogFlag.put("flag", "default");
 			blogFlag.put("keyword", null);
 			blogFlag.put("count", listCnt);
-			model.addAttribute("blogFlag", blogFlag);
-			
-			
-		}else if(uri.equals("/blog/tag")) {
+			break;
+		case "/blog/tag" :
 			listCnt = blogService.findAllForTagNameCnt(tagname);
-			Pagination pagination = new Pagination(listCnt, curPage);
-			
-			model.addAttribute("pagination", pagination);
-			List<Blog> blogList = blogService.findListPagingForTagName(tagname, pagination.getStartIndex(), pagination.getPageSize());
-			model.addAttribute("blogList", blogList);
-			
-			List<Blog> popList = blogService.findPopList();
-			model.addAttribute("popList", popList);
-			
-			List<String> tagList = tagService.findAllNoDuplicate();
-			model.addAttribute("tagList", tagList);
-			
-			Map<String, Object> blogFlag = new HashMap<>();
+			pagination = new Pagination(listCnt, curPage);
+			blogList = blogService.findListPagingForTagName(tagname, pagination.getStartIndex(), pagination.getPageSize());
 			blogFlag.put("flag", "searchTag");
 			blogFlag.put("keyword", null);
 			blogFlag.put("tagname", tagname);
 			blogFlag.put("count", listCnt);
-			model.addAttribute("blogFlag", blogFlag);
-			
-			
-		}else if(uri.equals("/blog/search")) {
+			break;
+		case "/blog/search" :
 			listCnt = blogService.findAllForSearchCnt(keyword);
-			Pagination pagination = new Pagination(listCnt, curPage);
-			
-			model.addAttribute("pagination", pagination);
-			List<Blog> blogList = blogService.findListPagingForSearch(keyword, pagination.getStartIndex(), pagination.getPageSize());
-			model.addAttribute("blogList", blogList);
-			
-			List<Blog> popList = blogService.findPopList();
-			model.addAttribute("popList", popList);
-			
-			List<String> tagList = tagService.findAllNoDuplicate();
-			model.addAttribute("tagList", tagList);
-			
-			Map<String, Object> blogFlag = new HashMap<>();
+			pagination = new Pagination(listCnt, curPage);
+			blogList = blogService.findListPagingForSearch(keyword, pagination.getStartIndex(), pagination.getPageSize());
 			blogFlag.put("flag", "searchText");
 			blogFlag.put("keyword", keyword);
 			blogFlag.put("count", listCnt);
-			model.addAttribute("blogFlag", blogFlag);
-			
-			
+			break;
+		
+		default :
+
 		}
+		popList = blogService.findPopList();
+		tagList = tagService.findAllNoDuplicate();
+		
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("blogList", blogList);
+		model.addAttribute("popList", popList);
+		model.addAttribute("tagList", tagList);
+		model.addAttribute("blogFlag", blogFlag);
+		model.addAttribute("active", "blog");
+		
 		return "blog/list";
 	}
 	
@@ -155,13 +143,19 @@ public class BlogController {
 		model.addAttribute("blog", blog);
 		model.addAttribute("user", user);
 		model.addAttribute("comments", comments);
+		model.addAttribute("active", "blog");
 		
 		
 		return "blog/detail";
 	}
 	
 	@GetMapping("/blog/create")
-	public String createForm(Model model) {
+	public String createForm(Model model, HttpSession session) {
+		
+		if(session.getAttribute(Constant.SESSIONED_ID) == null) {
+			model.addAttribute("errorMessage", "로그인된 사용자만 이용할 수 있습니다.");
+			return "login/loginForm";
+		}
 		
 		List<Blog> popList = blogService.findPopList();
 		model.addAttribute("popList", popList);
@@ -169,6 +163,7 @@ public class BlogController {
 		List<String> tagList = tagService.findAllNoDuplicate();
 		model.addAttribute("tagList", tagList);
 		
+		model.addAttribute("active", "blog");
 		return "blog/createForm";
 	}
 	
@@ -239,36 +234,46 @@ public class BlogController {
 		
 	}
 	
-	@GetMapping("/blog/edit/{id}")
-	public String updateForm(@PathVariable Long id, Model model) {
+	@GetMapping("/blog/update/{id}")
+	public String updateForm(@PathVariable Long id, Model model, HttpSession session, HttpServletRequest request) {
 		
 		Blog blog = blogService.findOne(id);
+		
+		if(session.getAttribute(Constant.SESSIONED_ID) == null) {
+			model.addAttribute("errorMessage", "로그인된 사용자만 이용할 수 있습니다.");
+			return "login/loginForm";
+		}
+		
+		User user = (User) session.getAttribute(Constant.SESSIONED_ID); 
+		
+		if(!user.getId().equals(blog.getUser().getId())) {
+			Map<String, Object> modal = new HashMap<>();
+			modal.put("title", "malicious Access");
+			modal.put("message", "로그인된 유저의 게시글이 아닙니다. 본인의 게시물만 수정할 수 있습니다.");
+			model.addAttribute("modal", modal);
+			return "index";
+		}
+		
 		List<Blog> popList = blogService.findPopList();
 		List<String> tagList = tagService.findAllNoDuplicate();
 		model.addAttribute("blog", blog);
 		model.addAttribute("tagList", tagList);
 		model.addAttribute("popList", popList);
+		model.addAttribute("active", "blog");
 		
 		return "blog/updateForm";
 	}
 	
-	@PostMapping("/blog/edit/{id}")
+	@PostMapping("/blog/update/{id}")
 	public String update(@PathVariable Long id, BlogForm blogForm) {
 		blogService.update(id, blogForm);
 		return "redirect:/blog";
 	}
 	
-	@GetMapping("/blog/delete/{id}")
-	public String delete(@PathVariable Long id) {
+	@PostMapping("/blog/delete/{id}")
+	public String delete(@PathVariable Long id, HttpSession session) {
 		blogService.delete(id);
 		return "redirect:/blog";
 	}
 }
-
-
-
-
-
-
-
 

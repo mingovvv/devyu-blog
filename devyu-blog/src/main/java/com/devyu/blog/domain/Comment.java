@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -29,11 +30,13 @@ public class Comment extends Abstract{
 	@Column(name = "comment_id")
 	private Long id;
 	
+	@NotNull
 	private String name;
 	
-	@Lob
+	@Lob @NotNull
 	private String contents;
 	
+	@NotNull
 	private String password;
 	
 	@JsonIgnore
