@@ -33,8 +33,6 @@ public class LoginController {
 		try {
 			String refererURI = new URI(request.getHeader("referer")).getPath();
 			
-			System.err.println(refererURI);
-			System.err.println(request.getHeader("referer"));
 			model.addAttribute("referer", refererURI);
 		} catch (URISyntaxException e) {
 			logger.info("URISyntaxException error 발생");
@@ -53,7 +51,7 @@ public class LoginController {
 		User user = userService.findByUserId(loginId);
 		
 		if(user == null || !user.equalsPassword(user.getPassword(), password)) {
-			model.addAttribute("errorMessage", "아이디 또는 비밀번호가 일치하지 않습니다.");
+			model.addAttribute("errorMessage", Constant.ACCOUNT_ACCESS_ERROR_MESSAGE);
 			return "login/loginForm"; 
 		}
 		

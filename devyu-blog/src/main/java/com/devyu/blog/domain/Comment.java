@@ -30,14 +30,14 @@ public class Comment extends Abstract{
 	@Column(name = "comment_id")
 	private Long id;
 	
-	@NotNull
 	private String name;
 	
 	@Lob @NotNull
 	private String contents;
 	
-	@NotNull
 	private String password;
+	
+	private Boolean isWriter;
 	
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -68,6 +68,7 @@ public class Comment extends Abstract{
 		this.name = commentForm.getName();
 		this.password = BCrypt.hashpw(commentForm.getPassword(), BCrypt.gensalt());
 		this.contents = commentForm.getContents();
+		this.isWriter = commentForm.getIsWriter();
 	}
 
 	public Boolean equalsPassword(String DBPassword, String inputPassword) {

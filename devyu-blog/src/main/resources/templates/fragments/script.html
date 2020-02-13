@@ -10,7 +10,7 @@
 	    <script th:src="@{/js/jquery.waypoints.min.js}"></script>
 	    <script th:src="@{/js/jquery.stellar.min.js}"></script>
 	    <script th:src="@{/js/main.js}"></script>
-	    <script th:src="@{/custom/js/commons.js}"></script>
+	    <script type="text/javascript" th:inline="javascript" th:src="@{/custom/js/commons.js}"></script>
 
 		<!-- 개별적인 css 설정 -->
 	    <th:block layout:fragment="js"></th:block>

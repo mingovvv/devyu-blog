@@ -17,12 +17,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.devyu.blog.constant.Constant;
 import com.devyu.blog.domain.Blog;
 import com.devyu.blog.inputForm.ContactForm;
 import com.devyu.blog.service.BlogService;
-import com.devyu.blog.service.CommentService;
 import com.devyu.blog.service.TagService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,19 +36,22 @@ public class ContactController {
 	private final TagService tagService;
 
 	@GetMapping("/contact")
-	public String contact(Model model) {
+	public String contact(Model model, @RequestParam Map<String, Object> modal) {
 		List<Blog> popList = blogService.findPopList();
 		model.addAttribute("popList", popList);
 		
 		List<String> tagList = tagService.findAllNoDuplicate();
 		model.addAttribute("tagList", tagList);
-		
 		model.addAttribute("active", "contact");
+		
+		if(!modal.isEmpty()) {
+			model.addAttribute("modal", modal);
+		}
 		return "contact/contact";
 	}
 	
 	@PostMapping("/contact")
-	public String mailSender(ContactForm contactForm, Model model) throws AddressException, MessagingException{
+	public String mailSender(ContactForm contactForm, Model model, RedirectAttributes attributes) throws AddressException, MessagingException{
 		
 		String subject = contactForm.getName()+Constant.SMTP_TITLE; 
 		String body =   
@@ -81,11 +85,12 @@ public class ContactController {
 		mimeMessage.setContent(body, "text/html; charset=UTF-8"); 
 		Transport.send(mimeMessage); //javax.mail.Transport.send() 이용
 		
+		// 전송 완료 메시지
 		Map<String, Object> modal = new HashMap<>();
 		modal.put("title", "mail sender");
-		modal.put("message", "성공적으로 메일이 전송되었습니다 )");
-		model.addAttribute("modal", modal);
+		modal.put("message", Constant.MAIL_SUCCESS_MESSAGE);
+		attributes.addFlashAttribute("modal", modal);
 		
-		return "contact/contact";
+		return "redirect:/contact";
 	}
 }

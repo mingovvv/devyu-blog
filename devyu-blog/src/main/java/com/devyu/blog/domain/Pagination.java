@@ -45,10 +45,6 @@ public class Pagination {
 
 	public Pagination(int listCnt, int curPage) {
 
-		/**
-		 * 페이징 처리 순서 1. 총 페이지수 2. 총 블럭(range)수 3. range setting
-		 */
-
 		// 총 게시물 수와 현재 페이지를 Controller로 부터 받아온다.
 		/** 현재페이지 **/
 		setCurPage(curPage);
@@ -67,10 +63,10 @@ public class Pagination {
 	}
 	
 	public void setPageCnt(int listCnt) {
-        this.pageCnt = (int) Math.ceil(listCnt*1.0/pageSize);
+		this.pageCnt = (int) ((Math.ceil(listCnt*1.0/pageSize) == 0 ) ? 1 : Math.ceil(listCnt*1.0/pageSize)); 
     }
     public void setRangeCnt(int pageCnt) {
-        this.rangeCnt = (int) Math.ceil(pageCnt*1.0/rangeSize);
+        this.rangeCnt = (int) ((Math.ceil(pageCnt*1.0/rangeSize) == 0 ) ? 1 : Math.ceil(pageCnt*1.0/rangeSize));
     }
     public void rangeSetting(int curPage){
         
