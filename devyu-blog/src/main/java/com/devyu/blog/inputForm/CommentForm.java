@@ -5,7 +5,8 @@ import lombok.Setter;
 
 @Getter @Setter
 public class CommentForm {
-	String name;
-	String password;
-	String contents;
+	private String name;
+	private String password;
+	private String contents;
+	private Boolean isWriter;
 }

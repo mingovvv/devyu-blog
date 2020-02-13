@@ -99,4 +99,8 @@ public class Blog extends Abstract{
 		this.contents = blogForm.getContents();
 		this.blogTags.clear();
 	}
+
+	public void removeCountOfCommnet() {
+		countOfComment = countOfComment-1;
+	}
 }

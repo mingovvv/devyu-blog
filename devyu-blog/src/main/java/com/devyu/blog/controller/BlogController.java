@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.ejb.access.EjbAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +30,6 @@ import com.devyu.blog.domain.Comment;
 import com.devyu.blog.domain.Pagination;
 import com.devyu.blog.domain.User;
 import com.devyu.blog.inputForm.BlogForm;
-import com.devyu.blog.repository.BlogRepository;
 import com.devyu.blog.service.BlogService;
 import com.devyu.blog.service.CommentService;
 import com.devyu.blog.service.TagService;
@@ -118,6 +114,7 @@ public class BlogController {
 	@GetMapping("/blog/{id}")
 	public String detail(@PathVariable Long id, Model model, HttpServletRequest req, HttpServletResponse res) {
 		
+		// 방문자 쿠키 생성
 		boolean isCookie=false;
 		Cookie[] cookies = req.getCookies();
 		if(cookies!=null){   
@@ -153,7 +150,7 @@ public class BlogController {
 	public String createForm(Model model, HttpSession session) {
 		
 		if(session.getAttribute(Constant.SESSIONED_ID) == null) {
-			model.addAttribute("errorMessage", "로그인된 사용자만 이용할 수 있습니다.");
+			model.addAttribute("errorMessage", Constant.MALICIOUS_CREATE_MESSAGE);
 			return "login/loginForm";
 		}
 		
@@ -185,7 +182,7 @@ public class BlogController {
 	@PostMapping("/blog/imageUpload")
 	public String createFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
 		
-		String filePath = "C:\\Users\\min\\Desktop\\upload-folder";
+		String filePath = Constant.IMAGE_FILE_PATH;
 		File newFile = new File(filePath);
 	    if(!newFile.exists()) {
 	    	newFile.mkdirs();
@@ -195,18 +192,13 @@ public class BlogController {
 		String originalFilename = file.getOriginalFilename();
 		
 		InputStream fis =  file.getInputStream();
-		FileOutputStream fos = new FileOutputStream(filePath + File.separator + uuid + originalFilename); //File.separator 구분자 / \ 윈도우는 \ 유닉스는 / 니깐 둘중 골라주는놈 파일.세퍼레이톨
+		FileOutputStream fos = new FileOutputStream(filePath + File.separator + uuid + originalFilename); 
 
-		byte[] buf = new byte[1024]; //버퍼 만들기
-			
+		byte[] buf = new byte[1024];
 		int size = 0;
-		
 		while((size = fis.read(buf,0,1024)) != -1)
 				fos.write(buf,0,size);
-		
 		fis.read(buf, 0, 1024);
-		
-		
 		fis.close();
 		fos.close();
 		
@@ -240,7 +232,7 @@ public class BlogController {
 		Blog blog = blogService.findOne(id);
 		
 		if(session.getAttribute(Constant.SESSIONED_ID) == null) {
-			model.addAttribute("errorMessage", "로그인된 사용자만 이용할 수 있습니다.");
+			model.addAttribute("errorMessage", Constant.MALICIOUS_CREATE_MESSAGE);
 			return "login/loginForm";
 		}
 		
@@ -249,7 +241,7 @@ public class BlogController {
 		if(!user.getId().equals(blog.getUser().getId())) {
 			Map<String, Object> modal = new HashMap<>();
 			modal.put("title", "malicious Access");
-			modal.put("message", "로그인된 유저의 게시글이 아닙니다. 본인의 게시물만 수정할 수 있습니다.");
+			modal.put("message", Constant.MALICIOUS_ACCESS_MESSAGE);
 			model.addAttribute("modal", modal);
 			return "index";
 		}
