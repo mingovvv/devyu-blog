@@ -1,49 +1,79 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <footer th:fragment="footerFragment" class="site-footer">
 	<div class="container">
+          <div class="row mb-5">
+          
+            <div class="col-md-4">
+           	  <img class="footer-images" th:src="@{/custom/images/favicon.png}">
+              <span class="footer-font text-light font-weight-bold">devyu's Blog</span>
+              <p class="small text-warning font-weight-bold">기록하고 공유해요!</p>
+              <p class="small">해당 사이트는 개인 제작 블로그입니다.</p>
+              <p class="small">모든 게시물은 공개되며 자유롭게 사용이 가능합니다.</p>
+            </div>
+            
+            <div class="col-md-1 mb-5"></div>
+            
+            <div class="col-md-7 ml-auto">
+              <div class="row">
+                <div class="col-md-8">
+                 <div class="mb-5">
+                    <h3>Contact</h3>
+                    <ul class="list-unstyled footer-contact">
+                      <li class="text-white"><span class="fa fa-home"></span> Yangcheon-gu, Seoul, Republic of Korea</li>
+                      <li class="text-white"><span class="fa fa-phone"></span> 010-9970-6821</li>
+                      <li><a th:href="@{/contact}"><span class="fa fa-envelope-o"></span> puregyu@naver.com</a></li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class="col-md-1"></div>
+                
+                <div class="col-md-3">
+                  <div class="mb-5">
+                    <h3>Social</h3>
+                    <ul class="list-unstyled footer-social">
+                      <li><a href="https://github.com/puregyu" target="_blank"><span class="fa fa-github"></span> github</a></li>
+                      <li><a href="https://pugyu.tistory.com" target="_blank"><span class="fa fa-book"></span> Tstory</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <p class="small">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy; <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>document.write(new Date().getFullYear());</script> All Rights Reserved | This template is made with <i class="fa fa-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+            </div>
+          </div>
 
-		<div class="row">
-			<div class="col-md-12 text-center">
-				<p class="small">
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					Copyright &copy;
-					<script>
-						document.write(new Date().getFullYear());
-					</script>
-					All Rights Reserved | This template is made with <i
-						class="fa fa-heart text-danger" aria-hidden="true"></i> by <a
-						href="https://colorlib.com" target="_blank">Colorlib</a>
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-				</p>
-			</div>
-		</div>
-
-	</div>
-
-	<!-- 공용 모달 -->
-	<th:block th:if="${modal}">
-		<div class="modal fade" id="EmailModal" tabindex="-1" role="dialog"
-			aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel"
-							th:text="${modal.title}"></h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body" th:text="${modal.message}"></div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-dismiss="modal">Close</button>
+		<!-- 공용 모달 -->
+		<th:block th:if="${modal}">
+			<div class="modal fade" id="EmailModal" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel"
+								th:text="${modal.title}"></h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" th:text="${modal.message}"></div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</th:block>
-	<!-- 공용 모달 -->
-
+		</th:block>
+		<!-- 공용 모달 -->
+</div>
 </footer>
 </html>

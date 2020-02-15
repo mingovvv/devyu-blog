@@ -182,7 +182,13 @@ public class BlogController {
 	@PostMapping("/blog/imageUpload")
 	public String createFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws IllegalStateException, IOException {
 		
-		String filePath = Constant.IMAGE_FILE_PATH;
+		String filePath;
+		if(Constant.IS_LINUX) {
+			filePath=Constant.IMAGE_FILE_PATH_LINUX;
+		}else {
+			filePath=Constant.IMAGE_FILE_PATH_WINDOWS;
+		}
+		
 		File newFile = new File(filePath);
 	    if(!newFile.exists()) {
 	    	newFile.mkdirs();
