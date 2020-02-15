@@ -23,11 +23,14 @@ public class Constant {
 	
 	// image file storage
 	public static final String RESOURCE_HANDLER = "/blog/images/**";
+	
+	public static Boolean IS_LINUX = false;
+	
 	// windos
-	//public static final String IMAGE_FILE_PATH = "C:\\Users\\upload-folder";
-	//public static final String RESOURCE_LOCATIONS = "file:///C:/Users/upload-folder/";
+	public static final String IMAGE_FILE_PATH_WINDOWS = "C:\\Users\\min\\upload-folder";
+	public static final String RESOURCE_LOCATIONS_WINDOWS = "file:///C:/Users/min/upload-folder/";
 	
 	// linux
-	public static final String IMAGE_FILE_PATH = "/home/ubuntu/upload-folder";
-	public static final String RESOURCE_LOCATIONS = "file:///home/ubuntu/upload-folder/";
+	public static final String IMAGE_FILE_PATH_LINUX = "/home/ubuntu/upload-folder";
+	public static final String RESOURCE_LOCATIONS_LINUX = "file:///home/ubuntu/upload-folder/";
 }
