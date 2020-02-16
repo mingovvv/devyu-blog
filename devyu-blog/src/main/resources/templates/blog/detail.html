@@ -29,8 +29,7 @@
                     								  endMatchingIndex = ${#strings.indexOf(frontCutting, '&quot')},
                     								  endCutting = ${#strings.substring(frontCutting, 0, endMatchingIndex)}"
 						th:if="${#strings.contains(contents, 'src=')}">
-						<img th:src="${endCutting}" class="img-fluid mb-5"
-							style="width: 100%" />
+						<img th:src="${endCutting}" class="img-fluid mb-5 w-100"/>
 					</th:block>
 
 					<th:block th:unless="${#strings.contains(contents, 'src=')}">
@@ -67,7 +66,7 @@
 					</th:block>
 					<!-- 수정, 삭제 버튼 END -->
 					
-					<div style="width: 100%">
+					<div class="w-100">
 						<th:block th:utext="${blog.contents}"></th:block>
 					</div>
 
@@ -135,11 +134,11 @@
 						<!-- END comment-list -->
 
 						<!-- START comment-delete Button-->
-						<div class="input-group" style="display: none; border: solid;">
+						<div class="input-group comment-delete-box">
 							<input type="password" class="form-control"
 								placeholder="enter user password"
 								aria-label="Recipient's username"
-								aria-describedby="basic-addon2" style="height: 45px;">
+								aria-describedby="basic-addon2">
 							<div class="input-group-append">
 								<button class="btn btn-outline-secondary comment-delete" type="button">delete</button>
 								<button class="btn btn-outline-secondary comment-delete-cancel" type="button">cancel</button>

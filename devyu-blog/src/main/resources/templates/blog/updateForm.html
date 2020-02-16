@@ -9,7 +9,7 @@
 
 
 <div layout:fragment="content">
-	<section class="site-section">
+	<section class="site-section update-form">
       <div class="container">
         <div class="row mb-4">
           <div class="col-md-6">
@@ -31,7 +31,7 @@
                   <div class="row">
                     <div class="col-md-12 form-group">
                       <label for="content">content</label>
-                      <textarea style="line-height: normal;" name="contents" id="summernote" class="form-control summernote" cols="30" rows="8" th:value="${blog.contents}">
+                      <textarea name="contents" id="summernote" class="form-control summernote" cols="30" rows="8" th:value="${blog.contents}">
                       <th:block th:utext=${blog.contents}>
                       
                       </th:block>
@@ -55,13 +55,13 @@
 						    	<li class="append">
 						    		<div class="d-inline-block" th:each="tags : ${blog.blogTags}">
 						    		<span>#</span>
-						    		<input style="width: 55px" class="border border-white inputBox" type="text" name="tagName" placeholder="tag" th:value="${tags.tag.tagName}">
+						    		<input class="border border-white inputBox" type="text" name="tagName" placeholder="tag" th:value="${tags.tag.tagName}">
 						    		<span class="measure"></span>
 						    		<i class='fa fa-times tagMinus' aria-hidden='true'></i>
 						    		</div>
 						    		<div class="d-inline-block">
 						    		<span>#</span>
-						    		<input style="width: 55px" class="border border-white inputBox" type="text" name="tagName" placeholder="tag">
+						    		<input class="border border-white inputBox" type="text" name="tagName" placeholder="tag">
 						    		<span class="measure"></span>
 						    		<i class='fa fa-times tagMinus' aria-hidden='true'></i>
 						    		</div>
