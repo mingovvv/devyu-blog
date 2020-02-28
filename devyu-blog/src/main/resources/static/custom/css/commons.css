@@ -66,6 +66,16 @@
 .site-footer .footer-contact li span {
     width: 30px;
 }
+
+.sidebar-box .comments {
+	margin-left: -40px;
+}
+
+.sidebar-box .comments a{
+	color:#766b6b; 
+}
+
+
 /* [ALL] end */
 
 /* [home] start */

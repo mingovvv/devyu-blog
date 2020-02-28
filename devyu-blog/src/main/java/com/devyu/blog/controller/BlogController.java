@@ -65,6 +65,7 @@ public class BlogController {
 		List<Blog> blogList = null;
 		List<Blog> popList = null;
 		List<String> tagList = null;
+		List<Comment> commentList = null;
 		Map<String, Object> blogFlag = new HashMap<>();
 		
 		switch(uri) {
@@ -100,7 +101,9 @@ public class BlogController {
 		}
 		popList = blogService.findPopList();
 		tagList = tagService.findAllNoDuplicate();
+		commentList  = commentService.findLatestComment();
 		
+		model.addAttribute("commentList", commentList);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("blogList", blogList);
 		model.addAttribute("popList", popList);
@@ -135,6 +138,8 @@ public class BlogController {
 		List<Comment> comments = commentService.findAllByBlogId(id);
 		List<Blog> popList = blogService.findPopList();
 		List<String> tagList = tagService.findAllNoDuplicate();
+		List<Comment> commentList  = commentService.findLatestComment();
+		model.addAttribute("commentList", commentList);
 		model.addAttribute("tagList", tagList);
 		model.addAttribute("popList", popList);
 		model.addAttribute("blog", blog);
@@ -159,6 +164,9 @@ public class BlogController {
 		
 		List<String> tagList = tagService.findAllNoDuplicate();
 		model.addAttribute("tagList", tagList);
+		
+		List<Comment> commentList  = commentService.findLatestComment();
+		model.addAttribute("commentList", commentList);
 		
 		model.addAttribute("active", "blog");
 		return "blog/createForm";
@@ -222,6 +230,9 @@ public class BlogController {
 		List<String> tagList = tagService.findAllNoDuplicate();
 		model.addAttribute("tagList", tagList);
 		
+		List<Comment> commentList  = commentService.findLatestComment();
+		model.addAttribute("commentList", commentList);
+		
 		Map<String, Object> blogFlag = new HashMap<>();
 		blogFlag.put("flag", "searchText");
 		blogFlag.put("keyword", keyword);
@@ -254,6 +265,8 @@ public class BlogController {
 		
 		List<Blog> popList = blogService.findPopList();
 		List<String> tagList = tagService.findAllNoDuplicate();
+		List<Comment> commentList  = commentService.findLatestComment();
+		model.addAttribute("commentList", commentList);
 		model.addAttribute("blog", blog);
 		model.addAttribute("tagList", tagList);
 		model.addAttribute("popList", popList);
