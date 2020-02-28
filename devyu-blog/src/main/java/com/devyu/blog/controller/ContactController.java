@@ -22,8 +22,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.devyu.blog.constant.Constant;
 import com.devyu.blog.domain.Blog;
+import com.devyu.blog.domain.Comment;
 import com.devyu.blog.inputForm.ContactForm;
 import com.devyu.blog.service.BlogService;
+import com.devyu.blog.service.CommentService;
 import com.devyu.blog.service.TagService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,6 +36,7 @@ public class ContactController {
 	
 	private final BlogService blogService;
 	private final TagService tagService;
+	private final CommentService commentService;
 
 	@GetMapping("/contact")
 	public String contact(Model model, @RequestParam Map<String, Object> modal) {
@@ -42,6 +45,10 @@ public class ContactController {
 		
 		List<String> tagList = tagService.findAllNoDuplicate();
 		model.addAttribute("tagList", tagList);
+		
+		List<Comment> commentList  = commentService.findLatestComment();
+		model.addAttribute("commentList", commentList);
+		
 		model.addAttribute("active", "contact");
 		
 		if(!modal.isEmpty()) {

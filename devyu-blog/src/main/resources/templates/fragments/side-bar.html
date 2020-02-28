@@ -1,17 +1,6 @@
 <div		lang="ko" 
 			xmlns:th="http://www.thymeleaf.org"
 			class="col-md-12 col-lg-4 sidebar" th:fragment = "side-bar">
-
-	<!-- search-form -->
-	<!-- <div class="sidebar-box search-form-wrap">
-	  <form method="post" th:action="@{/blog/search}" class="search-form">
-	    <div class="form-group">
-	      <span class="icon fa fa-search" style="cursor: pointer;"></span>
-	      <input type="text" class="form-control" id="s" placeholder="keyword and hit"  th:name="keyword">
-	    </div>
-	  </form>
-	</div> -->
-	<!-- search-form -->
             
 	<!-- my profile -->
 	<!-- <div class="sidebar-box">
@@ -85,18 +74,18 @@
 	  </ul>
 	</div>
 	<!-- tag side-bar -->
+	
+	<!-- comment side-bar -->
+	<div class="sidebar-box">
+	  <h3 class="heading">Latest Comments</h3>
+	  <ul class="comments" th:each="comments : ${commentList}">
+	    <li class="text-truncate">
+	    	<i class="fa fa-comment-o" aria-hidden="true"></i>
+	    	<a th:href="@{/blog/{id} (id=${comments.blog.id})}" th:text="${comments.contents}"></a>
+	    </li>
+	  </ul>
+	</div>
+	<!-- comment side-bar -->
 </div>
-          
-<!-- search side-bar -->
-<!-- <div class="col-md-12 col-lg-4 sidebar">
-    <div class="sidebar-box search-form-wrap">
-      <form action="#" class="search-form">
-        <div class="form-group">
-          <span class="icon fa fa-search"></span>
-          <input type="text" class="form-control" id="s" placeholder="Type a keyword and hit enter">
-        </div>
-      </form>
-    </div>
-</div> -->
 
 <!-- END sidebar -->

@@ -83,4 +83,8 @@ public class CommentService {
 			return result;
 		}
 	}
+
+	public List<Comment> findLatestComment() {
+		return commentRepository.findLatestComment();
+	}
 }

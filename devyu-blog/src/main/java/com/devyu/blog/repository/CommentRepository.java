@@ -37,4 +37,10 @@ public class CommentRepository {
 	public void delete(Comment comment) {
 		em.remove(comment);
 	}
+
+	public List<Comment> findLatestComment() {
+		return em.createQuery("select c from Comment c order by c.createdDate desc ", Comment.class)
+				.setMaxResults(5)
+				.getResultList();
+	}
 }
