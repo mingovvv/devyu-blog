@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.devyu.blog.constant.Account;
 import com.devyu.blog.constant.Constant;
 import com.devyu.blog.domain.Blog;
 import com.devyu.blog.domain.Comment;
@@ -78,14 +79,14 @@ public class ContactController {
 		//Session 생성 
 		Session session = Session.getInstance(props,  new javax.mail.Authenticator() {
 		protected javax.mail.PasswordAuthentication getPasswordAuthentication() { 
-			return new javax.mail.PasswordAuthentication(Constant.SMTP_USERNAME, Constant.SMTP_PASSWORD); 
+			return new javax.mail.PasswordAuthentication(Account.SMTP_USERNAME, Account.SMTP_PASSWORD); 
 			} 
 		}); 
 		
 		session.setDebug(true); //for debug 
 		
 		Message mimeMessage = new MimeMessage(session); //MimeMessage 생성 
-		mimeMessage.setFrom(new InternetAddress(Constant.SMTP_USERNAME)); //발신자 셋팅 , 보내는 사람의 이메일주소를 한번 더 입력합니다. 이때는 이메일 풀 주소를 다 작성해주세요. 
+		mimeMessage.setFrom(new InternetAddress(Account.SMTP_USERNAME)); //발신자 셋팅 , 보내는 사람의 이메일주소를 한번 더 입력합니다. 이때는 이메일 풀 주소를 다 작성해주세요. 
 		mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(Constant.SMTP_RECIPIENT)); //수신자셋팅 //.TO 외에 .CC(참조) .BCC(숨은참조) 도 있음 
 		mimeMessage.setSubject(subject); //제목셋팅 
 		mimeMessage.setText(body); //내용셋팅 
