@@ -25,32 +25,7 @@ public class LoginControllerTest {
 	UserRepository userRepository;
 	
 	@Test
-	public void 로그인_비밀번호_테스트() {
-		User user = userService.findByUserId("devyu");
+	public void login_password_test() {
 		
-		if(user == null) {
-			System.err.println("아이디가 다르다");
-		}
-		
-		if(!user.getPassword().equals("jang82")) { 
-			System.err.println("패스워드가 다르다");
-		}
-		
-	}
-	
-	@Test
-	public void 세션_중복_테스트(HttpSession session) {
-		User user1 = new User();
-		user1.setId((long) 0);
-		user1.setName("민규");
-		
-		User user2 = new User();
-		user2.setId((long) 0);
-		user2.setName("상진");
-		
-		session.setAttribute("userInfo", user1);
-		session.setAttribute("userInfo", user2);
-		
-		System.out.println(session.getAttribute("userInfo"));
 	}
 }
